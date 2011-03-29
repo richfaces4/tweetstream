@@ -1,0 +1,24 @@
+tweetstream
+-----------------------
+
+You must setup a JMS topic within the admin console to run this app:
+
+Name: twitter
+
+JNDI name: /topic/twitter All the others: by default.
+
+In the same form we need to add roles for that topic. For that demo application we will create single role with next parameters:
+
+Name: guest
+
+Send: yes
+
+Consume: yes
+
+create subscriber: yes
+
+delete subscriber: yes
+
+create durable subscriber: yes
+
+delete durable subscriber: yes
