@@ -8,5 +8,11 @@
       http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
    <!-- Write your navigation rules here. You are encouraged to use CDI for creating @Named managed beans. -->
+   <application>
+		<system-event-listener>
+			<system-event-listener-class>org.richfaces.examples.twitterclient.listeners.TopicsInitializer</system-event-listener-class>
+			<system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+		</system-event-listener>
+	</application>
 
 </faces-config>
