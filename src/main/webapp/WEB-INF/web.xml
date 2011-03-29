@@ -3,6 +3,26 @@
     xmlns="http://java.sun.com/xml/ns/javaee"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     id="WebApp_ID" version="3.0">
+
+   <context-param>
+      <param-name>org.richfaces.push.jms.connectionUsername</param-name>
+      <param-value>guest</param-value>
+   </context-param>
+   <context-param>
+      <param-name>org.richfaces.push.jms.connectionPassword</param-name>
+      <param-value>guest</param-value>
+   </context-param>
+    <filter>
+        <filter-name>PushFilter</filter-name>
+        <filter-class>org.richfaces.webapp.PushFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>PushFilter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+
+
    <!-- Activate the JSF 2.0 servlet -->
    <servlet>
       <servlet-name>Faces Servlet</servlet-name>
