@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.twitterclient.listeners;
+package org.richfaces.examples.tweetstream.twitterclient.listeners;
 
 import org.richfaces.application.push.EventAbortedException;
 import org.richfaces.application.push.Session;
@@ -31,9 +31,7 @@ import org.richfaces.application.push.Topic;
 import org.richfaces.application.push.TopicKey;
 import org.richfaces.application.push.TopicsContext;
 import org.richfaces.application.push.impl.DefaultMessageDataSerializer;
-import org.richfaces.examples.twitterclient.TweetBean;
 
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.SystemEvent;
