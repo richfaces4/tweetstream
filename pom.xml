@@ -18,7 +18,7 @@
          To set the jboss.home environment variable the Maven way, set the jboss.home property in an active profile in
          the Maven 2 settings.xml file
       -->
-      <jboss.home>${env.JBOSS_HOME}</jboss.home>
+      <!--<jboss.home>${env.JBOSS_HOME}</jboss.home>-->
       <jboss.domain>default</jboss.domain>
       <!-- The version of Weld extensions in use -->
       <weld.extensions.version>1.0.0-CR2</weld.extensions.version>

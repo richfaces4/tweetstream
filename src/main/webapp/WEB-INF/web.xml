@@ -43,9 +43,4 @@
       <param-value>true</param-value>
    </context-param>
 
-   <persistence-unit-ref>
-      <persistence-unit-ref-name>widgets/pu</persistence-unit-ref-name>
-      <persistence-unit-name>widgets</persistence-unit-name>
-   </persistence-unit-ref>
-
 </web-app>

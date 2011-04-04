@@ -76,8 +76,9 @@ public class TopicsInitializer implements SystemEventListener
             }
 
             public void processPreSubscriptionEvent(SessionPreSubscriptionEvent event) throws EventAbortedException {
-                ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                TweetBean tweetBean = (TweetBean) externalContext.getSessionMap().get("tweetBean");
+                //ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                //TweetBean tweetBean = (TweetBean) externalContext.getSessionMap().get("tweetBean");
+
                 //if (tweetBean == null || !(tweetBean.isConnected())) {
                 //    throw new EventAbortedException("We are not connected to IRC");
                 //}

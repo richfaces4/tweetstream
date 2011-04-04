@@ -31,7 +31,8 @@ import twitter4j.TwitterFactory;
 import javax.inject.Named;
 import java.util.List;
 
-/** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
+/**
+ * @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 @Named
 public class TwitterClient
 {
