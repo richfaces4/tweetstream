@@ -16,7 +16,7 @@
 
         <title>TweetStream Phone</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
         <!-- enable full-screen mode -->
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <!-- controls the appearance of the status bar in full-screen mode -->
@@ -24,15 +24,50 @@
         <h:outputStylesheet name="css/iphone.css"/>
 
         <script type="text/javascript">
-
+            //TODO - create global .js to be used only for mobile devices
             function hideURLbar() {
                 setTimeout(scrollTo, 0, 0, 1);
             }
         </script>
-
-
         <style type="text/css">
-            /*// target mobile devices*/
+
+            .tweet-item-touch{
+              left: -480px;
+              opacity: 0;
+            }
+
+            .tweet-item-touch,
+            .tweet-detail-active{
+                -moz-transition-duration: 1.5s;
+                -webkit-transition-duration: 1.5s;
+                -o-transition-duration: 1.5s;
+            }
+
+            .hide {
+               display:none;
+            }
+
+            .show {
+               display:block;
+            }
+
+            #tweet-detail {
+               position: absolute;
+
+            }
+
+            .tweet-detail-hidden {
+               top: 0;
+               left: 480px;
+            }
+
+            .tweet-detail-active {
+               top: 0;
+               left: 0;
+               width: 100%;
+            }
+
+           /*// target mobile devices*/
             /*@media only screen and (max-device-width: 480px) {*/
             /*body { max-width: 100%; }*/
             /*}*/
@@ -47,12 +82,10 @@
             /*@media only screen and (min-resolution: 300dpi) {*/
             /*// CSS goes here*/
             /*}*/
-        </style>
-
-
+         </style>
         <ui:insert name="head"/>
     </ui:define>
-
+    <ui:param name="onLoadFunction" value="hideURLbar()"/>
     <ui:define name="body">
 
         <ui:insert name="body"/>

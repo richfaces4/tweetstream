@@ -24,35 +24,15 @@
         <h:outputStylesheet name="css/iphone.css"/>
 
         <script type="text/javascript">
-
+            //TODO - create global .js to be used only for mobile devices
             function hideURLbar() {
                 setTimeout(scrollTo, 0, 0, 1);
             }
         </script>
 
-
-        <style type="text/css">
-            /*// target mobile devices*/
-            /*@media only screen and (max-device-width: 480px) {*/
-            /*body { max-width: 100%; }*/
-            /*}*/
-
-            /*// recent Webkit-specific media query to target the iPhone 4's high-resolution Retina display*/
-            /*@media only screen and (-webkit-min-device-pixel-ratio: 2) {*/
-            /*// CSS goes here*/
-            /*}*/
-
-            /*// should technically achieve a similar result to the above query,*/
-            /*// targeting based on screen resolution (the iPhone 4 has 326 ppi/dpi)*/
-            /*@media only screen and (min-resolution: 300dpi) {*/
-            /*// CSS goes here*/
-            /*}*/
-        </style>
-
-
         <ui:insert name="head"/>
     </ui:define>
-
+    <ui:param name="onLoadFunction" value="hideURLbar()"/>
     <ui:define name="body">
 
         <ui:insert name="body"/>

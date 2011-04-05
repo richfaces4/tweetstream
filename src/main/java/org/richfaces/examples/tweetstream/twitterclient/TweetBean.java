@@ -52,7 +52,6 @@ public class TweetBean implements StatusListener, Serializable
    private TwitterStream twitterStream;
 
    {
-      System.out.println("-------init");
       twitterStream = new TwitterStreamFactory().getInstance();
       twitterStream.addListener(this);
    }
