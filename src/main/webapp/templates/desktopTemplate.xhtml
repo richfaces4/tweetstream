@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="commonTemplate.xhtml">
+
+    <ui:define name="metadata">
+
+        <ui:insert name="metadata"/>
+    </ui:define>
+
+    <ui:define name="head">
+        <title>TweetStream Desktop</title>
+        <h:outputStylesheet name="css/screen.css"/>
+        <ui:insert name="head"/>
+    </ui:define>
+
+    <ui:define name="body">
+        <div id="container">
+            <div id="content">
+                <div id="sidebar">
+                    <h:form>
+                        <a4j:outputPanel ajaxRendered="true">
+                            <h:messages style="color:red"/>
+                        </a4j:outputPanel>
+                        <a4j:commandButton value="Connect" execute="@form" render="@all"
+                                           action="#{tweetBean.connect}"/>
+                    </h:form>
+                    <rich:panel>
+                        <hr/>
+                        <h:form>
+                            <a4j:push address="tweet_status@twitter"
+                                      onerror="alert(event.rf.data)"
+                                      ondataavailable="jQuery('&lt;div /&gt;').prependTo('.tweetstreamOutput').text(event.rf.data)"/>
+                        </h:form>
+                        <rich:panel styleClass="tweetOutput"
+                                    bodyClass="tweetstreamOutput"/>
+                    </rich:panel>
+                </div>
+                <ui:insert name="content"/>
+            </div>
+            <div id="footer">
+                Footer
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

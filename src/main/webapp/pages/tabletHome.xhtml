@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/templates/iPadTemplate.xhtml">
+
+    <ui:define name="body">
+        <div id="browser">
+            <div id="header">
+                TweetStream Tablet
+                <div id="back_button" class="back_button_template dashcode-header-backbutton"></div>
+            </div>
+            <div id="stackLayout">
+                <div id="listLevel">
+                    <ul id="list">
+                        <ui:repeat value="#{twitterClient.getTweets('#richfaces')}" var="tweet">
+                            <li id="listRowTemplate" class="listRowTemplate_template first" style=""
+                                onclick="itemClicked(event)">
+                                <div class="rowTitle_template" id="rowTitle">#{tweet.text}...</div>
+                                <div id="rowArrow" class="rowArrow_template"></div>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </div>
+                <div id="detailLevel">
+                    <div id="detailBox">
+                        <div id="detailTitle"></div>
+                        <div id="detailSubtitle"></div>
+                        <div id="detailDescription"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

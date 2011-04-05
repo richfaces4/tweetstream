@@ -56,7 +56,7 @@
 // *******************************************
  */
 
-package org.richfaces.examples.tweetstream.util;
+package org.richfaces.examples.tweetstream.useragent;
 
 /**
  * The DetectSmartPhone class encapsulates information about

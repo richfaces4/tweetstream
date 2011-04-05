@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="commonTemplate.xhtml">
+
+    <ui:define name="metadata">
+
+        <ui:insert name="metadata"/>
+    </ui:define>
+
+    <ui:define name="head">
+
+        <title>TweetStream Tablet</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- enable full-screen mode -->
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <!-- controls the appearance of the status bar in full-screen mode -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+        <h:outputStylesheet name="css/iphone.css"/>
+
+        <script type="text/javascript">
+
+            function hideURLbar() {
+                setTimeout(scrollTo, 0, 0, 1);
+            }
+        </script>
+
+
+        <style type="text/css">
+            /*// target mobile devices*/
+            /*@media only screen and (max-device-width: 480px) {*/
+            /*body { max-width: 100%; }*/
+            /*}*/
+
+            /*// recent Webkit-specific media query to target the iPhone 4's high-resolution Retina display*/
+            /*@media only screen and (-webkit-min-device-pixel-ratio: 2) {*/
+            /*// CSS goes here*/
+            /*}*/
+
+            /*// should technically achieve a similar result to the above query,*/
+            /*// targeting based on screen resolution (the iPhone 4 has 326 ppi/dpi)*/
+            /*@media only screen and (min-resolution: 300dpi) {*/
+            /*// CSS goes here*/
+            /*}*/
+        </style>
+
+
+        <ui:insert name="head"/>
+    </ui:define>
+
+    <ui:define name="body">
+
+        <ui:insert name="body"/>
+    </ui:define>
+</ui:composition>
