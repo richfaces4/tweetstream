@@ -7,35 +7,314 @@
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:rich="http://richfaces.org/rich"
                 template="/templates/iPhoneTemplate.xhtml">
+    <ui:define name="head">
+        <style type="text/css">
 
+            body {
+                background-image: url(#{request.contextPath}/resources/images/iphone/backgroundStripes.png);
+                background-repeat: repeat;
+                margin: 0px;
+                padding: 0px;
+                min-height: 416px;
+                font-family: Helvetica;
+            }
+
+
+
+            #header {
+                position: relative;
+                height: 44px;
+                width: auto;
+                font-family: Helvetica;
+                font-weight: bold;
+                color: rgb(255, 255, 255);
+                text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+                font-size: 16pt;
+                border: 0;
+                text-align: center;
+                line-height: 47px;
+                -webkit-user-select: none;
+            }
+
+            .back_button {
+                font-family: Helvetica;
+                font-weight: bold;
+                font-size: 12px;
+                color: rgb(255, 255, 255);
+                text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+                text-align: center;
+                text-overflow: ellipsis;
+                height: 30px;
+                width: 60px;
+                position: absolute;
+                top: 7px;
+                left: 5px;
+                line-height: 30px;
+            }
+
+            .agenda_button {
+                font-family: Helvetica;
+                font-weight: bold;
+                font-size: 12px;
+                color: rgb(255, 255, 255);
+                text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+                text-align: center;
+                text-overflow: ellipsis;
+                height: 30px;
+                width: 60px;
+                position: absolute;
+                top: 7px;
+                right: 5px;
+                line-height: 30px;
+            }
+
+
+
+
+            .button {
+               background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+               background: #af7124 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
+               border-radius: 7px;
+               mozborder-radius: 7px;
+               webkitborder-radius: 7px;
+               border: none;
+               box-shadow: 0 0 6px rgba(235,195,146,1) inset;
+               mozbox-shadow: 0 0 6px rgba(235,195,146,1) inset;
+               webkitbox-shadow: 0 0 6px rgba(235,195,146,1) inset;
+            }
+
+            .header-gradient {
+               background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+               background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
+               border: none;
+               box-shadow: 0 0 6px rgba(204,216,223,1) inset;
+               mozbox-shadow: 0 0 6px rgba(204,216,223,1) inset;
+               webkitbox-shadow: 0 0 6px rgba(204,216,223,1) inset;
+            }
+
+            .hide {
+               opacity: 0;
+            }
+
+            .hide-delay {
+               opacity: 0;
+               -webkit-transition-delay: 0.3s;
+            }
+
+            .show {
+               opacity: 1;
+            }
+
+            .show-delay {
+               opacity: 1;
+               -webkit-transition-delay: 0.3s;
+            }
+
+            .display-none {
+               display: none;
+            }
+
+            .display-block {
+               display: block;
+            }
+
+            #tweet-detail {
+               position: absolute;
+
+            }
+
+            #tweet-detail a {
+               text-decoration: none;
+
+            }
+
+            /*iphone landscape screen width*/
+            @media screen and (min-device-width: 321px) {
+               .stage-left {
+                   left: -480px;
+                   opacity: 0;
+               }
+
+               .stage-right {
+
+                  left: 480px;
+               }
+            }
+
+            /*iphone portrait screen width*/
+            @media screen and (max-device-width: 320px) {
+               .stage-left {
+                   left: -320px;
+                   opacity: 0;
+               }
+
+               .stage-right {
+
+                  left: 320px;
+               }
+            }
+
+            /*catch all for larger devices*/
+            @media screen and (min-device-width: 481px) {
+               .stage-left {
+                   left: -1024px;
+                   opacity: 0;
+               }
+
+               .stage-right {
+
+                  left: 1024px;
+               }
+            }
+
+
+            .stage-center {
+               top: 0;
+               left: 0;
+               width: 100%;
+            }
+
+            .transition{
+                -moz-transition-duration: 1.5s;
+                -webkit-transition-duration: 1.5s;
+                -o-transition-duration: 1.5s;
+            }
+
+
+            #browser {
+                height: auto;
+                -webkit-margin-top-collapse: separate;
+                -webkit-margin-bottom-collapse: separate;
+                position: relative;
+                min-height: 416px;
+                width: auto;
+            }
+
+            .flip{
+                position:relative;
+                width:100%;
+                -webkit-transition-property: -webkit-transform, background;
+                -webkit-transition-duration: 1s, 0;
+                -webkit-transition-delay: 0, 0.3s;
+                overflow:hidden;
+
+
+            }
+            .flip-active {
+                -webkit-transform: rotateY(180deg);
+                width:100%;
+
+            }
+            .flip > div{
+                position:absolute;
+                left:0;
+                top:0;
+                width:100%;
+                overflow:hidden;
+                -webkit-transition-property: -webkit-transform, background;
+                -webkit-transition-duration: 0;
+                -webkit-transition-delay: 0.3s;
+            }
+
+            .flip-active > div{
+                -webkit-transform: rotateY(180deg);
+            }
+
+            #agenda {
+               width:100%;
+               height:100%;
+            }
+
+            .agenda-flip-show {
+               position:absolute;
+               top:0;
+               left:0;
+               -webkit-transform: rotateY(0);
+            }
+
+
+
+            /*// should technically achieve a similar result to the above query,*/
+            /*// targeting based on screen resolution (the iPhone 4 has 326 ppi/dpi)*/
+            /*@media only screen and (min-resolution: 300dpi) {*/
+            /*// CSS goes here*/
+            /*}*/
+         </style>
+         <script type="text/javascript">
+
+            function tweetDetail(e){
+               //change the class name so we get the css transition for old and new page
+               document.getElementById('back-button').className='button back_button show transition';
+               document.getElementById('list').className='stage-left transition';
+               document.getElementById('tweet-detail').className = 'stage-center transition'
+            }
+
+            function tweetDetailBack(e){
+               //change the class name so we get the css transition for old and new page
+               document.getElementById('back-button').className='button back_button hide transition';
+               document.getElementById('list').className='stage-center transition';
+               document.getElementById('tweet-detail').className = 'stage-right transition'
+            }
+
+            function showAgenda(e){
+               //change the class name so we get the css transition for old and new page
+               document.getElementById('flip').className='flip flip-active';
+               document.getElementById('agenda').className='agenda-flip-show show-delay';
+               document.getElementById('list').className='hide-delay';
+               //hide tweet detail if coming from that screen
+               document.getElementById('tweet-detail').className='display-none';
+               //change the button
+               document.getElementById('agenda-back-button').className='button agenda_button display-block';
+               document.getElementById('agenda-button').className='display-none';
+               document.getElementById('back-button').className='button back_button hide';
+            }
+
+            function hideAgenda(){
+               alert('');
+              document.getElementById('list').className='stage-center transition';
+               document.getElementById('agenda').className='display-none';
+            }
+         </script>
+        <ui:insert name="head"/>
+    </ui:define>
     <ui:define name="body">
+       <div id="flip" class="flip">
         <div id="browser">
-            <div id="header">
-                TweetStream Phone
-                <div id="back_button" class="back_button_template dashcode-header-backbutton"></div>
+            <div id="header" class="header-gradient">
+                TweetStream
+                <div id="back-button" class="button back_button hide" onclick="tweetDetailBack()">Back</div>
+                <div id="agenda-button" class="button agenda_button" onclick="showAgenda()">Agenda</div>
+                <div id="agenda-back-button" class="button agenda_button display-none" onclick="hideAgenda()">Back</div>
             </div>
-            <div id="stackLayout">
+            <div id="stackLvayout">
 
                 <div id="listLevel">
-                   <div id="tweet-detail" class="tweet-detail-hidden"></div>
+
+                   <div id="tweet-detail" class="stage-right">
+                      <a4j:outputPanel id="list-panel" ajaxRendered="true">
+                          <img src="#{twitterClient.selectedTweet.profileImageUrl}" alt=""/>
+                          #{twitterClient.selectedTweet.fromUser}
+                           <hr/>
+                           #{twitterClient.selectedTweet.text}
+                       </a4j:outputPanel>
+                   </div>
+                   <h:form id="list-form">
+
                     <ul id="list">
                         <ui:repeat value="#{twitterClient.getTweets('#richfaces')}" var="tweet">
-                            <li id="listRowTemplate" class="listRowTemplate_template first" tabindex="-1"
-                                onclick="this.parentNode.className='tweet-item-touch';
-                                document.getElementById('tweet-detail').innerHTML=document.getElementById('tweet-holder-#{tweet.id}').innerHTML;
-                                document.getElementById('tweet-detail').className='tweet-detail-active'">
-                                <div class="rowTitle_template tweet-text" id="rowTitle" >#{tweet.text}...</div>
-                                <div id="rowArrow" class="rowArrow_template"></div>
-                                <div id="tweet-holder-#{tweet.id}" class="hide">
-                                   <img src="#{tweet.profileImageUrl}" alt=""/>#{tweet.fromUser}
-                                    <hr/>
-                                    #{tweet.text}
-                                </div>
+                            <li id="listRowTemplate-#{tweet.id}" class="listRowTemplate_template first" tabindex="-1">
+                                <a4j:commandLink action="#{twitterClient.selectTweet(tweet)}" oncomplete="tweetDetail()" >
+                                   <div class="rowTitle_template tweet-text" id="rowTitle" >#{tweet.text}...</div>
+                                   <div id="rowArrow" class="rowArrow_template"></div>
+                                </a4j:commandLink>
                             </li>
                         </ui:repeat>
                     </ul>
+                   </h:form>
 
-
+                   <div id="agenda" class="hide">
+                      <img src="#{request.contextPath}/resources/images/judcon-logo.gif" alt=""/>
+                   </div>
 
                 </div>
                 <div id="detailLevel">
@@ -47,6 +326,7 @@
                 </div>
             </div>
         </div>
+       </div>
     </ui:define>
 
 </ui:composition>

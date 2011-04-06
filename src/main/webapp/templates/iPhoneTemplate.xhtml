@@ -16,7 +16,7 @@
 
         <title>TweetStream Phone</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
         <!-- enable full-screen mode -->
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <!-- controls the appearance of the status bar in full-screen mode -->
@@ -29,60 +29,7 @@
                 setTimeout(scrollTo, 0, 0, 1);
             }
         </script>
-        <style type="text/css">
 
-            .tweet-item-touch{
-              left: -480px;
-              opacity: 0;
-            }
-
-            .tweet-item-touch,
-            .tweet-detail-active{
-                -moz-transition-duration: 1.5s;
-                -webkit-transition-duration: 1.5s;
-                -o-transition-duration: 1.5s;
-            }
-
-            .hide {
-               display:none;
-            }
-
-            .show {
-               display:block;
-            }
-
-            #tweet-detail {
-               position: absolute;
-
-            }
-
-            .tweet-detail-hidden {
-               top: 0;
-               left: 480px;
-            }
-
-            .tweet-detail-active {
-               top: 0;
-               left: 0;
-               width: 100%;
-            }
-
-           /*// target mobile devices*/
-            /*@media only screen and (max-device-width: 480px) {*/
-            /*body { max-width: 100%; }*/
-            /*}*/
-
-            /*// recent Webkit-specific media query to target the iPhone 4's high-resolution Retina display*/
-            /*@media only screen and (-webkit-min-device-pixel-ratio: 2) {*/
-            /*// CSS goes here*/
-            /*}*/
-
-            /*// should technically achieve a similar result to the above query,*/
-            /*// targeting based on screen resolution (the iPhone 4 has 326 ppi/dpi)*/
-            /*@media only screen and (min-resolution: 300dpi) {*/
-            /*// CSS goes here*/
-            /*}*/
-         </style>
         <ui:insert name="head"/>
     </ui:define>
     <ui:param name="onLoadFunction" value="hideURLbar()"/>

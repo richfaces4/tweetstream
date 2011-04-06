@@ -28,14 +28,24 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
-@Named
-public class TwitterClient
+@ManagedBean
+@SessionScoped
+public class TwitterClient implements Serializable
 {
+
+   private Tweet selectedTweet;
+
+   public void selectTweet(Tweet tweet) {
+     selectedTweet = tweet;
+   }
 
    public List getTweets(String searchTerm){
       Twitter twitter = new TwitterFactory().getInstance();
@@ -53,4 +63,13 @@ public class TwitterClient
       return tweets;
    }
 
+   public Tweet getSelectedTweet()
+   {
+      return selectedTweet;
+   }
+
+   public void setSelectedTweet(Tweet selectedTweet)
+   {
+      this.selectedTweet = selectedTweet;
+   }
 }

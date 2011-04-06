@@ -4,69 +4,8 @@
  according to the license.txt file included in the project.
  */
 
-body {
-    background-image: url(#{request.contextPath}/resources/images/iphone/backgroundStripes.png);
-    background-repeat: repeat;
-    margin: 0px;
-    padding: 0px;
-    min-height: 416px;
-    font-family: Helvetica;
-}
 
-#browser {
-    height: auto;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    position: relative;
-    min-height: 416px;
-    width: auto;
-}
 
-#header {
-    position: relative;
-    left: 0px;
-    top: 0px;
-    height: 44px;
-    width: auto;
-    font-family: Helvetica;
-    font-weight: bold;
-    color: rgb(255, 255, 255);
-    text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-    font-size: 16pt;
-    border-top-width: 0px;
-    border-bottom-width: 0px;
-    background-image: url(#{request.contextPath}/resources/images/iphone/header.png);
-    background-repeat: repeat-x;
-    border-left-width: 0px;
-    border-right-width: 0px;
-    text-align: center;
-    line-height: 47px;
-    cursor: default;
-    -webkit-user-select: none;
-}
-
-.back_button_template {
-    font-family: Helvetica;
-    font-weight: bold;
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-    text-align: center;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    height: 30px;
-    -webkit-dashboard-region: dashboard-region(control rectangle);
-    width: 60px;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    top: 7px;
-    left: 5px;
-    cursor: default;
-    -webkit-user-select: none;
-}
 
 #listLevel {
     /**/
