@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.twitterclient;
+package org.richfaces.examples.tweetstream.twitterclient.listeners;
 
 import org.richfaces.application.push.MessageException;
 import org.richfaces.application.push.TopicKey;
@@ -43,10 +43,10 @@ import java.util.Date;
 
 @ManagedBean
 @SessionScoped
-public class TweetBean implements StatusListener, Serializable
+public class TweetListenerBean implements StatusListener, Serializable
 {
    private transient TopicsContext topicsContext;
-   private static final Logger LOGGER = LogFactory.getLogger(TweetBean.class);
+   private static final Logger LOGGER = LogFactory.getLogger(TweetListenerBean.class);
    private static final String SUBTOPIC_SEPARATOR = "_";
    private static final String[] TRACK = {"java","jboss","richfaces"};
    private TwitterStream twitterStream;
