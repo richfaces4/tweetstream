@@ -17,7 +17,7 @@
 
 #detailLevel {
     min-height: 372px;
-    
+
     position: relative;
     width: 100%;
 }
@@ -25,7 +25,7 @@
 #list {
     background-color: white;
     overflow: hidden;
-   
+
     padding: 0px;
     margin: 0px;
     height: auto;

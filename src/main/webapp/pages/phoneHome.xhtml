@@ -136,7 +136,7 @@
                }
 
                .stage-right {
-
+                   opacity: 0;
                   left: 480px;
                }
             }
@@ -149,12 +149,12 @@
                }
 
                .stage-right {
-
+                   opacity: 0;
                   left: 320px;
                }
             }
 
-            /*catch all for larger devices*/
+            /*catch all for larger than iphone landscape device widths*/
             @media screen and (min-device-width: 481px) {
                .stage-left {
                    left: -1024px;
@@ -162,7 +162,7 @@
                }
 
                .stage-right {
-
+                  opacity: 0;
                   left: 1024px;
                }
             }
@@ -195,6 +195,7 @@
                 width:100%;
                 -webkit-transition-property: -webkit-transform, background;
                 -webkit-transition-duration: 1s, 0;
+                -webkit-transform-style: preserve-3d;
                 -webkit-transition-delay: 0, 0.3s;
                 overflow:hidden;
 
@@ -205,6 +206,13 @@
                 width:100%;
 
             }
+
+            .flip-active-hide {
+                -webkit-transform: rotateY(0deg);
+                width:100%;
+
+            }
+
             .flip > div{
                 position:absolute;
                 left:0;
@@ -212,6 +220,7 @@
                 width:100%;
                 overflow:hidden;
                 -webkit-transition-property: -webkit-transform, background;
+                -webkit-transform-style: preserve-3d;
                 -webkit-transition-duration: 0;
                 -webkit-transition-delay: 0.3s;
             }
@@ -223,14 +232,15 @@
             #agenda {
                width:100%;
                height:100%;
+               -webkit-user-select:element;
             }
 
             .agenda-flip-show {
                position:absolute;
-               top:0;
+               top:44px;
                left:0;
-               -webkit-transform: rotateY(0);
             }
+
 
 
 
@@ -264,29 +274,35 @@
                //hide tweet detail if coming from that screen
                document.getElementById('tweet-detail').className='display-none';
                //change the button
-               document.getElementById('agenda-back-button').className='button agenda_button display-block';
+               document.getElementById('agenda-back-button').className='button agenda_button';
                document.getElementById('agenda-button').className='display-none';
                document.getElementById('back-button').className='button back_button hide';
             }
 
             function hideAgenda(){
-               alert('');
+               document.getElementById('flip').className='flip flip-active-hide';
+               document.getElementById('agenda').className='hide-delay';
+
               document.getElementById('list').className='stage-center transition';
-               document.getElementById('agenda').className='display-none';
+               document.getElementById('agenda-back-button').className='display-none';
+               document.getElementById('agenda-button').className='button agenda_button';
             }
          </script>
         <ui:insert name="head"/>
     </ui:define>
     <ui:define name="body">
-       <div id="flip" class="flip">
+
         <div id="browser">
             <div id="header" class="header-gradient">
                 TweetStream
                 <div id="back-button" class="button back_button hide" onclick="tweetDetailBack()">Back</div>
                 <div id="agenda-button" class="button agenda_button" onclick="showAgenda()">Agenda</div>
-                <div id="agenda-back-button" class="button agenda_button display-none" onclick="hideAgenda()">Back</div>
+                <div id="agenda-back-button" class="hide" onclick="hideAgenda()">Back</div>
             </div>
-            <div id="stackLvayout">
+           <div id="flip" class="flip">
+
+
+            <div id="stackLayout">
 
                 <div id="listLevel">
 
@@ -325,7 +341,11 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
+
+
        </div>
     </ui:define>
 
