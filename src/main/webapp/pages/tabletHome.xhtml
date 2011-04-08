@@ -8,14 +8,20 @@
                 xmlns:rich="http://richfaces.org/rich"
                 template="/templates/iPadTemplate.xhtml">
 
+
+    <ui:define name="head">
+        <h:outputStylesheet name="css/ipad.css"/>
+
+    </ui:define>
+
     <ui:define name="body">
         <div id="browser">
-            <div id="header">
-                TweetStream Tablet
-                <div id="back_button" class="back_button_template dashcode-header-backbutton"></div>
+            <div id="header" class="header-gradient">
+                <h1>TweetStream Tablet</h1>
             </div>
-            <div id="stackLayout">
-                <div id="listLevel">
+
+            <div id="stream" class="landscape-leftbar">
+                <rich:panel>
                     <ul id="list">
                         <ui:repeat value="#{twitterClient.getTweets('#richfaces')}" var="tweet">
                             <li id="listRowTemplate" class="listRowTemplate_template first" style=""
@@ -25,14 +31,18 @@
                             </li>
                         </ui:repeat>
                     </ul>
-                </div>
-                <div id="detailLevel">
-                    <div id="detailBox">
-                        <div id="detailTitle"></div>
-                        <div id="detailSubtitle"></div>
-                        <div id="detailDescription"></div>
-                    </div>
-                </div>
+                </rich:panel>
+            </div>
+
+            <div id="top_tags" class="landscape-rightbar">
+                <rich:panel>
+                    topTags
+                </rich:panel>
+            </div>
+
+            <div id="top_tweeters" class="landscape-rightbar">
+                <rich:panel>top Tweets</rich:panel>
+
             </div>
         </div>
     </ui:define>
