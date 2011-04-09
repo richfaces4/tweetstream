@@ -7,6 +7,12 @@
                 xmlns:rich="http://richfaces.org/rich"
                 template="/templates/desktopTemplate.xhtml">
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{twitterAgent.updateTweets}"/>
+        </f:metadata>
+    </ui:define>
+
     <ui:define name="content">
         <h2>Tweets</h2>
         <h:dataTable var="_tweet" value="#{twitterAgent.tweets}">

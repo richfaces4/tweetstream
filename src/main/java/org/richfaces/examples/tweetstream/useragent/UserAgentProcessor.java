@@ -2,7 +2,6 @@ package org.richfaces.examples.tweetstream.useragent;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author jbalunas@redhat.com
  */
-@ManagedBean(name="userAgent")
+@Named("userAgent")
 @RequestScoped
 public class UserAgentProcessor {
     private String userAgentStr;

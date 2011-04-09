@@ -8,6 +8,11 @@
                 xmlns:rich="http://richfaces.org/rich"
                 template="/templates/iPadTemplate.xhtml">
 
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{twitterAgent.updateTweets}"/>
+        </f:metadata>
+    </ui:define>
 
     <ui:define name="head">
         <h:outputStylesheet name="css/ipad.css"/>
@@ -16,54 +21,61 @@
 
     <ui:define name="body">
         <h:form>
-        <div id="browser">
-            <div id="header" class="header-gradient">
-                <h1>TweetStream Tablet</h1>
-            </div>
+            <div id="browser">
+                <div id="header" class="header-gradient">
+                    <h1>TweetStream Tablet</h1>
+                    <rich:inplaceInput value="#{twitterAgent.searchTerm}">
+                        <a4j:ajax render="@form" event="change" action="#{twitterAgent.updateTweets}"/>
+                    </rich:inplaceInput>
+                </div>
 
-            <div id="stream" class="landscape-leftbar">
-                <rich:panel>
-                    <ul id="list">
-                        <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
-                            <li id="listRowTemplate" class="listRowTemplate_template first" style=""
-                                onclick="itemClicked(event)">
-                                <div class="rowTitle_template" id="rowTitle">#{tweet.text}...</div>
-                                <div id="rowArrow" class="rowArrow_template"></div>
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </rich:panel>
-            </div>
+                <div id="stream" class="landscape-leftbar">
+                    <rich:panel>
+                        <ul id="list">
+                            <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
+                                <li id="listRowTemplate" class="listRowTemplate_template first" style=""
+                                    onclick="itemClicked(event)">
+                                    <div class="rowTitle_template" id="rowTitle">#{tweet.text}...</div>
+                                    <div id="rowArrow" class="rowArrow_template"></div>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </rich:panel>
+                </div>
 
-            <div id="top_tags" class="landscape-rightbar">
-                <rich:panel header="Top Tags">
-                    <ul id="top_tags_list">
-                        <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
-                            <li id="top_tags_listRowTemplate" class="listRowTemplate_template first" style=""
-                                onclick="itemClicked(event)">
-                                <div class="rowTitle_template" id="top_tags_rowTitle">#{tag.hashtag} -- count #{tag.count}...</div>
-                                <div id="top_tags_rowArrow" class="rowArrow_template"></div>
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </rich:panel>
-            </div>
+                <div id="top_tags" class="landscape-rightbar">
+                    <rich:panel header="Top Tags">
+                        <ul id="top_tags_list">
+                            <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
+                                <li id="top_tags_listRowTemplate" class="listRowTemplate_template first" style=""
+                                    onclick="itemClicked(event)">
+                                    <div class="rowTitle_template"
+                                         id="top_tags_rowTitle">#{tag.hashtag} -- count #{tag.count}...
+                                    </div>
+                                    <div id="top_tags_rowArrow" class="rowArrow_template"></div>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </rich:panel>
+                </div>
 
-            <div id="top_tweeters" class="landscape-rightbar">
-                <rich:panel header="Top Tweeters">
-                    <ul id="top_tweeters_list">
-                        <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
-                            <li id="top_tweeters_listRowTemplate" class="listRowTemplate_template first" style=""
-                                onclick="itemClicked(event)">
-                                <div class="rowTitle_template" id="top_tweeters_rowTitle">#{tweeter.user} -- count #{tweeter.tweetCount}...</div>
-                                <div id="top_tweeters_rowArrow" class="rowArrow_template"></div>
-                            </li>
-                        </ui:repeat>
-                    </ul>
-                </rich:panel>
+                <div id="top_tweeters" class="landscape-rightbar">
+                    <rich:panel header="Top Tweeters">
+                        <ul id="top_tweeters_list">
+                            <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
+                                <li id="top_tweeters_listRowTemplate" class="listRowTemplate_template first" style=""
+                                    onclick="itemClicked(event)">
+                                    <div class="rowTitle_template"
+                                         id="top_tweeters_rowTitle">#{tweeter.user} -- count #{tweeter.tweetCount}...
+                                    </div>
+                                    <div id="top_tweeters_rowArrow" class="rowArrow_template"></div>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </rich:panel>
 
+                </div>
             </div>
-        </div>
         </h:form>
     </ui:define>
 

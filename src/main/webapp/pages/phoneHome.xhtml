@@ -7,6 +7,13 @@
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:rich="http://richfaces.org/rich"
                 template="/templates/iPhoneTemplate.xhtml">
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{twitterAgent.updateTweets}"/>
+        </f:metadata>
+    </ui:define>
+
     <ui:define name="head">
         <style type="text/css">
 

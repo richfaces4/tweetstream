@@ -35,13 +35,14 @@ import twitter4j.TwitterStreamFactory;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Date;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 
-@ManagedBean
+@Named
 @SessionScoped
 public class TweetListenerBean implements StatusListener, Serializable
 {

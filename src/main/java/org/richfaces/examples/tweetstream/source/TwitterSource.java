@@ -4,6 +4,7 @@ import org.richfaces.examples.tweetstream.model.Hashtag;
 import org.richfaces.examples.tweetstream.model.Tweeter;
 import twitter4j.Tweet;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
-public interface TwitterSource {
+public interface TwitterSource extends Serializable {
     List<Tweet> getTweets(String searchTerm);
 
     List<Tweeter> getTopTweeters(String searchTerm);

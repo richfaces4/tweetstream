@@ -5,19 +5,19 @@ import org.richfaces.examples.tweetstream.model.Tweeter;
 import org.richfaces.examples.tweetstream.source.TwitterSource;
 import twitter4j.Tweet;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 @Named("twitterAgent")
-@RequestScoped
-public class TwitterAgentImpl implements TwitterAgent {
-    private String searchTerm = "#richfaces";
+@SessionScoped
+public class TwitterAgentImpl implements TwitterAgent, Serializable {
+    private String searchTerm = "#jboss";
     private Tweet selectedTweet;
     private  List<Tweet> tweets;
     private List<Tweeter> topTweeters;
@@ -26,12 +26,11 @@ public class TwitterAgentImpl implements TwitterAgent {
     @Inject
     private TwitterSource source;
 
-    @PostConstruct
-    public String updateTweets(){
+    public void updateTweets(){
         tweets = source.getTweets(searchTerm);
         topTweeters = source.getTopTweeters(searchTerm);
         topTHashtags = source.getTopHashtags(searchTerm);
-        return null;
+
     }
 
     @Override
