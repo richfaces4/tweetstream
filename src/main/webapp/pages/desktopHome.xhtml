@@ -9,7 +9,7 @@
 
     <ui:define name="content">
         <h2>Tweets</h2>
-        <h:dataTable var="_tweet" value="#{twitterClient.getTweets('#richfaces')}">
+        <h:dataTable var="_tweet" value="#{twitterAgent.tweets}">
             <h:column>
                 <f:facet name="header">From</f:facet>
                 #{_tweet.fromUserId}

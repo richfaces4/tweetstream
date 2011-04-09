@@ -308,18 +308,18 @@
 
                    <div id="tweet-detail" class="stage-right">
                       <a4j:outputPanel id="list-panel" ajaxRendered="true">
-                          <img src="#{twitterClient.selectedTweet.profileImageUrl}" alt=""/>
-                          #{twitterClient.selectedTweet.fromUser}
+                          <img src="#{twitterAgent.selectedTweet.profileImageUrl}" alt=""/>
+                          #{twitterAgent.selectedTweet.fromUser}
                            <hr/>
-                           #{twitterClient.selectedTweet.text}
+                           #{twitterAgent.selectedTweet.text}
                        </a4j:outputPanel>
                    </div>
                    <h:form id="list-form">
 
                     <ul id="list">
-                        <ui:repeat value="#{twitterClient.getTweets('#richfaces')}" var="tweet">
+                        <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
                             <li id="listRowTemplate-#{tweet.id}" class="listRowTemplate_template first" tabindex="-1">
-                                <a4j:commandLink action="#{twitterClient.selectTweet(tweet)}" oncomplete="tweetDetail()" >
+                                <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}" oncomplete="tweetDetail()" >
                                    <div class="rowTitle_template tweet-text" id="rowTitle" >#{tweet.text}...</div>
                                    <div id="rowArrow" class="rowArrow_template"></div>
                                 </a4j:commandLink>

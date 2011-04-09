@@ -15,6 +15,7 @@
     </ui:define>
 
     <ui:define name="body">
+        <h:form>
         <div id="browser">
             <div id="header" class="header-gradient">
                 <h1>TweetStream Tablet</h1>
@@ -23,7 +24,7 @@
             <div id="stream" class="landscape-leftbar">
                 <rich:panel>
                     <ul id="list">
-                        <ui:repeat value="#{twitterClient.getTweets('#richfaces')}" var="tweet">
+                        <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
                             <li id="listRowTemplate" class="listRowTemplate_template first" style=""
                                 onclick="itemClicked(event)">
                                 <div class="rowTitle_template" id="rowTitle">#{tweet.text}...</div>
@@ -35,16 +36,35 @@
             </div>
 
             <div id="top_tags" class="landscape-rightbar">
-                <rich:panel>
-                    topTags
+                <rich:panel header="Top Tags">
+                    <ul id="top_tags_list">
+                        <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
+                            <li id="top_tags_listRowTemplate" class="listRowTemplate_template first" style=""
+                                onclick="itemClicked(event)">
+                                <div class="rowTitle_template" id="top_tags_rowTitle">#{tag.hashtag} -- count #{tag.count}...</div>
+                                <div id="top_tags_rowArrow" class="rowArrow_template"></div>
+                            </li>
+                        </ui:repeat>
+                    </ul>
                 </rich:panel>
             </div>
 
             <div id="top_tweeters" class="landscape-rightbar">
-                <rich:panel>top Tweets</rich:panel>
+                <rich:panel header="Top Tweeters">
+                    <ul id="top_tweeters_list">
+                        <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
+                            <li id="top_tweeters_listRowTemplate" class="listRowTemplate_template first" style=""
+                                onclick="itemClicked(event)">
+                                <div class="rowTitle_template" id="top_tweeters_rowTitle">#{tweeter.user} -- count #{tweeter.tweetCount}...</div>
+                                <div id="top_tweeters_rowArrow" class="rowArrow_template"></div>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </rich:panel>
 
             </div>
         </div>
+        </h:form>
     </ui:define>
 
 </ui:composition>
