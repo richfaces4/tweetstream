@@ -17,7 +17,7 @@ import java.util.List;
 @Named("twitterAgent")
 @SessionScoped
 public class TwitterAgentImpl implements TwitterAgent, Serializable {
-    private String searchTerm = "#jboss";
+    private String searchTerm = "";
     private Tweet selectedTweet;
     private  List<Tweet> tweets;
     private List<Tweeter> topTweeters;
@@ -30,7 +30,6 @@ public class TwitterAgentImpl implements TwitterAgent, Serializable {
         tweets = source.getTweets(searchTerm);
         topTweeters = source.getTopTweeters(searchTerm);
         topTHashtags = source.getTopHashtags(searchTerm);
-
     }
 
     @Override
