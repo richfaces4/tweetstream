@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.facelets.FaceletContext;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,10 @@ import java.util.List;
  */
 @ApplicationScoped
 public class TwitterSourceLocal implements TwitterSource {
-    private String searchTermBase;
+
+   @Inject org.slf4j.Logger log;
+
+   private String searchTermBase;
 
     @PostConstruct
     private void init(){
@@ -26,29 +30,30 @@ public class TwitterSourceLocal implements TwitterSource {
         if (searchTermBase == null){
             searchTermBase = "";
         }
-        System.out.println("Base search term set to : " + searchTermBase);
+        log.info("Base search term set to : " + searchTermBase);
     }
 
-    @Override
     public List<Tweet> getTweets(String searchTerm) {
+
         searchTerm = searchTermBase + " " + searchTerm;
-        System.out.println("Current search term set to : \"" + searchTerm + "\"");
+        log.info("Current search term set to : \"" + searchTerm + "\"");
+
         Twitter twitter = new TwitterFactory().getInstance();
+
         List<Tweet> tweets = null;
         try {
             QueryResult result = twitter.search(new Query(searchTerm));
             tweets = result.getTweets();
             for (Tweet tweet : tweets) {
-                System.out.println("@" + tweet.getFromUser() + " - " + tweet.getText());
+                log.info("@" + tweet.getFromUser() + " - " + tweet.getText());
             }
         } catch (TwitterException te) {
             te.printStackTrace();
-            System.out.println("Failed to search tweets: " + te.getMessage());
+            log.info("Failed to search tweets: " + te.getMessage());
         }
         return tweets;
     }
 
-    @Override
     public List<Tweeter> getTopTweeters(String searchTerm) {
         List<Tweeter> tweeters = new ArrayList<Tweeter>();
 
@@ -65,7 +70,6 @@ public class TwitterSourceLocal implements TwitterSource {
         return tweeters;
     }
 
-    @Override
     public List<Hashtag> getTopHashtags(String searchTerm) {
         List<Hashtag> hashtags = new ArrayList<Hashtag>();
 

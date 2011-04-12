@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.push;
+package org.richfaces.examples.tweetstream.listener;
 
 import org.richfaces.application.push.MessageException;
 import org.richfaces.application.push.TopicKey;
@@ -33,8 +33,8 @@ import twitter4j.StatusListener;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.text.MessageFormat;
@@ -46,9 +46,10 @@ import java.util.Date;
 @SessionScoped
 public class TweetListenerBean implements StatusListener, Serializable
 {
-   private transient TopicsContext topicsContext;
-   private static final Logger LOGGER = LogFactory.getLogger(TweetListenerBean.class);
-   private static final String SUBTOPIC_SEPARATOR = "_";
+
+   @Inject
+   org.slf4j.Logger log;
+
    private static final String[] TRACK = {"java","jboss","richfaces"};
    private TwitterStream twitterStream;
 
@@ -57,32 +58,10 @@ public class TweetListenerBean implements StatusListener, Serializable
       twitterStream.addListener(this);
    }
 
-   public void connect()
-   {
-
-      FilterQuery filterQuery = new FilterQuery();
-      filterQuery.track(TRACK);
-      twitterStream.filter(filterQuery);
-   }
-
-   private TopicsContext getTopicsContext() {
-        if (topicsContext == null) {
-            topicsContext = TopicsContext.lookup();
-        }
-        return topicsContext;
-    }
-
 
    public void onStatus(Status status)
    {
-      System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
-
-        try {
-            getTopicsContext().publish(new TopicKey("twitter","tweet_status"),
-            MessageFormat.format("{0,time,medium} {1}: {2}", new Date(), status.getUser().getScreenName(), status.getText()));
-        } catch (MessageException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
+      //TODO - get the tweet update and trigger refresh on CacheBuilder
    }
 
    public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice)
