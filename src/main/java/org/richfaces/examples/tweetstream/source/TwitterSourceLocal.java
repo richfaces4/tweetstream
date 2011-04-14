@@ -58,7 +58,7 @@ public class TwitterSourceLocal implements TwitterSource {
         List<Tweeter> tweeters = new ArrayList<Tweeter>();
 
         Tweeter tweeter = null;
-        for (int i=0; i<50;i++){
+        for (int i=0; i<10;i++){
             tweeter = new Tweeter();
             tweeter.setProfileImgUrl("http://twitter.com/account/profile_image/tech4j?hreflang=en");
             tweeter.setTweetCount(100 - (2 * i));
@@ -74,7 +74,7 @@ public class TwitterSourceLocal implements TwitterSource {
         List<Hashtag> hashtags = new ArrayList<Hashtag>();
 
         Hashtag hashtag = null;
-        for (int i=0; i<50;i++){
+        for (int i=0; i<10;i++){
             hashtag = new Hashtag();
             hashtag.setHashtag("#richfaces_" + i);
             hashtag.setCount(1000-(5*i));

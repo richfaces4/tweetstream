@@ -2,6 +2,8 @@ body {
     background-image: url(#{request.contextPath}/resources/images/iphone/backgroundStripes.png);
     background-repeat: repeat;
     margin: 0px;
+    /* Fixes a strange issue with top margin space */
+    margin-top: -20px;
     padding: 0px;
     min-height: 416px;
     font-family: Helvetica;
@@ -11,7 +13,7 @@ body {
 @media all and (orientation:portrait) {
     .landscape-leftbar {
         height: 480px;
-        text-overflow: auto;
+        /*text-overflow: auto;*/
 
     }
 

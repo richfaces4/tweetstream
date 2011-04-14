@@ -29,28 +29,32 @@ import org.infinispan.notifications.cachelistener.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-/** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
+/**
+ * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
+ */
 
 @Listener
-public class ViewBuilderListener
-{
+public class ViewBuilderListener {
 
-   @Inject
-   org.slf4j.Logger log;
+  @Inject
+  org.slf4j.Logger log;
 
-   @CacheEntryModified
-   @CacheEntryVisited
-   public void handle(Event e) {
-     switch (e.getType()) {
-       case CACHE_ENTRY_MODIFIED:
-           // a cache entry has been modified
-          //TODO - get/update/build the view and publish to topic
+  @CacheEntryModified
+  @CacheEntryVisited
+  public void handle(Event e) {
+    switch (e.getType()) {
+      case CACHE_ENTRY_MODIFIED:
 
+        //TODO determine if the event is for new data
 
+        //TODO pull, or query for the TwitterAggregate data
+        // This can be Sanne's service, or something else
 
-       case CACHE_ENTRY_VISITED:
-           // a cache entry has been visited
-     }
-   }
+        //TODO publish this updated data model to the RichFaces push component's JMS topic
+        //UI's will then receive this data, and update their views with it.
+
+        //At this point it is pretty much just repeat either as a poll, or event driven process.
+    }
+  }
 
 }
