@@ -1,8 +1,29 @@
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2011, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
 package org.richfaces.examples.tweetstream.dataserver.source;
 
 import org.richfaces.examples.tweetstream.dataserver.cache.InfinispanCacheBuilder;
-import org.richfaces.examples.tweetstream.dataserver.listener.TweetListenerBean;
-import org.richfaces.examples.tweetstream.dataserver.listener.ViewBuilderListener;
+import org.richfaces.examples.tweetstream.dataserver.listeners.TweetStreamListener;
+import org.richfaces.examples.tweetstream.dataserver.listeners.CacheUpdateListener;
 import org.richfaces.examples.tweetstream.domain.*;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import twitter4j.*;
@@ -12,6 +33,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +53,9 @@ public class TwitterSourceLocal implements TwitterSource {
   InfinispanCacheBuilder cacheBuilder;
 
   @Inject
-  TweetListenerBean tweetListener;
+  TweetStreamListener tweetListener;
+
+  Long lastSearch = -1l;
 
 
   private TwitterAggregate twitterAggregate;
@@ -43,14 +67,14 @@ public class TwitterSourceLocal implements TwitterSource {
     fetchContent();
 
     // add the listener that checks hi new data has been added.
-    cacheBuilder.getCache().addListener(new ViewBuilderListener());
+    cacheBuilder.getCache().addListener(new CacheUpdateListener());
 
     //Populate cache with seed data from this class
     cacheBuilder.getCache().put("tweetaggregate", twitterAggregate);
     System.out.println("-------cacheBuilder.getCache().--" + cacheBuilder.getCache().containsKey("tweetaggregate"));
 
     //Start the twitter streaming
-    tweetListener.startTwitterStream();
+    //tweetListener.startTwitterStream();
 
 
     log.info("Initialization of twitter source local complete");
@@ -69,8 +93,8 @@ public class TwitterSourceLocal implements TwitterSource {
     return twitterAggregate.getTopTweeters();
   }
 
-  public List<Hashtag> getTopHashtags() {
-    return twitterAggregate.getTopHashtags();
+  public List<HashTag> getTopHashtags() {
+    return twitterAggregate.getTopHashTags();
   }
 
   @Override
@@ -80,74 +104,98 @@ public class TwitterSourceLocal implements TwitterSource {
 
   @Override
   public void fetchContent() {
-    twitterAggregate = new TwitterAggregate();
+    //TODO Check if updating content is needed
+    //If not skip - can be called on every page load
+    if (performSearch()) {
 
-    //Load the base search term from context param
-    String searchTerm = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("org.richfaces.examples.tweetstream.searchTermBase");
 
-    if (searchTerm == null) {
-      searchTerm = "";
-      log.warn("Default initial twitter filter term not found in context params");
-    }
+      twitterAggregate = new TwitterAggregate();
 
-    twitterAggregate.setFilter(searchTerm);
+      //Load the base search term from context param
+      String searchTerm = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("org.richfaces.examples.tweetstream.searchTermBase");
 
-    //Load the twitter search
-    List<Tweet> tweets = new ArrayList<Tweet>();
-
-    Twitter twitter = new TwitterFactory().getInstance();
-    List<twitter4j.Tweet> t4jTweets = null;
-    try {
-      QueryResult result = twitter.search(new Query(searchTerm));
-      t4jTweets = result.getTweets();
-      for (twitter4j.Tweet t4jTweet : t4jTweets) {
-        log.info("@" + t4jTweet.getFromUser() + " - " + t4jTweet.getText());
-        //Create a local tweet object from the t4j
-        Tweet tweet = new Tweet();
-        tweet.setText(t4jTweet.getText());
-        tweet.setId(t4jTweet.getFromUserId());
-        tweet.setProfileImageUrl(t4jTweet.getProfileImageUrl().toString());
-        tweet.setScreenName(t4jTweet.getFromUser());
-        //TODO fill in any other required data
-        tweets.add(tweet);
+      if (searchTerm == null) {
+        searchTerm = "";
+        log.warn("Default initial twitter filter term not found in context params");
       }
-    } catch (TwitterException te) {
-      te.printStackTrace();
-      log.info("Failed to search tweets: " + te.getMessage());
+
+      twitterAggregate.setFilter(searchTerm);
+
+      //Load the twitter search
+      List<Tweet> tweets = new ArrayList<Tweet>();
+
+      Twitter twitter = new TwitterFactory().getInstance();
+      List<twitter4j.Tweet> t4jTweets = null;
+      try {
+        QueryResult result = twitter.search(new Query(searchTerm));
+        t4jTweets = result.getTweets();
+        for (twitter4j.Tweet t4jTweet : t4jTweets) {
+          log.info("@" + t4jTweet.getFromUser() + " - " + t4jTweet.getText());
+          //Create a local tweet object from the t4j
+          Tweet tweet = new Tweet();
+          tweet.setText(t4jTweet.getText());
+          tweet.setId(t4jTweet.getFromUserId());
+          tweet.setProfileImageUrl(t4jTweet.getProfileImageUrl().toString());
+          tweet.setScreenName(t4jTweet.getFromUser());
+          //TODO fill in any other required data
+          tweets.add(tweet);
+        }
+      } catch (TwitterException te) {
+        te.printStackTrace();
+        log.info("Failed to search tweets: " + te.getMessage());
+      }
+
+      twitterAggregate.setTweets(tweets);
+
+      //TODO need to calc the top N
+
+      //Load TopTweeters
+      List<Tweeter> tweeters = new ArrayList<Tweeter>();
+
+      Tweeter tweeter = null;
+      for (int i = 0; i < 10; i++) {
+        tweeter = new Tweeter();
+        tweeter.setProfileImgUrl("http://twitter.com/account/profile_image/tech4j?hreflang=en");
+        tweeter.setTweetCount(100 - (2 * i));
+        tweeter.setUser("tech4j_" + i);
+        tweeter.setUserId(32423444);
+        tweeters.add(tweeter);
+      }
+
+      twitterAggregate.setTopTweeters(tweeters);
+
+      //Load TopTags
+      List<HashTag> hashTags = new ArrayList<HashTag>();
+
+      HashTag hashTag = null;
+      for (int i = 0; i < 10; i++) {
+        hashTag = new HashTag();
+        hashTag.setHashtag("#richfaces_" + i);
+        hashTag.setCount(1000 - (5 * i));
+        hashTags.add(hashTag);
+      }
+
+      twitterAggregate.setTopHashTags(hashTags);
     }
 
-    twitterAggregate.setTweets(tweets);
+  }
 
-    //TODO need to calc the top N
-
-    //Load TopTweeters
-    List<Tweeter> tweeters = new ArrayList<Tweeter>();
-
-    Tweeter tweeter = null;
-    for (int i = 0; i < 10; i++) {
-      tweeter = new Tweeter();
-      tweeter.setProfileImgUrl("http://twitter.com/account/profile_image/tech4j?hreflang=en");
-      tweeter.setTweetCount(100 - (2 * i));
-      tweeter.setUser("tech4j_" + i);
-      tweeter.setUserId(32423444);
-      tweeters.add(tweeter);
+  private boolean performSearch() {
+    if (lastSearch > 0) {
+      long current = new Date().getTime();
+      if (current - lastSearch > 5000) {
+        log.debug("****** Enough time past - fetching new data--" + current + "-" + lastSearch + "=" + (current-lastSearch));
+        lastSearch = current;
+        return true;
+      } else {
+        log.debug("****** NOT enough time past - NOT fetching new data--" + current + "-" + lastSearch + "=" + (current-lastSearch));
+        return false;
+      }
+    } else {
+      lastSearch = new Date().getTime();
+      log.debug("****** First time through - fetching new data");
+      return true;
     }
-
-    twitterAggregate.setTopTweeters(tweeters);
-
-    //Load TopTags
-    List<Hashtag> hashtags = new ArrayList<Hashtag>();
-
-    Hashtag hashtag = null;
-    for (int i = 0; i < 10; i++) {
-      hashtag = new Hashtag();
-      hashtag.setHashtag("#richfaces_" + i);
-      hashtag.setCount(1000 - (5 * i));
-      hashtags.add(hashtag);
-    }
-
-    twitterAggregate.setTopHashtags(hashtags);
-
   }
 
 

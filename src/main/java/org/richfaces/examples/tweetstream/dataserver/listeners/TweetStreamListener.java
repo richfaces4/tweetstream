@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.dataserver.listener;
+package org.richfaces.examples.tweetstream.dataserver.listeners;
 
 import org.richfaces.examples.tweetstream.dataserver.cache.CacheBuilder;
 import org.richfaces.examples.tweetstream.domain.Tweet;
@@ -29,15 +29,13 @@ import twitter4j.*;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
- * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a> */
-
-@ManagedBean
-public class TweetListenerBean implements StatusListener, Serializable
+ * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
+ */
+public class TweetStreamListener implements StatusListener, Serializable
 {
 
    @Inject

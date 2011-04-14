@@ -19,31 +19,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.dataserver.listener;
+package org.richfaces.examples.tweetstream.dataserver.listeners;
 
 import org.infinispan.notifications.Listener;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryCreated;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryModified;
 import org.infinispan.notifications.cachelistener.event.Event;
 import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
-import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
 import javax.inject.Inject;
-import java.util.List;
 
 /**
  * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
+ * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
-
 @Listener
-public class ViewBuilderListener {
+public class CacheUpdateListener {
 
   @Inject
   org.slf4j.Logger log;
 
-
-  //@CacheEntryVisited
   @CacheEntryModified
   @CacheEntryCreated
   public void handle(Event e) {
@@ -55,10 +51,11 @@ public class ViewBuilderListener {
     //Pull out updated aggregate
     TwitterAggregate tweetAggregate = (TwitterAggregate) e.getCache().get("tweetaggregate");
 
-    PublishController pushController = new PublishController();
+    //TODO look into getting this injected so we don't need to lookup RF push service each time
+    PublishController pubControl = new PublishController();
 
     //Send push controller updated content to publish
-    pushController.publishView(tweetAggregate);
+    pubControl.publishView(tweetAggregate);
 
   }
 }

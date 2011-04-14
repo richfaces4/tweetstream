@@ -26,6 +26,7 @@ import org.richfaces.application.push.TopicsContext;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,9 +37,9 @@ import java.util.List;
 
 /**
  * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
+ * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 
-@Singleton
 public class PublishController implements Serializable {
   @Inject
   org.slf4j.Logger log;

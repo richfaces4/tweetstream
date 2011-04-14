@@ -1,8 +1,29 @@
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2011, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
 package org.richfaces.examples.tweetstream.dataserver.source;
 
 import org.richfaces.examples.tweetstream.dataserver.cache.InfinispanCacheBuilder;
-import org.richfaces.examples.tweetstream.dataserver.listener.TweetListenerBean;
-import org.richfaces.examples.tweetstream.dataserver.listener.ViewBuilderListener;
+import org.richfaces.examples.tweetstream.dataserver.listeners.TweetStreamListener;
+import org.richfaces.examples.tweetstream.dataserver.listeners.CacheUpdateListener;
 import org.richfaces.examples.tweetstream.domain.*;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import twitter4j.*;
@@ -32,7 +53,7 @@ public class TwitterSourceServer implements TwitterSource {
   InfinispanCacheBuilder cacheBuilder;
 
   @Inject
-  TweetListenerBean tweetListener;
+  TweetStreamListener tweetListener;
 
 
   private TwitterAggregate twitterAggregate;
@@ -40,11 +61,11 @@ public class TwitterSourceServer implements TwitterSource {
   @PostConstruct
   private void init() {
 
-    //TODO Wrap in what ever try/catch is needed
+    //TODO Remove this top part once we integrate with server side
     fetchContent();
 
     // add the listener that checks hi new data has been added.
-    cacheBuilder.getCache().addListener(new ViewBuilderListener());
+    cacheBuilder.getCache().addListener(new CacheUpdateListener());
 
     //Populate cache with seed data from this class
     cacheBuilder.getCache().put("tweetaggregate", twitterAggregate);
@@ -80,8 +101,8 @@ public class TwitterSourceServer implements TwitterSource {
     return twitterAggregate.getTopTweeters();
   }
 
-  public List<Hashtag> getTopHashtags() {
-    return twitterAggregate.getTopHashtags();
+  public List<HashTag> getTopHashtags() {
+    return twitterAggregate.getTopHashTags();
   }
 
   @Override
@@ -91,6 +112,9 @@ public class TwitterSourceServer implements TwitterSource {
 
   @Override
   public void fetchContent() {
+    //TODO check if updating data is required
+    //  this method can be called on every page load
+
     twitterAggregate = new TwitterAggregate();
 
     //Load the base search term from context param
@@ -145,17 +169,17 @@ public class TwitterSourceServer implements TwitterSource {
     twitterAggregate.setTopTweeters(tweeters);
 
     //Load TopTags
-    List<Hashtag> hashtags = new ArrayList<Hashtag>();
+    List<HashTag> hashTags = new ArrayList<HashTag>();
 
-    Hashtag hashtag = null;
+    HashTag hashTag = null;
     for (int i = 0; i < 10; i++) {
-      hashtag = new Hashtag();
-      hashtag.setHashtag("#richfaces_" + i);
-      hashtag.setCount(1000 - (5 * i));
-      hashtags.add(hashtag);
+      hashTag = new HashTag();
+      hashTag.setHashtag("#richfaces_" + i);
+      hashTag.setCount(1000 - (5 * i));
+      hashTags.add(hashTag);
     }
 
-    twitterAggregate.setTopHashtags(hashtags);
+    twitterAggregate.setTopHashTags(hashTags);
 
   }
 
