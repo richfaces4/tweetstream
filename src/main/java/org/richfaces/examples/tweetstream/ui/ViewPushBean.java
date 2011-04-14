@@ -76,6 +76,8 @@ public class ViewPushBean implements Serializable
 
         try {
            //push the updated view object
+           //TODO - looks like we need to convert the List of tweets to a javascript array, so it can be properly iterated
+           //TODO - and formatted on the client side.
             getTopicsContext().publish(new TopicKey("twitter","simple_tweets"), MessageFormat.format("{0} <br/>", tweetString));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

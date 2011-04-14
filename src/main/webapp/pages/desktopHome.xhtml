@@ -19,11 +19,11 @@
        <h:form>
           <a4j:push address="simple_tweets@twitter"
                     onerror="alert(event.rf.data)"
-                    ondataavailable="jQuery('&lt;div /&gt;').replaceAll('.tweetstreamOutput').text(event.rf.data)">
+                    ondataavailable="document.getElementById('tweetstreamOutput').innerHTML = event.rf.data">
                     </a4j:push>
 
       </h:form>
-      <rich:panel styleClass="tweetOutput"
+      <rich:panel styleClass="tweetOutput" id="tweetstreamOutput"
                   bodyClass="tweetstreamOutput"/>
 
         <h:dataTable var="_tweet" value="#{twitterAgent.tweets}">
