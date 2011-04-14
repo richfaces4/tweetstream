@@ -1,9 +1,10 @@
 package org.richfaces.examples.tweetstream.dataserver.source;
 
 import org.richfaces.examples.tweetstream.dataserver.cache.InfinispanCacheBuilder;
-import org.richfaces.examples.tweetstream.domain.*;
 import org.richfaces.examples.tweetstream.dataserver.listener.TweetListenerBean;
 import org.richfaces.examples.tweetstream.dataserver.listener.ViewBuilderListener;
+import org.richfaces.examples.tweetstream.domain.Hashtag;
+import org.richfaces.examples.tweetstream.domain.Tweeter;
 import twitter4j.*;
 
 import javax.annotation.PostConstruct;

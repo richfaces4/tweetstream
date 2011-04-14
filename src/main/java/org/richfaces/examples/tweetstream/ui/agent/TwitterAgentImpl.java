@@ -1,8 +1,8 @@
 package org.richfaces.examples.tweetstream.ui.agent;
 
+import org.richfaces.examples.tweetstream.dataserver.source.TwitterSource;
 import org.richfaces.examples.tweetstream.domain.Hashtag;
 import org.richfaces.examples.tweetstream.domain.Tweeter;
-import org.richfaces.examples.tweetstream.dataserver.source.TwitterSource;
 import twitter4j.Tweet;
 
 import javax.enterprise.context.SessionScoped;

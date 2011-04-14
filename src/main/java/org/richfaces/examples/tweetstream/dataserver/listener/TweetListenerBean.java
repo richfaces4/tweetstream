@@ -23,12 +23,7 @@ package org.richfaces.examples.tweetstream.dataserver.listener;
 
 import org.richfaces.examples.tweetstream.dataserver.cache.CacheBuilder;
 import org.richfaces.examples.tweetstream.domain.Tweet;
-import twitter4j.FilterQuery;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.StatusListener;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
+import twitter4j.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
