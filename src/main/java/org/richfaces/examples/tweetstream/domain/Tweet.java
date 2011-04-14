@@ -33,7 +33,7 @@ public class Tweet
 
    private List hashTags;
 
-   private String profileImageURL;
+   private String profileImageUrl;
 
    private String screenName;
 
@@ -69,14 +69,14 @@ public class Tweet
       this.hashTags = hashTags;
    }
 
-   public String getProfileImageURL()
+   public String getProfileImageUrl()
    {
-      return profileImageURL;
+      return profileImageUrl;
    }
 
-   public void setProfileImageURL(String profileImageURL)
+   public void setProfileImageUrl(String profileImageUrl)
    {
-      this.profileImageURL = profileImageURL;
+      this.profileImageUrl = profileImageUrl;
    }
 
    public String getScreenName()

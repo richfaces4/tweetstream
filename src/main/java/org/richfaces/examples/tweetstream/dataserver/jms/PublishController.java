@@ -27,6 +27,7 @@ import org.richfaces.application.push.TopicsContext;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,9 +38,9 @@ import java.util.List;
 
 /**
  * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
+ * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 
-@Singleton
 public class PublishController implements Serializable {
   @Inject
   org.slf4j.Logger log;
@@ -53,25 +54,24 @@ public class PublishController implements Serializable {
     return topicsContext;
   }
 
-  public void publishView(List<Tweet> tweets) {
+  public void publishView(TwitterAggregate twitterAggregate) {
 
-    TwitterAggregate ta = new TwitterAggregate();
-    ta.setTweets(tweets);
 
     String tweetString = "{\"tweets\":[";
-    if (ta.getTweets() != null) {
 
-       for (int i = 0; i < ta.getTweets().size(); i++)
+    if (twitterAggregate.getTweets() != null) {
+
+       for (int i = 0; i < twitterAggregate.getTweets().size(); i++)
        {
-          Tweet tweet  = ta.getTweets().get(i);
+          Tweet tweet  = twitterAggregate.getTweets().get(i);
 
           tweetString += "{\"id\":" + tweet.getId()
            + ",\"text\":\"" + StringEscapeUtils.escapeHtml(tweet.getText())
-           + "\",\"profileImageURL\":\"" + StringEscapeUtils.escapeHtml(tweet.getProfileImageURL())
+           + "\",\"profileImageURL\":\"" + StringEscapeUtils.escapeHtml(tweet.getProfileImageUrl())
            + "\",\"screenName\":\"" + tweet.getScreenName()
            + "\",\"retweet\":" + tweet.isRetweet() + "}";
 
-          if(i + 1 == ta.getTweets().size()){
+          if(i + 1 == twitterAggregate.getTweets().size()){
              tweetString += "]}";
           }else{
              tweetString += ",";

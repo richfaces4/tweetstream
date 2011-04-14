@@ -1,9 +1,31 @@
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2011, Red Hat, Inc. and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
 package org.richfaces.examples.tweetstream.ui.agent;
 
 import org.richfaces.examples.tweetstream.dataserver.source.TwitterSource;
-import org.richfaces.examples.tweetstream.domain.Hashtag;
+import org.richfaces.examples.tweetstream.domain.HashTag;
+import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.Tweeter;
-import twitter4j.Tweet;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -12,49 +34,45 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * Responsible for all client data.  The source injection is
+ * key and is the point where we can swap between data sources.
+ *
+ * This class primarily loads initial content, and provides to
+ * the UI.  The source is responsible for kicking off any listeners
+ * and/or push updates.
+ *
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 @Named("twitterAgent")
 @SessionScoped
 public class TwitterAgentImpl implements TwitterAgent, Serializable {
-    private String searchTerm = "";
     private Tweet selectedTweet;
-    private  List<Tweet> tweets;
-    private List<Tweeter> topTweeters;
-    private List<Hashtag> topTHashtags;
 
     @Inject
     private TwitterSource source;
 
     public void updateTweets(){
-        tweets = source.getTweets(searchTerm);
-        topTweeters = source.getTopTweeters(searchTerm);
-        topTHashtags = source.getTopHashtags(searchTerm);
+      source.fetchContent();
     }
 
     @Override
     public String getSearchTerm() {
-        return searchTerm;
-    }
-
-    @Override
-    public void setSearchTerm(String searchTerm) {
-        this.searchTerm = searchTerm;
+        return source.getSearchTerm();
     }
 
     @Override
     public List<Tweet> getTweets() {
-        return tweets;
+        return source.getTweets();
     }
 
     @Override
     public List<Tweeter> getTweeters() {
-        return topTweeters;
+        return source.getTopTweeters();
     }
 
     @Override
-    public List<Hashtag> getHashtags() {
-        return topTHashtags;
+    public List<HashTag> getHashtags() {
+        return source.getTopHashtags();
     }
 
     public Tweet getSelectedTweet() {

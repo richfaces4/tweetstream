@@ -19,22 +19,23 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.dataserver.listener;
+package org.richfaces.examples.tweetstream.dataserver.listeners;
 
 import org.richfaces.examples.tweetstream.dataserver.cache.CacheBuilder;
 import org.richfaces.examples.tweetstream.domain.Tweet;
+import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 import twitter4j.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-/** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
-
-@ManagedBean
-public class TweetListenerBean implements StatusListener, Serializable
+/**
+ * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
+ * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
+ */
+public class TweetStreamListener implements StatusListener, Serializable
 {
 
    @Inject
@@ -43,6 +44,7 @@ public class TweetListenerBean implements StatusListener, Serializable
    @Inject
    CacheBuilder cacheBuilder;
 
+   //TODO Update track support to work with context param
    private static final String[] TRACK = {"java","jboss","richfaces"};
    private static TwitterStream twitterStream;
 
@@ -64,19 +66,27 @@ public class TweetListenerBean implements StatusListener, Serializable
       Tweet tweet = new Tweet();
        tweet.setText(status.getText());
        tweet.setId(status.getId());
-       tweet.setProfileImageURL(status.getUser().getProfileImageURL().toString());
+       tweet.setProfileImageUrl(status.getUser().getProfileImageURL().toString());
        tweet.setScreenName(status.getUser().getScreenName());
        if(status.getRetweetedStatus() != null){
           tweet.setRetweet(status.getRetweetedStatus().isRetweet());
        }
 
-       List<Tweet> tweets = new ArrayList<Tweet>();
-       //if(cacheBuilder.getCache().containsKey("simpletweets")){
-       tweets = (List)cacheBuilder.getCache().get("simpletweets");
-       System.out.println("-------tweets.size(): "+ tweets.size());
-       //}
+       TwitterAggregate tweetAggregate = (TwitterAggregate)cacheBuilder.getCache().get("tweetaggregate");
+
+       List<Tweet> tweets = tweetAggregate.getTweets();
        tweets.add(tweet);
-       cacheBuilder.getCache().put("simpletweets" , tweets);
+       System.out.println("-------tweets.size(): "+ tweets.size());
+
+       //clip to top 50
+       if (tweets.size() > 50){
+        tweets = tweets.subList(0,49);
+       }
+
+       //TODO process top X here
+
+       //put back in the cache
+       cacheBuilder.getCache().put("tweetaggregate" , tweetAggregate);
    }
 
    public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice)

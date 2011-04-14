@@ -19,55 +19,43 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.dataserver.listener;
+package org.richfaces.examples.tweetstream.dataserver.listeners;
 
 import org.infinispan.notifications.Listener;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryCreated;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryModified;
 import org.infinispan.notifications.cachelistener.event.Event;
 import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
-import org.richfaces.examples.tweetstream.domain.Tweet;
+import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
 import javax.inject.Inject;
-import java.util.List;
 
 /**
  * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
+ * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
-
 @Listener
-public class ViewBuilderListener {
+public class CacheUpdateListener {
 
   @Inject
   org.slf4j.Logger log;
 
+  @CacheEntryModified
+  @CacheEntryCreated
+  public void handle(Event e) {
+    System.out.println("-----e.getType()----" + e.getType());
 
+    //TODO - need to do some checking here or we will get duplicates
+    //actually, we need a better cache update strategy globally
 
+    //Pull out updated aggregate
+    TwitterAggregate tweetAggregate = (TwitterAggregate) e.getCache().get("tweetaggregate");
 
-   //@CacheEntryVisited
-   @CacheEntryModified
-   @CacheEntryCreated
-   public void handle(Event e) {
-          //TODO - need to do some checking here or we will get duplicates
-          //actually, we need a better cache update strategy globally
-          List<Tweet> tweets = (List)e.getCache().get("simpletweets");
-          PublishController viewPushBean = new PublishController();
-          viewPushBean.publishView(tweets);
+    //TODO look into getting this injected so we don't need to lookup RF push service each time
+    PublishController pubControl = new PublishController();
 
-          System.out.println("-----e.getType()----" + e.getType());
-          if(tweets != null)
-          System.out.println("-----tweets.size()----" + tweets.size());
-   }
+    //Send push controller updated content to publish
+    pubControl.publishView(tweetAggregate);
 
-        //TODO determine if the event is for new data
-
-        //TODO pull, or query for the TwitterAggregate data
-        // This can be Sanne's service, or something else
-
-        //TODO publish this updated data model to the RichFaces push component's JMS topic
-        //UI's will then receive this data, and update their views with it.
-
-        //At this point it is pretty much just repeat either as a poll, or event driven process.
-
-
+  }
 }
