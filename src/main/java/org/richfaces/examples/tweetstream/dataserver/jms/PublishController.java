@@ -55,11 +55,8 @@ public class PublishController implements Serializable {
   }
 
   public void publishView(TwitterAggregate twitterAggregate) {
-
-
     String tweetString = "{\"tweets\":[";
-
-    if (twitterAggregate.getTweets() != null) {
+    if (twitterAggregate != null && twitterAggregate.getTweets() != null) {
 
        for (int i = 0; i < twitterAggregate.getTweets().size(); i++)
        {
