@@ -19,65 +19,85 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.model.view;
+package org.richfaces.examples.tweetstream.model;
 
-import org.richfaces.examples.tweetstream.model.SimpleTweet;
-import org.richfaces.examples.tweetstream.model.Tweeter;
-import twitter4j.Tweet;
+import twitter4j.HashtagEntity;
 
 import java.util.List;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
-public class Region
+public class SimpleTweet
 {
 
-   public static enum RegionType {TOP_TWEETERS, TWEETS, TWEET_DETAIL}
+   private long id;
 
-   private String regionType;
+   private String text;
 
-   private List<Tweeter> tweeters;
+   private List hashTags;
 
-   private Tweet tweet;
+   private String profileImageURL;
 
-   private List<SimpleTweet> tweets;
+   private String screenName;
 
-   public String getRegionType()
+   private boolean retweet;
+
+   public long getId()
    {
-      return regionType;
+      return id;
    }
 
-   public void setRegionType(String regionType)
+   public void setId(long id)
    {
-      this.regionType = regionType;
+      this.id = id;
    }
 
-   public List<Tweeter> getTweeters()
+   public String getText()
    {
-      return tweeters;
+      return text;
    }
 
-   public void setTweeters(List<Tweeter> tweeters)
+   public void setText(String text)
    {
-      this.tweeters = tweeters;
+      this.text = text;
    }
 
-   public Tweet getTweet()
+   public List getHashTags()
    {
-      return tweet;
+      return hashTags;
    }
 
-   public void setTweet(Tweet tweet)
+   public void setHashTags(List hashTags)
    {
-      this.tweet = tweet;
+      this.hashTags = hashTags;
    }
 
-   public List<SimpleTweet> getTweets()
+   public String getProfileImageURL()
    {
-      return tweets;
+      return profileImageURL;
    }
 
-   public void setTweets(List<SimpleTweet> tweets)
+   public void setProfileImageURL(String profileImageURL)
    {
-      this.tweets = tweets;
+      this.profileImageURL = profileImageURL;
+   }
+
+   public String getScreenName()
+   {
+      return screenName;
+   }
+
+   public void setScreenName(String screenName)
+   {
+      this.screenName = screenName;
+   }
+
+   public boolean isRetweet()
+   {
+      return retweet;
+   }
+
+   public void setRetweet(boolean retweet)
+   {
+      this.retweet = retweet;
    }
 }

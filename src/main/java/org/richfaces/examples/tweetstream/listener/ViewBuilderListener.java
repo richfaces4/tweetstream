@@ -22,12 +22,22 @@
 package org.richfaces.examples.tweetstream.listener;
 
 import org.infinispan.notifications.Listener;
+import org.infinispan.notifications.cachelistener.annotation.CacheEntryCreated;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryModified;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryVisited;
 import org.infinispan.notifications.cachelistener.event.Event;
+import org.richfaces.examples.tweetstream.model.SimpleTweet;
+import org.richfaces.examples.tweetstream.model.TwitterAggregate;
+import org.richfaces.examples.tweetstream.model.view.Page;
+import org.richfaces.examples.tweetstream.model.view.Region;
+import org.richfaces.examples.tweetstream.model.view.View;
+import org.richfaces.examples.tweetstream.ui.ViewPushBean;
 
+import javax.enterprise.inject.New;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 
@@ -38,19 +48,19 @@ public class ViewBuilderListener
    @Inject
    org.slf4j.Logger log;
 
+   //@CacheEntryVisited
    @CacheEntryModified
-   @CacheEntryVisited
+   @CacheEntryCreated
    public void handle(Event e) {
-     switch (e.getType()) {
-       case CACHE_ENTRY_MODIFIED:
-           // a cache entry has been modified
-          //TODO - get/update/build the view and publish to topic
+          //TODO - need to do some checking here or we will get duplicates
+          //actually, we need a better cache update strategy globally
+          List<SimpleTweet> simpleTweets = (List)e.getCache().get("simpletweets");
+          ViewPushBean viewPushBean = new ViewPushBean();
+          viewPushBean.publishView(simpleTweets);
 
-
-
-       case CACHE_ENTRY_VISITED:
-           // a cache entry has been visited
-     }
+          System.out.println("-----e.getType()----" + e.getType());
+          if(simpleTweets != null)
+          System.out.println("-----simpleTweets.size()----" + simpleTweets.size());
    }
 
 }

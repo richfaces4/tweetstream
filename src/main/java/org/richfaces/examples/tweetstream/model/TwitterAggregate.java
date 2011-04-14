@@ -4,6 +4,7 @@ import twitter4j.Tweet;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the aggregated data require to power the tweetstream
@@ -28,17 +29,17 @@ public class TwitterAggregate implements Serializable{
     /**
      * The top N ( likely 25 ) tweets in date order.
      */
-    private ArrayList<Tweet> tweets;
+    private List<SimpleTweet> tweets;
 
     /**
      * The top 10 most active tweeters
      */
-    private ArrayList<Tweeter> topTweeters;
+    private List<Tweeter> topTweeters;
 
     /**
      * The top 10 most used sub-tags.
      */
-    private ArrayList<Hashtag> topHashtags;
+    private List<Hashtag> topHashtags;
 
 
     public String getFilter() {
@@ -49,27 +50,33 @@ public class TwitterAggregate implements Serializable{
         this.filter = filter;
     }
 
-    public ArrayList<Tweet> getTweets() {
-        return tweets;
-    }
+   public List<SimpleTweet> getTweets()
+   {
+      return tweets;
+   }
 
-    public void setTweets(ArrayList<Tweet> tweets) {
-        this.tweets = tweets;
-    }
+   public void setTweets(List<SimpleTweet> tweets)
+   {
+      this.tweets = tweets;
+   }
 
-    public ArrayList<Tweeter> getTopTweeters() {
-        return topTweeters;
-    }
+   public List<Tweeter> getTopTweeters()
+   {
+      return topTweeters;
+   }
 
-    public void setTopTweeters(ArrayList<Tweeter> topTweeters) {
-        this.topTweeters = topTweeters;
-    }
+   public void setTopTweeters(List<Tweeter> topTweeters)
+   {
+      this.topTweeters = topTweeters;
+   }
 
-    public ArrayList<Hashtag> getTopHashtags() {
-        return topHashtags;
-    }
+   public List<Hashtag> getTopHashtags()
+   {
+      return topHashtags;
+   }
 
-    public void setTopHashtags(ArrayList<Hashtag> topHashtags) {
-        this.topHashtags = topHashtags;
-    }
+   public void setTopHashtags(List<Hashtag> topHashtags)
+   {
+      this.topHashtags = topHashtags;
+   }
 }

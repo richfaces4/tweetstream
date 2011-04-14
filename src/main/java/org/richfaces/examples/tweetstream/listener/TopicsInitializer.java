@@ -48,7 +48,7 @@ public class TopicsInitializer implements SystemEventListener
     {
         TopicsContext topicsContext = TopicsContext.lookup();
 
-        Topic topic = topicsContext.getOrCreateTopic(new TopicKey("TWEETSTREAM_VIEW"));
+        Topic topic = topicsContext.getOrCreateTopic(new TopicKey("twitter"));
 
         topic.setMessageDataSerializer(DefaultMessageDataSerializer.instance());
 

@@ -15,6 +15,17 @@
 
     <ui:define name="content">
         <h2>Tweets</h2>
+
+       <h:form>
+          <a4j:push address="simple_tweets@twitter"
+                    onerror="alert(event.rf.data)"
+                    ondataavailable="jQuery('&lt;div /&gt;').replaceAll('.tweetstreamOutput').text(event.rf.data)">
+                    </a4j:push>
+
+      </h:form>
+      <rich:panel styleClass="tweetOutput"
+                  bodyClass="tweetstreamOutput"/>
+
         <h:dataTable var="_tweet" value="#{twitterAgent.tweets}">
             <h:column>
                 <f:facet name="header">From</f:facet>

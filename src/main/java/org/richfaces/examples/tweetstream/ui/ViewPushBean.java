@@ -24,15 +24,26 @@ package org.richfaces.examples.tweetstream.ui;
 import org.richfaces.application.push.MessageException;
 import org.richfaces.application.push.TopicKey;
 import org.richfaces.application.push.TopicsContext;
+import org.richfaces.examples.tweetstream.model.SimpleTweet;
+import org.richfaces.examples.tweetstream.model.TwitterAggregate;
 import org.richfaces.examples.tweetstream.model.view.View;
 import twitter4j.FilterQuery;
 
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Model;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.List;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
-public class ViewPushBean
+
+@SessionScoped
+@Named
+public class ViewPushBean implements Serializable
 {
    @Inject
    org.slf4j.Logger log;
@@ -51,12 +62,21 @@ public class ViewPushBean
         return topicsContext;
    }
 
-   public void publishView(View view){
+   public void publishView(List<SimpleTweet> simpleTweets){
+
+         TwitterAggregate ta = new TwitterAggregate();
+         ta.setTweets(simpleTweets);
+      String tweetString = "";
+      //TODO - simple hack just to diaplay data...needs work
+      if(ta.getTweets() != null){
+         for (SimpleTweet tweet:ta.getTweets()){
+          tweetString += tweet.getText();
+         }
+      }
 
         try {
            //push the updated view object
-            //getTopicsContext().publish(new TopicKey("twitter","tweet_status"),
-            //MessageFormat.format("{0,time,medium} {1}: {2}", new Date(), status.getUser().getScreenName(), status.getText()));
+            getTopicsContext().publish(new TopicKey("twitter","simple_tweets"), MessageFormat.format("{0} <br/>", tweetString));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

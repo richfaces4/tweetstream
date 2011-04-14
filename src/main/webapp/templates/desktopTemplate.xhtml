@@ -22,22 +22,10 @@
         <div id="container">
             <div id="content">
                 <div id="sidebar">
-                    <h:form>
-                        <a4j:outputPanel ajaxRendered="true">
-                            <h:messages style="color:red"/>
-                        </a4j:outputPanel>
-                        <a4j:commandButton value="Connect" execute="@form" render="@all"
-                                           action="#{tweetListenerBean.connect}"/>
-                    </h:form>
+
                     <rich:panel>
                         <hr/>
-                        <h:form>
-                            <a4j:push address="tweet_status@twitter"
-                                      onerror="alert(event.rf.data)"
-                                      ondataavailable="jQuery('&lt;div /&gt;').prependTo('.tweetstreamOutput').text(event.rf.data)"/>
-                        </h:form>
-                        <rich:panel styleClass="tweetOutput"
-                                    bodyClass="tweetstreamOutput"/>
+
                     </rich:panel>
                 </div>
                 <ui:insert name="content"/>

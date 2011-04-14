@@ -21,33 +21,18 @@
  */
 package org.richfaces.examples.tweetstream.cache;
 
-import javax.inject.Inject;
+import org.infinispan.Cache;
+import org.infinispan.manager.EmbeddedCacheManager;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
-
-public class CacheBuilder
+public interface CacheBuilder
 {
 
-   @Inject
-   org.slf4j.Logger log;
+   public static final String TWEETSTREAM_CACHE = "tweetstream";
 
-   //TODO - we need to init infinispan instance
-   //create a clusterable cache
-//   EmbeddedCacheManager manager = new DefaultCacheManager(
-//                GlobalConfiguration.getClusteredDefault() );
+   public <K, V> Cache<K, V> getCache();
 
+   public <K, V> Cache<K, V> getCache(String cacheName);
 
-
-   public void refresh(){
-      //TODO - receive event from TweetListenerBean
-   }
-
-   //TODO - get tweet history and store in cache
-   //we need to decide if we should use the view object in cache or
-   //simple lists
-     // Cache<String, View> cache = manager.getCache();
-    //cache.put("key", "value");
-   //TODO - calculate top tweeters based on tweet history and store in cache
-
-
+   public EmbeddedCacheManager getCacheContainer();
 }

@@ -1,6 +1,11 @@
 package org.richfaces.examples.tweetstream.source;
 
+import org.richfaces.examples.tweetstream.cache.CacheBuilder;
+import org.richfaces.examples.tweetstream.cache.InfinispanCacheBuilder;
+import org.richfaces.examples.tweetstream.listener.TweetListenerBean;
+import org.richfaces.examples.tweetstream.listener.ViewBuilderListener;
 import org.richfaces.examples.tweetstream.model.Hashtag;
+import org.richfaces.examples.tweetstream.model.SimpleTweet;
 import org.richfaces.examples.tweetstream.model.Tweeter;
 import twitter4j.*;
 
@@ -10,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.facelets.FaceletContext;
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,6 +25,13 @@ import java.util.List;
 public class TwitterSourceLocal implements TwitterSource {
 
    @Inject org.slf4j.Logger log;
+
+   @Inject
+   InfinispanCacheBuilder cacheBuilder;
+
+   @Inject
+   TweetListenerBean tweetListener;
+
 
    private String searchTermBase;
 
@@ -30,7 +43,38 @@ public class TwitterSourceLocal implements TwitterSource {
         if (searchTermBase == null){
             searchTermBase = "";
         }
-        log.info("Base search term set to : " + searchTermBase);
+
+       List<SimpleTweet> tweetList = new ArrayList<SimpleTweet>();
+
+       try
+       {
+         //populate historical data
+          Twitter twitter = new TwitterFactory().getInstance();
+          QueryResult result = twitter.search(new Query(searchTermBase));
+
+           cacheBuilder.getCache().addListener(new ViewBuilderListener());
+
+            for (Tweet tweet : result.getTweets()) {
+
+                SimpleTweet simpleTweet = new SimpleTweet();
+                simpleTweet.setText(tweet.getText());
+                simpleTweet.setId(tweet.getId());
+                simpleTweet.setProfileImageURL(tweet.getProfileImageUrl());
+                simpleTweet.setScreenName(tweet.getFromUser());
+                simpleTweet.setRetweet(false);
+                tweetList.add(simpleTweet);
+            }
+
+          cacheBuilder.getCache().put("simpletweets", tweetList);
+          System.out.println("-------cacheBuilder.getCache().--" + cacheBuilder.getCache().containsKey("simpletweets"));
+          tweetListener.startTwitterStream();
+       }
+       catch (TwitterException e)
+       {
+          e.printStackTrace();
+       }
+
+       log.info("Base search term set to : " + searchTermBase);
     }
 
     public List<Tweet> getTweets(String searchTerm) {
@@ -83,4 +127,6 @@ public class TwitterSourceLocal implements TwitterSource {
 
         return hashtags;
     }
+
+
 }
