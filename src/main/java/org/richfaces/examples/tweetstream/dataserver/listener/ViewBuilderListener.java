@@ -25,8 +25,8 @@ import org.infinispan.notifications.Listener;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryCreated;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryModified;
 import org.infinispan.notifications.cachelistener.event.Event;
+import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
 import org.richfaces.examples.tweetstream.domain.Tweet;
-import org.richfaces.examples.tweetstream.ui.ViewPushBean;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -51,7 +51,7 @@ public class ViewBuilderListener {
           //TODO - need to do some checking here or we will get duplicates
           //actually, we need a better cache update strategy globally
           List<Tweet> tweets = (List)e.getCache().get("simpletweets");
-          ViewPushBean viewPushBean = new ViewPushBean();
+          PublishController viewPushBean = new PublishController();
           viewPushBean.publishView(tweets);
 
           System.out.println("-----e.getType()----" + e.getType());

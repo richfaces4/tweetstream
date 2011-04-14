@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.dataserver.listener;
+package org.richfaces.examples.tweetstream.dataserver.jms;
 
 import org.richfaces.application.push.*;
 import org.richfaces.application.push.impl.DefaultMessageDataSerializer;
@@ -31,7 +31,12 @@ import javax.faces.event.SystemEventListener;
 import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 
-/** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
+/**
+ * JSF System event, and initializes the JMS topic for push support
+ *
+ * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
+ *
+ */
 
 public class TopicsInitializer implements SystemEventListener
 {

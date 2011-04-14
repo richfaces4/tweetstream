@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.ui;
+package org.richfaces.examples.tweetstream.dataserver.jms;
 
 import org.richfaces.application.push.TopicKey;
 import org.richfaces.application.push.TopicsContext;
@@ -29,54 +29,52 @@ import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.List;
 
-/** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
+/**
+ * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
+ */
 
-@SessionScoped
-@Named
-public class ViewPushBean implements Serializable
-{
-   @Inject
-   org.slf4j.Logger log;
+@Singleton
+public class PublishController implements Serializable {
+  @Inject
+  org.slf4j.Logger log;
 
-   private transient TopicsContext topicsContext;
+  private transient TopicsContext topicsContext;
 
-   public void connect()
-   {
-        //will happen on page load probably
-   }
+  private TopicsContext getTopicsContext() {
+    if (topicsContext == null) {
+      topicsContext = TopicsContext.lookup();
+    }
+    return topicsContext;
+  }
 
-   private TopicsContext getTopicsContext() {
-        if (topicsContext == null) {
-            topicsContext = TopicsContext.lookup();
-        }
-        return topicsContext;
-   }
+  public void publishView(List<Tweet> tweets) {
 
-   public void publishView(List<Tweet> tweets){
-
-         TwitterAggregate ta = new TwitterAggregate();
-         ta.setTweets(tweets);
-      String tweetString = "";
-      //TODO - simple hack just to diaplay data...needs work
-      if(ta.getTweets() != null){
-         for (Tweet tweet:ta.getTweets()){
-          tweetString += tweet.getText();
-         }
+    TwitterAggregate ta = new TwitterAggregate();
+    ta.setTweets(tweets);
+    String tweetString = "";
+    //TODO - simple hack just to diaplay data...needs work
+    if (ta.getTweets() != null) {
+      for (Tweet tweet : ta.getTweets()) {
+        tweetString += tweet.getText();
       }
+    }
 
-        try {
-           //push the updated view object
-           //TODO - looks like we need to convert the List of tweets to a javascript array, so it can be properly iterated
-           //TODO - and formatted on the client side.
-            getTopicsContext().publish(new TopicKey("twitter","simple_tweets"), MessageFormat.format("{0} <br/>", tweetString));
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-   }
+    try {
+      //push the updated view object
+      //TODO - looks like we need to convert the List of tweets to a javascript array, so it can be properly iterated
+      //TODO - and formatted on the client side.
+      //JAY Agree - we need to format the content to JSON most likely and update the UI sections
+
+      getTopicsContext().publish(new TopicKey("twitter", "simple_tweets"), MessageFormat.format("{0} <br/>", tweetString));
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+    }
+  }
 
 
 }
