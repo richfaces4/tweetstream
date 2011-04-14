@@ -1,8 +1,9 @@
 package org.richfaces.examples.tweetstream.dataserver.source;
 
 import org.richfaces.examples.tweetstream.domain.Hashtag;
+import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.Tweeter;
-import twitter4j.Tweet;
+import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,9 +14,16 @@ import java.util.List;
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 public interface TwitterSource extends Serializable {
-    List<Tweet> getTweets(String searchTerm);
 
-    List<Tweeter> getTopTweeters(String searchTerm);
+    public void fetchContent();
 
-    List<Hashtag> getTopHashtags(String searchTerm);
+    public String getSearchTerm();
+
+    public List<Tweet> getTweets();
+
+    public List<Tweeter> getTopTweeters();
+
+    public List<Hashtag> getTopHashtags();
+
+    public TwitterAggregate getTwitterAggregate();
 }

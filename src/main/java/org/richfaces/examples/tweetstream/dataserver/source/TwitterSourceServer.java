@@ -3,8 +3,8 @@ package org.richfaces.examples.tweetstream.dataserver.source;
 import org.richfaces.examples.tweetstream.dataserver.cache.InfinispanCacheBuilder;
 import org.richfaces.examples.tweetstream.dataserver.listener.TweetListenerBean;
 import org.richfaces.examples.tweetstream.dataserver.listener.ViewBuilderListener;
-import org.richfaces.examples.tweetstream.domain.Hashtag;
-import org.richfaces.examples.tweetstream.domain.Tweeter;
+import org.richfaces.examples.tweetstream.domain.*;
+import org.richfaces.examples.tweetstream.domain.Tweet;
 import twitter4j.*;
 
 import javax.annotation.PostConstruct;
@@ -25,109 +25,139 @@ import java.util.List;
 @Alternative
 public class TwitterSourceServer implements TwitterSource {
 
-   @Inject org.slf4j.Logger log;
+  @Inject
+  org.slf4j.Logger log;
 
-   @Inject
-   InfinispanCacheBuilder cacheBuilder;
+  @Inject
+  InfinispanCacheBuilder cacheBuilder;
 
-   @Inject
-   TweetListenerBean tweetListener;
+  @Inject
+  TweetListenerBean tweetListener;
 
 
-   private String searchTermBase;
+  private TwitterAggregate twitterAggregate;
 
-    @PostConstruct
-    private void init(){
-        //Load the base search term
-        searchTermBase = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("org.richfaces.examples.tweetstream.searchTermBase");
+  @PostConstruct
+  private void init() {
 
-        if (searchTermBase == null){
-            searchTermBase = "";
-        }
+    //TODO Wrap in what ever try/catch is needed
+    fetchContent();
 
-       List<org.richfaces.examples.tweetstream.domain.Tweet> tweetList = new ArrayList<org.richfaces.examples.tweetstream.domain.Tweet>();
+    // add the listener that checks hi new data has been added.
+    cacheBuilder.getCache().addListener(new ViewBuilderListener());
 
-       try
-       {
-         //populate historical data
-          Twitter twitter = new TwitterFactory().getInstance();
-          QueryResult result = twitter.search(new Query(searchTermBase));
+    //Populate cache with seed data from this class
+    cacheBuilder.getCache().put("tweetaggregate", twitterAggregate);
+    System.out.println("-------cacheBuilder.getCache().--" + cacheBuilder.getCache().containsKey("tweetaggregate"));
 
-           cacheBuilder.getCache().addListener(new ViewBuilderListener());
+    //Start the twitter streaming
+    tweetListener.startTwitterStream();
 
-            for (twitter4j.Tweet tweet : result.getTweets()) {
 
-                org.richfaces.examples.tweetstream.domain.Tweet simpleTweet = new org.richfaces.examples.tweetstream.domain.Tweet();
-                simpleTweet.setText(tweet.getText());
-                simpleTweet.setId(tweet.getId());
-                simpleTweet.setProfileImageURL(tweet.getProfileImageUrl());
-                simpleTweet.setScreenName(tweet.getFromUser());
-                simpleTweet.setRetweet(false);
-                tweetList.add(simpleTweet);
-            }
+    //TODO setup connection/injection point etc... to interact with server content
+    //Likely will be injected above.
 
-          cacheBuilder.getCache().put("simpletweets", tweetList);
-          System.out.println("-------cacheBuilder.getCache().--" + cacheBuilder.getCache().containsKey("simpletweets"));
-          tweetListener.startTwitterStream();
-       }
-       catch (TwitterException e)
-       {
-          e.printStackTrace();
-       }
+    //TODO Load the filter/search term from server
+    //TODO try/catch as needed
+    fetchContent();
 
-       log.info("Base search term set to : " + searchTermBase);
+    //TODO Trigger polling of server, which will push updates.
+
+
+    log.info("Initialization of twitter source server complete");
+  }
+
+  @Override
+  public String getSearchTerm() {
+    return twitterAggregate.getFilter();
+  }
+
+  public List<Tweet> getTweets() {
+    return twitterAggregate.getTweets();
+  }
+
+  public List<Tweeter> getTopTweeters() {
+    return twitterAggregate.getTopTweeters();
+  }
+
+  public List<Hashtag> getTopHashtags() {
+    return twitterAggregate.getTopHashtags();
+  }
+
+  @Override
+  public TwitterAggregate getTwitterAggregate() {
+    return twitterAggregate;
+  }
+
+  @Override
+  public void fetchContent() {
+    twitterAggregate = new TwitterAggregate();
+
+    //Load the base search term from context param
+    String searchTerm = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("org.richfaces.examples.tweetstream.searchTermBase");
+
+    if (searchTerm == null) {
+      searchTerm = "";
+      log.warn("Default initial twitter filter term not found in context params");
     }
 
-    public List<twitter4j.Tweet> getTweets(String searchTerm) {
+    twitterAggregate.setFilter(searchTerm);
 
-        searchTerm = searchTermBase + " " + searchTerm;
-        log.info("Current search term set to : \"" + searchTerm + "\"");
+    //Load the twitter search
+    List<Tweet> tweets = new ArrayList<Tweet>();
 
-        Twitter twitter = new TwitterFactory().getInstance();
-
-        List<twitter4j.Tweet> tweets = null;
-        try {
-            QueryResult result = twitter.search(new Query(searchTerm));
-            tweets = result.getTweets();
-            for (twitter4j.Tweet tweet : tweets) {
-                log.info("@" + tweet.getFromUser() + " - " + tweet.getText());
-            }
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            log.info("Failed to search tweets: " + te.getMessage());
-        }
-        return tweets;
+    Twitter twitter = new TwitterFactory().getInstance();
+    List<twitter4j.Tweet> t4jTweets = null;
+    try {
+      QueryResult result = twitter.search(new Query(searchTerm));
+      t4jTweets = result.getTweets();
+      for (twitter4j.Tweet t4jTweet : t4jTweets) {
+        log.info("@" + t4jTweet.getFromUser() + " - " + t4jTweet.getText());
+        //Create a local tweet object from the t4j
+        Tweet tweet = new Tweet();
+        tweet.setText(t4jTweet.getText());
+        tweet.setId(t4jTweet.getFromUserId());
+        tweet.setProfileImageUrl(t4jTweet.getProfileImageUrl().toString());
+        tweet.setScreenName(t4jTweet.getFromUser());
+        //TODO fill in any other required data
+        tweets.add(tweet);
+      }
+    } catch (TwitterException te) {
+      te.printStackTrace();
+      log.info("Failed to search tweets: " + te.getMessage());
     }
 
-    public List<Tweeter> getTopTweeters(String searchTerm) {
-        List<Tweeter> tweeters = new ArrayList<Tweeter>();
+    twitterAggregate.setTweets(tweets);
 
-        Tweeter tweeter = null;
-        for (int i=0; i<10;i++){
-            tweeter = new Tweeter();
-            tweeter.setProfileImgUrl("http://twitter.com/account/profile_image/tech4j?hreflang=en");
-            tweeter.setTweetCount(100 - (2 * i));
-            tweeter.setUser("tech4j_" + i);
-            tweeter.setUserId(32423444);
-            tweeters.add(tweeter);
-        }
+    //Load TopTweeters
+    List<Tweeter> tweeters = new ArrayList<Tweeter>();
 
-        return tweeters;
+    Tweeter tweeter = null;
+    for (int i = 0; i < 10; i++) {
+      tweeter = new Tweeter();
+      tweeter.setProfileImgUrl("http://twitter.com/account/profile_image/tech4j?hreflang=en");
+      tweeter.setTweetCount(100 - (2 * i));
+      tweeter.setUser("tech4j_" + i);
+      tweeter.setUserId(32423444);
+      tweeters.add(tweeter);
     }
 
-    public List<Hashtag> getTopHashtags(String searchTerm) {
-        List<Hashtag> hashtags = new ArrayList<Hashtag>();
+    twitterAggregate.setTopTweeters(tweeters);
 
-        Hashtag hashtag = null;
-        for (int i=0; i<10;i++){
-            hashtag = new Hashtag();
-            hashtag.setHashtag("#richfaces_" + i);
-            hashtag.setCount(1000-(5*i));
-            hashtags.add(hashtag);
-        }
+    //Load TopTags
+    List<Hashtag> hashtags = new ArrayList<Hashtag>();
 
-        return hashtags;
+    Hashtag hashtag = null;
+    for (int i = 0; i < 10; i++) {
+      hashtag = new Hashtag();
+      hashtag.setHashtag("#richfaces_" + i);
+      hashtag.setCount(1000 - (5 * i));
+      hashtags.add(hashtag);
     }
+
+    twitterAggregate.setTopHashtags(hashtags);
+
+  }
 
 
 }

@@ -52,10 +52,10 @@ public class PublishController implements Serializable {
     return topicsContext;
   }
 
-  public void publishView(List<Tweet> tweets) {
+  public void publishView(TwitterAggregate twitterAggregate) {
+
 
     TwitterAggregate ta = new TwitterAggregate();
-    ta.setTweets(tweets);
     String tweetString = "";
     //TODO - simple hack just to diaplay data...needs work
     if (ta.getTweets() != null) {
@@ -70,7 +70,7 @@ public class PublishController implements Serializable {
       //TODO - and formatted on the client side.
       //JAY Agree - we need to format the content to JSON most likely and update the UI sections
 
-      getTopicsContext().publish(new TopicKey("twitter", "simple_tweets"), MessageFormat.format("{0} <br/>", tweetString));
+      getTopicsContext().publish(new TopicKey("twitter", "twitter_aggregate"), MessageFormat.format("{0} <br/>", tweetString));
     } catch (Exception e) {
       log.error(e.getMessage(), e);
     }

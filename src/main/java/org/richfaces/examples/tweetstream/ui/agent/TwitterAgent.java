@@ -1,8 +1,8 @@
 package org.richfaces.examples.tweetstream.ui.agent;
 
 import org.richfaces.examples.tweetstream.domain.Hashtag;
+import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.Tweeter;
-import twitter4j.Tweet;
 
 import java.util.List;
 
@@ -11,8 +11,6 @@ import java.util.List;
  */
 public interface TwitterAgent {
     String getSearchTerm();
-
-    void setSearchTerm(String searchTerm);
 
     Tweet getSelectedTweet();
 

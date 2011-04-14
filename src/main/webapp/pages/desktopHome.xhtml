@@ -17,7 +17,7 @@
         <h2>Tweets</h2>
 
        <h:form>
-          <a4j:push address="simple_tweets@twitter"
+          <a4j:push address="twitter_aggregate@twitter"
                     onerror="alert(event.rf.data)"
                     ondataavailable="document.getElementById('tweetstreamOutput').innerHTML = event.rf.data">
                     </a4j:push>
@@ -29,7 +29,7 @@
         <h:dataTable var="_tweet" value="#{twitterAgent.tweets}">
             <h:column>
                 <f:facet name="header">From</f:facet>
-                #{_tweet.fromUserId}
+                #{_tweet.screenName}
             </h:column>
             <h:column>
                 <f:facet name="header">Text</f:facet>
