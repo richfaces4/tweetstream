@@ -39,14 +39,18 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
-/** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
+/**
+ * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
+ */
 
 @Listener
-public class ViewBuilderListener
-{
+public class ViewBuilderListener {
 
-   @Inject
-   org.slf4j.Logger log;
+  @Inject
+  org.slf4j.Logger log;
+
+
+
 
    //@CacheEntryVisited
    @CacheEntryModified
@@ -62,5 +66,16 @@ public class ViewBuilderListener
           if(simpleTweets != null)
           System.out.println("-----simpleTweets.size()----" + simpleTweets.size());
    }
+
+        //TODO determine if the event is for new data
+
+        //TODO pull, or query for the TwitterAggregate data
+        // This can be Sanne's service, or something else
+
+        //TODO publish this updated data model to the RichFaces push component's JMS topic
+        //UI's will then receive this data, and update their views with it.
+
+        //At this point it is pretty much just repeat either as a poll, or event driven process.
+
 
 }
