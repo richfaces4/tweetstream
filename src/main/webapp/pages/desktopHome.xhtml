@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -13,16 +12,57 @@
         </f:metadata>
     </ui:define>
 
+
+   <ui:define name="head">
+
+         <script type="text/javascript">
+            <!--
+            function stageTweets(e){
+
+               var arr = JSON.parse(e);
+               document.getElementById('tweet-list').innerHTML = '';
+               for(var i=0;i<arr.tweets.length;i++){
+                    var tweet = arr.tweets[i];
+
+                    //document.getElementById('tweetstreamOutput').innerHTML += tweet.text;
+                    var tweetcontainer = document.createElement("div");
+                    tweetcontainer.innerHTML = tweet.text;
+                    tweetcontainer.style.border = '1px solid black';
+                    document.getElementById('tweet-list').appendChild(tweetcontainer);
+
+//                    for(var key in obj){
+//                        var attrName = key;
+//                        var attrValue = obj[key];
+//
+//                       if(attrName == 'text'){
+////                          display historical tweets
+//                          document.getElementById('tweetstreamOutput').innerHTML = attrValue;
+//                       }
+//                    }
+                }
+
+//
+            }
+            // -->
+         </script>
+        <ui:insert name="head"/>
+    </ui:define>
+
+
     <ui:define name="content">
         <h2>Tweets</h2>
 
        <h:form>
-          <a4j:push address="simple_tweets@twitter"
+          <a4j:push address="incoming_tweets@twitter"
                     onerror="alert(event.rf.data)"
-                    ondataavailable="document.getElementById('tweetstreamOutput').innerHTML = event.rf.data">
+                    ondataavailable="stageTweets(event.rf.data)">
                     </a4j:push>
 
       </h:form>
+       <div id="tweet-list"></div>
+       <div id="incoming-tweet"></div>
+
+
       <rich:panel styleClass="tweetOutput" id="tweetstreamOutput"
                   bodyClass="tweetstreamOutput"/>
 

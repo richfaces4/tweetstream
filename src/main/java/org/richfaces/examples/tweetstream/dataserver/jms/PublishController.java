@@ -21,6 +21,7 @@
  */
 package org.richfaces.examples.tweetstream.dataserver.jms;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.richfaces.application.push.TopicKey;
 import org.richfaces.application.push.TopicsContext;
 import org.richfaces.examples.tweetstream.domain.Tweet;
@@ -56,21 +57,33 @@ public class PublishController implements Serializable {
 
     TwitterAggregate ta = new TwitterAggregate();
     ta.setTweets(tweets);
-    String tweetString = "";
-    //TODO - simple hack just to diaplay data...needs work
+
+    String tweetString = "{\"tweets\":[";
     if (ta.getTweets() != null) {
-      for (Tweet tweet : ta.getTweets()) {
-        tweetString += tweet.getText();
-      }
+
+       for (int i = 0; i < ta.getTweets().size(); i++)
+       {
+          Tweet tweet  = ta.getTweets().get(i);
+
+          tweetString += "{\"id\":" + tweet.getId()
+           + ",\"text\":\"" + StringEscapeUtils.escapeHtml(tweet.getText())
+           + "\",\"profileImageURL\":\"" + StringEscapeUtils.escapeHtml(tweet.getProfileImageURL())
+           + "\",\"screenName\":\"" + tweet.getScreenName()
+           + "\",\"retweet\":" + tweet.isRetweet() + "}";
+
+          if(i + 1 == ta.getTweets().size()){
+             tweetString += "]}";
+          }else{
+             tweetString += ",";
+          }
+
+
+       }
+
     }
 
     try {
-      //push the updated view object
-      //TODO - looks like we need to convert the List of tweets to a javascript array, so it can be properly iterated
-      //TODO - and formatted on the client side.
-      //JAY Agree - we need to format the content to JSON most likely and update the UI sections
-
-      getTopicsContext().publish(new TopicKey("twitter", "simple_tweets"), MessageFormat.format("{0} <br/>", tweetString));
+      getTopicsContext().publish(new TopicKey("twitter", "incoming_tweets"), MessageFormat.format("{0}", tweetString));
     } catch (Exception e) {
       log.error(e.getMessage(), e);
     }
