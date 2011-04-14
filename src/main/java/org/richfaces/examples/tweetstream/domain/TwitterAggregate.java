@@ -1,9 +1,6 @@
-package org.richfaces.examples.tweetstream.model;
-
-import twitter4j.Tweet;
+package org.richfaces.examples.tweetstream.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +26,7 @@ public class TwitterAggregate implements Serializable{
     /**
      * The top N ( likely 25 ) tweets in date order.
      */
-    private List<SimpleTweet> tweets;
+    private List<Tweet> tweets;
 
     /**
      * The top 10 most active tweeters
@@ -50,12 +47,12 @@ public class TwitterAggregate implements Serializable{
         this.filter = filter;
     }
 
-   public List<SimpleTweet> getTweets()
+   public List<Tweet> getTweets()
    {
       return tweets;
    }
 
-   public void setTweets(List<SimpleTweet> tweets)
+   public void setTweets(List<Tweet> tweets)
    {
       this.tweets = tweets;
    }

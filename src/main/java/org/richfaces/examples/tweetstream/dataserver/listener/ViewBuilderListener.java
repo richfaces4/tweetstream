@@ -19,24 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.listener;
+package org.richfaces.examples.tweetstream.dataserver.listener;
 
 import org.infinispan.notifications.Listener;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryCreated;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryModified;
-import org.infinispan.notifications.cachelistener.annotation.CacheEntryVisited;
 import org.infinispan.notifications.cachelistener.event.Event;
-import org.richfaces.examples.tweetstream.model.SimpleTweet;
-import org.richfaces.examples.tweetstream.model.TwitterAggregate;
-import org.richfaces.examples.tweetstream.model.view.Page;
-import org.richfaces.examples.tweetstream.model.view.Region;
-import org.richfaces.examples.tweetstream.model.view.View;
+import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.ui.ViewPushBean;
 
-import javax.enterprise.inject.New;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.List;
 
 /**
@@ -58,13 +50,13 @@ public class ViewBuilderListener {
    public void handle(Event e) {
           //TODO - need to do some checking here or we will get duplicates
           //actually, we need a better cache update strategy globally
-          List<SimpleTweet> simpleTweets = (List)e.getCache().get("simpletweets");
+          List<Tweet> tweets = (List)e.getCache().get("simpletweets");
           ViewPushBean viewPushBean = new ViewPushBean();
-          viewPushBean.publishView(simpleTweets);
+          viewPushBean.publishView(tweets);
 
           System.out.println("-----e.getType()----" + e.getType());
-          if(simpleTweets != null)
-          System.out.println("-----simpleTweets.size()----" + simpleTweets.size());
+          if(tweets != null)
+          System.out.println("-----tweets.size()----" + tweets.size());
    }
 
         //TODO determine if the event is for new data

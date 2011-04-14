@@ -19,11 +19,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.model.view;
+package org.richfaces.examples.tweetstream.ui.view;
 
-import org.richfaces.examples.tweetstream.model.SimpleTweet;
-import org.richfaces.examples.tweetstream.model.Tweeter;
-import twitter4j.Tweet;
+import org.richfaces.examples.tweetstream.domain.Tweet;
+import org.richfaces.examples.tweetstream.domain.Tweeter;
 
 import java.util.List;
 
@@ -37,9 +36,9 @@ public class Region
 
    private List<Tweeter> tweeters;
 
-   private Tweet tweet;
+   private twitter4j.Tweet tweet;
 
-   private List<SimpleTweet> tweets;
+   private List<Tweet> tweets;
 
    public String getRegionType()
    {
@@ -61,22 +60,22 @@ public class Region
       this.tweeters = tweeters;
    }
 
-   public Tweet getTweet()
+   public twitter4j.Tweet getTweet()
    {
       return tweet;
    }
 
-   public void setTweet(Tweet tweet)
+   public void setTweet(twitter4j.Tweet tweet)
    {
       this.tweet = tweet;
    }
 
-   public List<SimpleTweet> getTweets()
+   public List<Tweet> getTweets()
    {
       return tweets;
    }
 
-   public void setTweets(List<SimpleTweet> tweets)
+   public void setTweets(List<Tweet> tweets)
    {
       this.tweets = tweets;
    }

@@ -19,30 +19,16 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.cache;
+package org.richfaces.examples.tweetstream.dataserver.cache;
 
 import org.infinispan.Cache;
-import org.infinispan.config.Configuration;
 import org.infinispan.config.GlobalConfiguration;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
-import org.richfaces.examples.tweetstream.listener.ViewBuilderListener;
-import org.richfaces.examples.tweetstream.model.view.View;
-import sun.tools.tree.SuperExpression;
-import twitter4j.Status;
-import twitter4j.Tweet;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Produces;
-import javax.faces.bean.ManagedBean;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 

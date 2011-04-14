@@ -19,14 +19,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.model;
-
-import twitter4j.HashtagEntity;
+package org.richfaces.examples.tweetstream.domain;
 
 import java.util.List;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
-public class SimpleTweet
+public class Tweet
 {
 
    private long id;

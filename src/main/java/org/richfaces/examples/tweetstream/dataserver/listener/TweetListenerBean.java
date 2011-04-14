@@ -19,11 +19,10 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.listener;
+package org.richfaces.examples.tweetstream.dataserver.listener;
 
-import org.richfaces.examples.tweetstream.cache.CacheBuilder;
-import org.richfaces.examples.tweetstream.cache.InfinispanCacheBuilder;
-import org.richfaces.examples.tweetstream.model.SimpleTweet;
+import org.richfaces.examples.tweetstream.dataserver.cache.CacheBuilder;
+import org.richfaces.examples.tweetstream.domain.Tweet;
 import twitter4j.FilterQuery;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
@@ -31,12 +30,8 @@ import twitter4j.StatusListener;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.event.Observes;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,21 +66,21 @@ public class TweetListenerBean implements StatusListener, Serializable
    public void onStatus(Status status)
    {
       System.out.println("-------status: "+ status.getText());
-      SimpleTweet simpleTweet = new SimpleTweet();
-       simpleTweet.setText(status.getText());
-       simpleTweet.setId(status.getId());
-       simpleTweet.setProfileImageURL(status.getUser().getProfileImageURL().toString());
-       simpleTweet.setScreenName(status.getUser().getScreenName());
+      Tweet tweet = new Tweet();
+       tweet.setText(status.getText());
+       tweet.setId(status.getId());
+       tweet.setProfileImageURL(status.getUser().getProfileImageURL().toString());
+       tweet.setScreenName(status.getUser().getScreenName());
        if(status.getRetweetedStatus() != null){
-          simpleTweet.setRetweet(status.getRetweetedStatus().isRetweet());
+          tweet.setRetweet(status.getRetweetedStatus().isRetweet());
        }
 
-       List<SimpleTweet> tweets = new ArrayList<SimpleTweet>();
+       List<Tweet> tweets = new ArrayList<Tweet>();
        //if(cacheBuilder.getCache().containsKey("simpletweets")){
        tweets = (List)cacheBuilder.getCache().get("simpletweets");
        System.out.println("-------tweets.size(): "+ tweets.size());
        //}
-       tweets.add(simpleTweet);
+       tweets.add(tweet);
        cacheBuilder.getCache().put("simpletweets" , tweets);
    }
 

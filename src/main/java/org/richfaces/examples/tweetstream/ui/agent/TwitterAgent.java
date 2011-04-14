@@ -1,7 +1,7 @@
-package org.richfaces.examples.tweetstream.agent;
+package org.richfaces.examples.tweetstream.ui.agent;
 
-import org.richfaces.examples.tweetstream.model.Hashtag;
-import org.richfaces.examples.tweetstream.model.Tweeter;
+import org.richfaces.examples.tweetstream.domain.Hashtag;
+import org.richfaces.examples.tweetstream.domain.Tweeter;
 import twitter4j.Tweet;
 
 import java.util.List;

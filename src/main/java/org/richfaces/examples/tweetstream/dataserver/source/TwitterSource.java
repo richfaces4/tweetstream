@@ -1,7 +1,7 @@
-package org.richfaces.examples.tweetstream.source;
+package org.richfaces.examples.tweetstream.dataserver.source;
 
-import org.richfaces.examples.tweetstream.model.Hashtag;
-import org.richfaces.examples.tweetstream.model.Tweeter;
+import org.richfaces.examples.tweetstream.domain.Hashtag;
+import org.richfaces.examples.tweetstream.domain.Tweeter;
 import twitter4j.Tweet;
 
 import java.io.Serializable;

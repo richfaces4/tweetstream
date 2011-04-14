@@ -1,4 +1,4 @@
-package org.richfaces.examples.tweetstream.model;
+package org.richfaces.examples.tweetstream.domain;
 
 
 /**

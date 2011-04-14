@@ -21,22 +21,16 @@
  */
 package org.richfaces.examples.tweetstream.ui;
 
-import org.richfaces.application.push.MessageException;
 import org.richfaces.application.push.TopicKey;
 import org.richfaces.application.push.TopicsContext;
-import org.richfaces.examples.tweetstream.model.SimpleTweet;
-import org.richfaces.examples.tweetstream.model.TwitterAggregate;
-import org.richfaces.examples.tweetstream.model.view.View;
-import twitter4j.FilterQuery;
+import org.richfaces.examples.tweetstream.domain.Tweet;
+import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Model;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.text.MessageFormat;
-import java.util.Date;
 import java.util.List;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
@@ -62,14 +56,14 @@ public class ViewPushBean implements Serializable
         return topicsContext;
    }
 
-   public void publishView(List<SimpleTweet> simpleTweets){
+   public void publishView(List<Tweet> tweets){
 
          TwitterAggregate ta = new TwitterAggregate();
-         ta.setTweets(simpleTweets);
+         ta.setTweets(tweets);
       String tweetString = "";
       //TODO - simple hack just to diaplay data...needs work
       if(ta.getTweets() != null){
-         for (SimpleTweet tweet:ta.getTweets()){
+         for (Tweet tweet:ta.getTweets()){
           tweetString += tweet.getText();
          }
       }

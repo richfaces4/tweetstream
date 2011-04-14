@@ -1,28 +1,28 @@
-package org.richfaces.examples.tweetstream.source;
+package org.richfaces.examples.tweetstream.dataserver.source;
 
-import org.richfaces.examples.tweetstream.cache.CacheBuilder;
-import org.richfaces.examples.tweetstream.cache.InfinispanCacheBuilder;
-import org.richfaces.examples.tweetstream.listener.TweetListenerBean;
-import org.richfaces.examples.tweetstream.listener.ViewBuilderListener;
-import org.richfaces.examples.tweetstream.model.Hashtag;
-import org.richfaces.examples.tweetstream.model.SimpleTweet;
-import org.richfaces.examples.tweetstream.model.Tweeter;
+import org.richfaces.examples.tweetstream.dataserver.cache.InfinispanCacheBuilder;
+import org.richfaces.examples.tweetstream.domain.*;
+import org.richfaces.examples.tweetstream.dataserver.listener.TweetListenerBean;
+import org.richfaces.examples.tweetstream.dataserver.listener.ViewBuilderListener;
 import twitter4j.*;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 import javax.faces.context.FacesContext;
-import javax.faces.view.facelets.FaceletContext;
 import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
+ * An implementation of the twitter source interfaces that will
+ * pull the initial content from the containers Cache manager.
+ *
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 @ApplicationScoped
-public class TwitterSourceLocal implements TwitterSource {
+@Alternative
+public class TwitterSourceServer implements TwitterSource {
 
    @Inject org.slf4j.Logger log;
 
@@ -44,7 +44,7 @@ public class TwitterSourceLocal implements TwitterSource {
             searchTermBase = "";
         }
 
-       List<SimpleTweet> tweetList = new ArrayList<SimpleTweet>();
+       List<org.richfaces.examples.tweetstream.domain.Tweet> tweetList = new ArrayList<org.richfaces.examples.tweetstream.domain.Tweet>();
 
        try
        {
@@ -54,9 +54,9 @@ public class TwitterSourceLocal implements TwitterSource {
 
            cacheBuilder.getCache().addListener(new ViewBuilderListener());
 
-            for (Tweet tweet : result.getTweets()) {
+            for (twitter4j.Tweet tweet : result.getTweets()) {
 
-                SimpleTweet simpleTweet = new SimpleTweet();
+                org.richfaces.examples.tweetstream.domain.Tweet simpleTweet = new org.richfaces.examples.tweetstream.domain.Tweet();
                 simpleTweet.setText(tweet.getText());
                 simpleTweet.setId(tweet.getId());
                 simpleTweet.setProfileImageURL(tweet.getProfileImageUrl());
@@ -77,18 +77,18 @@ public class TwitterSourceLocal implements TwitterSource {
        log.info("Base search term set to : " + searchTermBase);
     }
 
-    public List<Tweet> getTweets(String searchTerm) {
+    public List<twitter4j.Tweet> getTweets(String searchTerm) {
 
         searchTerm = searchTermBase + " " + searchTerm;
         log.info("Current search term set to : \"" + searchTerm + "\"");
 
         Twitter twitter = new TwitterFactory().getInstance();
 
-        List<Tweet> tweets = null;
+        List<twitter4j.Tweet> tweets = null;
         try {
             QueryResult result = twitter.search(new Query(searchTerm));
             tweets = result.getTweets();
-            for (Tweet tweet : tweets) {
+            for (twitter4j.Tweet tweet : tweets) {
                 log.info("@" + tweet.getFromUser() + " - " + tweet.getText());
             }
         } catch (TwitterException te) {

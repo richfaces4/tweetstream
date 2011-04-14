@@ -19,20 +19,50 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.richfaces.examples.tweetstream.cache;
+package org.richfaces.examples.tweetstream.ui.view;
 
-import org.infinispan.Cache;
-import org.infinispan.manager.EmbeddedCacheManager;
+import java.util.List;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
-public interface CacheBuilder
+
+public class View
 {
 
-   public static final String TWEETSTREAM_CACHE = "tweetstream";
+   private int id;
 
-   public <K, V> Cache<K, V> getCache();
+   private List<Page> pages;
 
-   public <K, V> Cache<K, V> getCache(String cacheName);
+   private String viewType;
 
-   public EmbeddedCacheManager getCacheContainer();
+   public static enum ViewType {PHONE, TABLET, DESKTOP}
+
+   public int getId()
+   {
+      return id;
+   }
+
+   public void setId(int id)
+   {
+      this.id = id;
+   }
+
+   public List<Page> getPages()
+   {
+      return pages;
+   }
+
+   public void setPages(List<Page> pages)
+   {
+      this.pages = pages;
+   }
+
+   public String getViewType()
+   {
+      return viewType;
+   }
+
+   public void setViewType(String viewType)
+   {
+      this.viewType = viewType;
+   }
 }
