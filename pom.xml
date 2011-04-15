@@ -186,18 +186,6 @@
       <scope>provided</scope>
     </dependency>
 
-     <!--<dependency>-->
-         <!--<groupId>org.jboss.weld</groupId>-->
-         <!--<artifactId>weld-logger</artifactId>-->
-         <!--<version>1.0.0-CR2</version>-->
-       <!--<exclusions>-->
-         <!--<exclusion>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-api</artifactId>-->
-         <!--</exclusion>-->
-      <!--</exclusions>-->
-     <!--</dependency>-->
-
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
@@ -216,13 +204,6 @@
       <artifactId>infinispan-core</artifactId>
       <version>5.0.0.BETA1</version>
     </dependency>
-
-    <!--<dependency>-->
-    <!--<groupId>com.google.code.gson</groupId>-->
-    <!--<artifactId>gson</artifactId>-->
-    <!--<version>1.4</version>-->
-    <!--<scope>compile</scope>-->
-    <!--</dependency>-->
 
     <dependency>
       <groupId>commons-lang</groupId>
@@ -274,10 +255,6 @@
   <profiles>
     <profile>
       <id>keynote</id>
-      <activation>
-        <!-- TODO Should not be active by default, but idea not accepting it -->
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <dependencies>
         <dependency>
           <groupId>org.jboss.jbw2011.keynote</groupId>
