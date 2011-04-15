@@ -25,6 +25,7 @@ import org.richfaces.application.push.TopicKey;
 import org.richfaces.application.push.TopicsContext;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
+import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
@@ -42,7 +43,7 @@ import java.util.List;
 
 public class PublishController implements Serializable {
   @Inject
-  org.slf4j.Logger log;
+  Logger log;
 
   private transient TopicsContext topicsContext;
 
@@ -74,6 +75,7 @@ public class PublishController implements Serializable {
       getTopicsContext().publish(new TopicKey("twitter", "twitter_aggregate"), MessageFormat.format("{0} <br/>", tweetString));
     } catch (Exception e) {
       log.error(e.getMessage(), e);
+      //System.out.println(e.getMessage());
     }
   }
 
