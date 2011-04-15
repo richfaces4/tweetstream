@@ -186,12 +186,30 @@
       <scope>provided</scope>
     </dependency>
 
+     <!--<dependency>-->
+         <!--<groupId>org.jboss.weld</groupId>-->
+         <!--<artifactId>weld-logger</artifactId>-->
+         <!--<version>1.0.0-CR2</version>-->
+       <!--<exclusions>-->
+         <!--<exclusion>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>slf4j-api</artifactId>-->
+         <!--</exclusion>-->
+      <!--</exclusions>-->
+     <!--</dependency>-->
+
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
       <version>3.0.0.Beta4</version>
       <scope>provided</scope>
     </dependency>
+
+     <dependency>
+       <groupId>org.jboss.seam.solder</groupId>
+       <artifactId>seam-solder</artifactId>
+       <version>3.0.0.Beta1</version>
+     </dependency>
 
     <dependency>
       <groupId>org.infinispan</groupId>

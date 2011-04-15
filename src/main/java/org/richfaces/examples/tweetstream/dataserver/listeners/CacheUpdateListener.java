@@ -27,7 +27,7 @@ import org.infinispan.notifications.cachelistener.annotation.CacheEntryModified;
 import org.infinispan.notifications.cachelistener.event.Event;
 import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
-import org.jboss.logging.Logger;
+
 
 import javax.inject.Inject;
 
@@ -38,8 +38,8 @@ import javax.inject.Inject;
 @Listener
 public class CacheUpdateListener {
 
-  @Inject
-  private Logger log;
+  //@Inject
+  //private Logger log;
 
   @CacheEntryModified
   @CacheEntryCreated
