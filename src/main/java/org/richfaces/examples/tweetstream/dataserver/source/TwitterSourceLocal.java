@@ -31,6 +31,7 @@ import org.jboss.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -44,7 +45,8 @@ import java.util.List;
  *
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
-@ApplicationScoped
+@TwitterLocal
+@ManagedBean
 public class TwitterSourceLocal implements TwitterSource {
 
   @Inject
@@ -61,9 +63,9 @@ public class TwitterSourceLocal implements TwitterSource {
 
   private TwitterAggregate twitterAggregate;
 
-  @PostConstruct
-  private void init() {
 
+  public void init() {
+     System.out.println("-------TwitterSourceLocal--");
     //TODO Wrap in what ever try/catch is needed
     fetchContent();
 

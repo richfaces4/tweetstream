@@ -3,6 +3,7 @@ package org.richfaces.examples.tweetstream.dataserver.listeners;
 import org.jboss.jbw2011.keynote.demo.model.Tweet;
 import org.jboss.jbw2011.keynote.demo.model.TweetAggregate;
 import org.jboss.logging.Logger;
+import org.jboss.seam.solder.core.Requires;
 import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
 import org.richfaces.examples.tweetstream.dataserver.service.TweetStreamPersistenceService;
 import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
@@ -27,6 +28,7 @@ import java.util.List;
  */
 @Singleton
 @Local(ServerContentListener.class)
+@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate.class")
 public class ServerContentUpdateListener implements ServerContentListener {
   private static final String EVERY = "*";
 

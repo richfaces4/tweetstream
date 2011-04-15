@@ -39,10 +39,12 @@ import org.jboss.jbw2011.keynote.demo.model.TweetAggregate ;
 import org.jboss.jbw2011.keynote.demo.model.Tweeter ;
 import org.jboss.jbw2011.keynote.demo.persistence.impl.PersistenceServiceImpl ;
 import org.jboss.logging.Logger ;
+import org.jboss.seam.solder.core.Requires;
 
 @Singleton
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @Lock(LockType.READ)
+@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate.class")
 public class TweetStreamPersistenceServiceBean implements TweetStreamPersistenceService
 {
     @Inject

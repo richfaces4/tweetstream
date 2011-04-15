@@ -21,7 +21,9 @@
  */
 package org.richfaces.examples.tweetstream.dataserver.source;
 
-import org.jboss.jbw2011.keynote.demo.model.*;
+
+import org.jboss.jbw2011.keynote.demo.model.TweetAggregate;
+import org.jboss.seam.solder.core.Requires;
 import org.richfaces.examples.tweetstream.dataserver.service.TweetStreamPersistenceService ;
 import org.richfaces.examples.tweetstream.dataserver.listeners.ServerContentListener;
 import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
@@ -44,8 +46,7 @@ import java.util.List;
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
  */
-@ApplicationScoped
-@Alternative
+@TwitterServer
 public class TwitterSourceServer implements TwitterSource {
 
   @Inject
@@ -61,8 +62,9 @@ public class TwitterSourceServer implements TwitterSource {
 
   private long lastSearch = -1l;
 
-  @PostConstruct
-  private void init() {
+
+  public void init() {
+     System.out.println("-------TwitterSourceServer--");
     log.info("Initialization of twitter source server started");
 
     //First go fetch update data

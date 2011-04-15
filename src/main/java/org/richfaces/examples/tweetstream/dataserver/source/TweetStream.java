@@ -21,32 +21,31 @@
  */
 package org.richfaces.examples.tweetstream.dataserver.source;
 
-import org.richfaces.examples.tweetstream.domain.HashTag;
-import org.richfaces.examples.tweetstream.domain.Tweet;
-import org.richfaces.examples.tweetstream.domain.Tweeter;
-import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
+import javax.faces.bean.ManagedBean;
+import javax.inject.Inject;
 
-import java.io.Serializable;
-import java.util.List;
+/** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 
-/**
- * Interface representing the source of the twitter data.
- *
- * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
- */
-public interface TwitterSource extends Serializable {
+@ApplicationScoped
+public class TweetStream
+{
 
-   public void init();
+   @Inject
+   TwitterSource twitterSource;
 
-   public void fetchContent();
+   @Produces
+   TwitterSource getTwitterSource(@TwitterLocal TwitterSource twitterLocal,
+                                @TwitterServer TwitterSource twitterServer){
+      return twitterServer != null ? twitterServer : twitterLocal;
+   }
 
-    public String getSearchTerm();
+   @PostConstruct
+   private void init(){
+      twitterSource.init();
+   }
 
-    public List<Tweet> getTweets();
 
-    public List<Tweeter> getTopTweeters();
-
-    public List<HashTag> getTopHashtags();
-
-    public TwitterAggregate getTwitterAggregate();
 }

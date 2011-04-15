@@ -4,11 +4,7 @@
        xsi:schemaLocation="
       http://java.sun.com/xml/ns/javaee 
       http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-  <alternatives>
-    <!-- enable these alternatives to hook into server based content instead of locally
-         creating our own data -->
-    <class>org.richfaces.examples.tweetstream.dataserver.source.TwitterSourceServer</class>
-  </alternatives>
+  <alternatives/>
   <decorators/>
   <interceptors/>
 </beans>

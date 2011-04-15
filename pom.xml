@@ -186,6 +186,13 @@
       <scope>provided</scope>
     </dependency>
 
+      <!--<dependency>-->
+      <!--<groupId>org.jboss.weld</groupId>-->
+      <!--<artifactId>weld-extensions</artifactId>-->
+      <!--<version>1.0.0.Beta1</version>-->
+      <!--<scope>provided</scope>-->
+    <!--</dependency>-->
+
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
@@ -255,6 +262,9 @@
   <profiles>
     <profile>
       <id>keynote</id>
+       <activation>
+          <activeByDefault>true</activeByDefault>
+       </activation>
       <dependencies>
         <dependency>
           <groupId>org.jboss.jbw2011.keynote</groupId>

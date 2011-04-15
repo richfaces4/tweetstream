@@ -3,10 +3,12 @@ package org.richfaces.examples.tweetstream.dataserver.util;
 import org.jboss.jbw2011.keynote.demo.model.Hashtag;
 import org.jboss.jbw2011.keynote.demo.model.Tweet;
 import org.jboss.jbw2011.keynote.demo.model.TweetAggregate;
+import org.jboss.seam.solder.core.Requires;
 import org.richfaces.examples.tweetstream.domain.HashTag;
 import org.richfaces.examples.tweetstream.domain.Tweeter;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
+import javax.faces.bean.ManagedBean;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,8 @@ import java.util.List;
  *
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
+@ManagedBean
+@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate.class")
 public class TweetAggregateConverter {
 
   public static TwitterAggregate convertTwitterAggregate(TweetAggregate serverAggregate) {

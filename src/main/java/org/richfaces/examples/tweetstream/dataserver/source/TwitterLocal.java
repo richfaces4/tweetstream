@@ -21,32 +21,18 @@
  */
 package org.richfaces.examples.tweetstream.dataserver.source;
 
-import org.richfaces.examples.tweetstream.domain.HashTag;
-import org.richfaces.examples.tweetstream.domain.Tweet;
-import org.richfaces.examples.tweetstream.domain.Tweeter;
-import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
-import java.io.Serializable;
-import java.util.List;
+import javax.inject.Qualifier;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-/**
- * Interface representing the source of the twitter data.
- *
- * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
- */
-public interface TwitterSource extends Serializable {
+/** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 
-   public void init();
-
-   public void fetchContent();
-
-    public String getSearchTerm();
-
-    public List<Tweet> getTweets();
-
-    public List<Tweeter> getTopTweeters();
-
-    public List<HashTag> getTopHashtags();
-
-    public TwitterAggregate getTwitterAggregate();
+@Qualifier
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
+public @interface TwitterLocal
+{
 }
