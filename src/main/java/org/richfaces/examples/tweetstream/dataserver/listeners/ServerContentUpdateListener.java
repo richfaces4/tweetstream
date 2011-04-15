@@ -2,12 +2,11 @@ package org.richfaces.examples.tweetstream.dataserver.listeners;
 
 import org.jboss.jbw2011.keynote.demo.model.Tweet;
 import org.jboss.jbw2011.keynote.demo.model.TweetAggregate;
-import org.jboss.jbw2011.keynote.demo.persistence.PersistenceService;
 import org.jboss.logging.Logger;
 import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
+import org.richfaces.examples.tweetstream.dataserver.service.TweetStreamPersistenceService ;
 import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
-import sun.jvm.hotspot.utilities.Interval;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -29,7 +28,7 @@ public class ServerContentUpdateListener {
   Logger log;
 
   @Inject
-  private PersistenceService persistenceService;
+  private TweetStreamPersistenceService persistenceService;
 
   private Tweet lastTweet = null;
 
