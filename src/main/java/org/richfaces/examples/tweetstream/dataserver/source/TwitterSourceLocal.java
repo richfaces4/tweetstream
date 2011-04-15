@@ -27,6 +27,7 @@ import org.richfaces.examples.tweetstream.dataserver.listeners.CacheUpdateListen
 import org.richfaces.examples.tweetstream.domain.*;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import twitter4j.*;
+import org.jboss.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -47,7 +48,7 @@ import java.util.List;
 public class TwitterSourceLocal implements TwitterSource {
 
   @Inject
-  org.slf4j.Logger log;
+  Logger log;
 
   @Inject
   InfinispanCacheBuilder cacheBuilder;

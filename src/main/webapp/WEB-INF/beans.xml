@@ -7,7 +7,7 @@
   <alternatives>
     <!-- enable these alternatives to hook into server based content instead of locally
          creating our own data -->
-    <!--<class>org.richfaces.examples.tweetstream.dataserver.source.TwitterSourceServer</class>-->
+    <class>org.richfaces.examples.tweetstream.dataserver.source.TwitterSourceServer</class>
   </alternatives>
   <decorators/>
   <interceptors/>
