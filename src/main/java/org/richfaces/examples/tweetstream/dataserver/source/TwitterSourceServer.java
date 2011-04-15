@@ -21,12 +21,12 @@
  */
 package org.richfaces.examples.tweetstream.dataserver.source;
 
-import org.richfaces.examples.tweetstream.dataserver.cache.InfinispanCacheBuilder;
-import org.richfaces.examples.tweetstream.dataserver.listeners.TweetStreamListener;
-import org.richfaces.examples.tweetstream.dataserver.listeners.CacheUpdateListener;
+import org.jboss.jbw2011.keynote.demo.model.*;
+import org.jboss.jbw2011.keynote.demo.persistence.PersistenceServiceBean;
 import org.richfaces.examples.tweetstream.domain.*;
 import org.richfaces.examples.tweetstream.domain.Tweet;
-import twitter4j.*;
+import org.richfaces.examples.tweetstream.domain.Tweeter;
+import org.jboss.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -34,6 +34,7 @@ import javax.enterprise.inject.Alternative;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,40 +48,20 @@ import java.util.List;
 public class TwitterSourceServer implements TwitterSource {
 
   @Inject
-  org.slf4j.Logger log;
+  Logger log;
 
   @Inject
-  InfinispanCacheBuilder cacheBuilder;
-
-  @Inject
-  TweetStreamListener tweetListener;
-
+  private PersistenceServiceBean persistenceServiceBean;
 
   private TwitterAggregate twitterAggregate;
 
+  private long lastSearch = -1l;
+
   @PostConstruct
   private void init() {
-
-    //TODO Remove this top part once we integrate with server side
+    //First go fetch update data
     fetchContent();
 
-    // add the listener that checks hi new data has been added.
-    cacheBuilder.getCache().addListener(new CacheUpdateListener());
-
-    //Populate cache with seed data from this class
-    cacheBuilder.getCache().put("tweetaggregate", twitterAggregate);
-    System.out.println("-------cacheBuilder.getCache().--" + cacheBuilder.getCache().containsKey("tweetaggregate"));
-
-    //Start the twitter streaming
-    tweetListener.startTwitterStream();
-
-
-    //TODO setup connection/injection point etc... to interact with server content
-    //Likely will be injected above.
-
-    //TODO Load the filter/search term from server
-    //TODO try/catch as needed
-    fetchContent();
 
     //TODO Trigger polling of server, which will push updates.
 
@@ -112,75 +93,78 @@ public class TwitterSourceServer implements TwitterSource {
 
   @Override
   public void fetchContent() {
-    //TODO check if updating data is required
-    //  this method can be called on every page load
-
-    twitterAggregate = new TwitterAggregate();
-
-    //Load the base search term from context param
-    String searchTerm = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("org.richfaces.examples.tweetstream.searchTermBase");
-
-    if (searchTerm == null) {
-      searchTerm = "";
-      log.warn("Default initial twitter filter term not found in context params");
+    //Check if updating data is required
+    if (performSearch()){
+      transformTwitterAggregate();
     }
 
-    twitterAggregate.setFilter(searchTerm);
 
-    //Load the twitter search
+  }
+
+  private void transformTwitterAggregate() {
+    TweetAggregate serverAggregate = persistenceServiceBean.getAggregate();
+
+    twitterAggregate.setFilter(serverAggregate.getFilter());
+
+    List<org.jboss.jbw2011.keynote.demo.model.Tweet> svrTweets = serverAggregate.getTweets();
     List<Tweet> tweets = new ArrayList<Tweet>();
 
-    Twitter twitter = new TwitterFactory().getInstance();
-    List<twitter4j.Tweet> t4jTweets = null;
-    try {
-      QueryResult result = twitter.search(new Query(searchTerm));
-      t4jTweets = result.getTweets();
-      for (twitter4j.Tweet t4jTweet : t4jTweets) {
-        log.info("@" + t4jTweet.getFromUser() + " - " + t4jTweet.getText());
-        //Create a local tweet object from the t4j
-        Tweet tweet = new Tweet();
-        tweet.setText(t4jTweet.getText());
-        tweet.setId(t4jTweet.getFromUserId());
-        tweet.setProfileImageUrl(t4jTweet.getProfileImageUrl().toString());
-        tweet.setScreenName(t4jTweet.getFromUser());
-        //TODO fill in any other required data
-        tweets.add(tweet);
-      }
-    } catch (TwitterException te) {
-      te.printStackTrace();
-      log.info("Failed to search tweets: " + te.getMessage());
+    for (org.jboss.jbw2011.keynote.demo.model.Tweet svrTweet : svrTweets) {
+      Tweet tweet = new Tweet();
+      tweet.setText(svrTweet.getMessage());
+      tweet.setScreenName(svrTweet.getScreenName());
+      tweet.setProfileImageUrl(svrTweet.getProfileImageURL());
+      tweet.setId(svrTweet.getUserId());
+      tweet.setHashTags(svrTweet.getHashtagsAsArray());
+      tweets.add(tweet);
     }
 
     twitterAggregate.setTweets(tweets);
 
-    //Load TopTweeters
+    List<Hashtag> svrHashtags = serverAggregate.getTopHashtags();
+    List<HashTag> hashTags = new ArrayList<HashTag>();
+
+    for (Hashtag svrHashtag : svrHashtags) {
+      HashTag tag = new HashTag();
+      tag.setHashtag(svrHashtag.getHashtag());
+      tag.setCount(svrHashtag.getCount());
+      hashTags.add(tag);
+    }
+
+    twitterAggregate.setTopHashTags(hashTags);
+
+    List<org.jboss.jbw2011.keynote.demo.model.Tweeter> svrTweeters = serverAggregate.getTopTweeters();
     List<Tweeter> tweeters = new ArrayList<Tweeter>();
 
-    Tweeter tweeter = null;
-    for (int i = 0; i < 10; i++) {
-      tweeter = new Tweeter();
-      tweeter.setProfileImgUrl("http://twitter.com/account/profile_image/tech4j?hreflang=en");
-      tweeter.setTweetCount(100 - (2 * i));
-      tweeter.setUser("tech4j_" + i);
-      tweeter.setUserId(32423444);
+    for (org.jboss.jbw2011.keynote.demo.model.Tweeter svrTweeter : svrTweeters) {
+      Tweeter tweeter = new Tweeter();
+      tweeter.setUser(svrTweeter.getUser());
+      tweeter.setUserId(svrTweeter.getUserId());
+      tweeter.setProfileImgUrl(svrTweeter.getProfileImgUrl());
+      tweeter.setTweetCount(svrTweeter.getTweetCount());
       tweeters.add(tweeter);
     }
 
     twitterAggregate.setTopTweeters(tweeters);
 
-    //Load TopTags
-    List<HashTag> hashTags = new ArrayList<HashTag>();
+  }
 
-    HashTag hashTag = null;
-    for (int i = 0; i < 10; i++) {
-      hashTag = new HashTag();
-      hashTag.setHashtag("#richfaces_" + i);
-      hashTag.setCount(1000 - (5 * i));
-      hashTags.add(hashTag);
+  private boolean performSearch() {
+    if (lastSearch > 0) {
+      long current = new Date().getTime();
+      if (current - lastSearch > 5000) {
+        log.debug("****** Enough time past - fetching new data--" + current + "-" + lastSearch + "=" + (current - lastSearch));
+        lastSearch = current;
+        return true;
+      } else {
+        log.debug("****** NOT enough time past - NOT fetching new data--" + current + "-" + lastSearch + "=" + (current - lastSearch));
+        return false;
+      }
+    } else {
+      lastSearch = new Date().getTime();
+      log.debug("****** First time through - fetching new data");
+      return true;
     }
-
-    twitterAggregate.setTopHashTags(hashTags);
-
   }
 
 

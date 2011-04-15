@@ -25,6 +25,7 @@ import org.richfaces.examples.tweetstream.dataserver.cache.CacheBuilder;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 import twitter4j.*;
+import org.jboss.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
@@ -39,7 +40,7 @@ public class TweetStreamListener implements StatusListener, Serializable
 {
 
    @Inject
-   org.slf4j.Logger log;
+   Logger log;
 
    @Inject
    CacheBuilder cacheBuilder;

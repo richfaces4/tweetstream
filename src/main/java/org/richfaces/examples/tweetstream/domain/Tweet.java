@@ -31,7 +31,7 @@ public class Tweet
 
    private String text;
 
-   private List hashTags;
+   private String[] hashTags;
 
    private String profileImageUrl;
 
@@ -59,12 +59,12 @@ public class Tweet
       this.text = text;
    }
 
-   public List getHashTags()
+   public String[] getHashTags()
    {
       return hashTags;
    }
 
-   public void setHashTags(List hashTags)
+   public void setHashTags(String[] hashTags)
    {
       this.hashTags = hashTags;
    }
