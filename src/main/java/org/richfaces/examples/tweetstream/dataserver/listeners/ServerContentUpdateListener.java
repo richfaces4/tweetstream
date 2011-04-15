@@ -7,7 +7,7 @@ import org.jboss.logging.Logger;
 import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
 import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
-import sun.jvm.hotspot.utilities.Interval;
+
 
 import javax.inject.Inject;
 import java.util.List;
@@ -31,6 +31,9 @@ public class ServerContentUpdateListener {
   @Inject
   private PersistenceService persistenceService;
 
+    @Inject
+   PublishController pubControl;
+
   private Tweet lastTweet = null;
 
   public void startServerListener() {
@@ -41,13 +44,11 @@ public class ServerContentUpdateListener {
 
       //Fetch the updates
       TweetAggregate svrAggregate = persistenceService.getAggregate();
-
+      System.out.println("--------------svrAggregate.getTweets().size()-" + svrAggregate.getTweets().size());
       //Convert to local domain model
       TwitterAggregate twitterAggregate = TweetAggregateConverter.convertTwitterAggregate(svrAggregate);
 
-      //TODO look into getting pubcontroller injected so we don't need to lookup RF push service each time
       //Send push controller updated content to publish
-      PublishController pubControl = new PublishController();
       pubControl.publishView(twitterAggregate);
 
     }

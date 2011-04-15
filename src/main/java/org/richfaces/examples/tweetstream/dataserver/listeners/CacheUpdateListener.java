@@ -41,6 +41,9 @@ public class CacheUpdateListener {
   //@Inject
   //private Logger log;
 
+   @Inject
+   PublishController pubControl;
+
   @CacheEntryModified
   @CacheEntryCreated
   public void handle(Event e) {
@@ -51,9 +54,6 @@ public class CacheUpdateListener {
 
     //Pull out updated aggregate
     TwitterAggregate tweetAggregate = (TwitterAggregate) e.getCache().get("tweetaggregate");
-
-    //TODO look into getting this injected so we don't need to lookup RF push service each time
-    PublishController pubControl = new PublishController();
 
     //Send push controller updated content to publish
     pubControl.publishView(tweetAggregate);

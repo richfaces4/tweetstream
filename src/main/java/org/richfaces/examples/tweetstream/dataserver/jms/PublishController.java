@@ -30,6 +30,7 @@ import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -42,11 +43,13 @@ import java.util.List;
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 
+@ManagedBean
 public class PublishController implements Serializable {
   @Inject
   Logger log;
 
-  private transient TopicsContext topicsContext;
+
+   private transient TopicsContext topicsContext;
 
   private TopicsContext getTopicsContext() {
     if (topicsContext == null) {
