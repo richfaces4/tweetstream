@@ -51,7 +51,6 @@ public class TwitterSourceServer implements TwitterSource {
   @Inject
   Logger log;
 
-  @Inject
   private PersistenceServiceBean persistenceServiceBean;
 
   private TwitterAggregate twitterAggregate;
@@ -60,6 +59,8 @@ public class TwitterSourceServer implements TwitterSource {
 
   @PostConstruct
   private void init() {
+     if(persistenceServiceBean == null)
+     persistenceServiceBean = new PersistenceServiceBean();
     //First go fetch update data
     fetchContent();
 
