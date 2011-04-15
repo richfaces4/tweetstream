@@ -45,8 +45,7 @@ import java.util.List;
 
 @ManagedBean
 public class PublishController implements Serializable {
-  @Inject
-  Logger log;
+  Logger log = Logger.getLogger(PublishController.class);
 
 
    private transient TopicsContext topicsContext;
