@@ -24,6 +24,7 @@ package org.richfaces.examples.tweetstream.dataserver.source;
 import org.jboss.jbw2011.keynote.demo.model.*;
 import org.jboss.jbw2011.keynote.demo.persistence.PersistenceService;
 import org.jboss.jbw2011.keynote.demo.persistence.PersistenceServiceBean;
+import org.richfaces.examples.tweetstream.dataserver.listeners.ServerContentUpdateListener;
 import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
 import org.richfaces.examples.tweetstream.domain.*;
 import org.richfaces.examples.tweetstream.domain.Tweet;
@@ -57,6 +58,9 @@ public class TwitterSourceServer implements TwitterSource {
   @Inject
   private PersistenceService persistenceService;
 
+  @Inject
+  private ServerContentUpdateListener serverListener;
+
   private TwitterAggregate twitterAggregate;
 
   private long lastSearch = -1l;
@@ -68,9 +72,8 @@ public class TwitterSourceServer implements TwitterSource {
     //First go fetch update data
     fetchContent();
 
-
-    //TODO Trigger polling of server, which will push updates.
-
+    //Trigger polling of server, which will push updates to clients
+    serverListener.startServerListener();
 
     log.info("Initialization of twitter source server complete");
   }
