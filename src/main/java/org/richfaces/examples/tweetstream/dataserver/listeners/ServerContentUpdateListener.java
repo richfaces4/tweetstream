@@ -34,8 +34,8 @@ public class ServerContentUpdateListener implements ServerContentListener {
   @Inject
   private TweetStreamPersistenceService persistenceService;
 
-    @Inject
-   PublishController pubControl;
+  @Inject
+  PublishController pubControl;
 
   private Tweet lastTweet = null;
 
