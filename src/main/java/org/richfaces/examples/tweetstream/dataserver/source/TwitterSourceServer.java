@@ -35,6 +35,7 @@ import org.jboss.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +48,7 @@ import java.util.List;
  * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
  */
 @TwitterServer
+@ManagedBean
 public class TwitterSourceServer implements TwitterSource {
 
   @Inject
