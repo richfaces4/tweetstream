@@ -22,6 +22,7 @@
 package org.richfaces.examples.tweetstream.dataserver.source;
 
 import org.jboss.jbw2011.keynote.demo.model.*;
+import org.jboss.jbw2011.keynote.demo.persistence.PersistenceService;
 import org.jboss.jbw2011.keynote.demo.persistence.PersistenceServiceBean;
 import org.richfaces.examples.tweetstream.domain.*;
 import org.richfaces.examples.tweetstream.domain.Tweet;
@@ -43,6 +44,7 @@ import java.util.List;
  * pull the initial content from the containers Cache manager.
  *
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
+ * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
  */
 @ApplicationScoped
 @Alternative
@@ -51,7 +53,8 @@ public class TwitterSourceServer implements TwitterSource {
   @Inject
   Logger log;
 
-  private PersistenceServiceBean persistenceServiceBean;
+  @Inject
+  private PersistenceService persistenceService;
 
   private TwitterAggregate twitterAggregate;
 
@@ -59,8 +62,6 @@ public class TwitterSourceServer implements TwitterSource {
 
   @PostConstruct
   private void init() {
-     if(persistenceServiceBean == null)
-     persistenceServiceBean = new PersistenceServiceBean();
     //First go fetch update data
     fetchContent();
 
@@ -104,8 +105,8 @@ public class TwitterSourceServer implements TwitterSource {
   }
 
   private void transformTwitterAggregate() {
-    TweetAggregate serverAggregate = persistenceServiceBean.getAggregate();
-
+    TweetAggregate serverAggregate = persistenceService.getAggregate();
+    twitterAggregate = new TwitterAggregate();
     twitterAggregate.setFilter(serverAggregate.getFilter());
 
     List<org.jboss.jbw2011.keynote.demo.model.Tweet> svrTweets = serverAggregate.getTweets();
