@@ -8,7 +8,7 @@ import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
 import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
-
+import javax.ejb.*;
 import javax.inject.Inject;
 import java.util.List;
 
@@ -20,9 +20,12 @@ import java.util.List;
  * The current impl polls, for updates, but will be updated to
  * listen for update events at some point.
  *
+ * //TODO change name of class to ServerContentListenerBean
+ *
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
-public class ServerContentUpdateListener {
+@Singleton
+public class ServerContentUpdateListener implements ServerContentListener {
   private static final long INTERVAL = 1000l;
 
   @Inject
@@ -36,10 +39,20 @@ public class ServerContentUpdateListener {
 
   private Tweet lastTweet = null;
 
+  @Override
   public void startServerListener() {
-    //TODO setup timed service
 
-    //TODO check if updates have been made
+    //TODO trigger teh polling of the server to start
+    // Investigating if it will start on its own
+    // but blocked by null entityManager
+
+  }
+
+  @Schedule(second = "0/10")
+  private void pollServer(){
+    log.info("ServerContentListener polling triggered");
+
+    //check if updates have been made
     if (updateContentAvailable()) {
 
       //Fetch the updates
@@ -53,6 +66,7 @@ public class ServerContentUpdateListener {
 
     }
 
+    log.info("ServerContentListener polling completed");
   }
 
   private boolean updateContentAvailable() {
