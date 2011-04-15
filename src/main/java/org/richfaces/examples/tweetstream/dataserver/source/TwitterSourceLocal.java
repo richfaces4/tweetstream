@@ -74,7 +74,7 @@ public class TwitterSourceLocal implements TwitterSource {
     System.out.println("-------cacheBuilder.getCache().--" + cacheBuilder.getCache().containsKey("tweetaggregate"));
 
     //Start the twitter streaming
-    //tweetListener.startTwitterStream();
+    tweetListener.startTwitterStream();
 
 
     log.info("Initialization of twitter source local complete");
