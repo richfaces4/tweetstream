@@ -22,8 +22,8 @@
 package org.richfaces.examples.tweetstream.dataserver.source;
 
 import org.jboss.jbw2011.keynote.demo.model.*;
-import org.richfaces.examples.tweetstream.dataserver.listeners.ServerContentUpdateListener;
 import org.richfaces.examples.tweetstream.dataserver.service.TweetStreamPersistenceService ;
+import org.richfaces.examples.tweetstream.dataserver.listeners.ServerContentListener;
 import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
 import org.richfaces.examples.tweetstream.domain.*;
 import org.richfaces.examples.tweetstream.domain.Tweet;
@@ -33,10 +33,7 @@ import org.jboss.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
-import javax.enterprise.inject.New;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -58,7 +55,7 @@ public class TwitterSourceServer implements TwitterSource {
   private TweetStreamPersistenceService persistenceService;
 
   @Inject
-  private ServerContentUpdateListener serverListener;
+  private ServerContentListener serverListener;
 
   private TwitterAggregate twitterAggregate;
 
