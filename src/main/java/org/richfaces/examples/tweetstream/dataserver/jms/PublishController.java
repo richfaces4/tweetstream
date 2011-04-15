@@ -56,6 +56,7 @@ public class PublishController implements Serializable {
   }
 
   public void publishView(TwitterAggregate twitterAggregate) {
+    //TODO Update to contain more than just tweet updates
     String tweetString = "{\"tweets\":[";
     if (twitterAggregate != null && twitterAggregate.getTweets() != null) {
 
@@ -75,16 +76,15 @@ public class PublishController implements Serializable {
              tweetString += ",";
           }
 
-
        }
 
     }
 
     try {
+      //TODO Wesley - so you want a separate JMS pub for each type of data?  Can we condense to one?
       getTopicsContext().publish(new TopicKey("twitter", "incoming_tweets"), MessageFormat.format("{0}", tweetString));
     } catch (Exception e) {
       log.error(e.getMessage(), e);
-      //System.out.println(e.getMessage());
     }
   }
 

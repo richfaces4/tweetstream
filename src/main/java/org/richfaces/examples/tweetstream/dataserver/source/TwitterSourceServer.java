@@ -24,6 +24,7 @@ package org.richfaces.examples.tweetstream.dataserver.source;
 import org.jboss.jbw2011.keynote.demo.model.*;
 import org.jboss.jbw2011.keynote.demo.persistence.PersistenceService;
 import org.jboss.jbw2011.keynote.demo.persistence.PersistenceServiceBean;
+import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
 import org.richfaces.examples.tweetstream.domain.*;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.Tweeter;
@@ -62,6 +63,8 @@ public class TwitterSourceServer implements TwitterSource {
 
   @PostConstruct
   private void init() {
+    log.info("Initialization of twitter source server started");
+
     //First go fetch update data
     fetchContent();
 
@@ -98,57 +101,9 @@ public class TwitterSourceServer implements TwitterSource {
   public void fetchContent() {
     //Check if updating data is required
     if (performSearch()){
-      transformTwitterAggregate();
+      TweetAggregate serverAggregate = persistenceService.getAggregate();
+      twitterAggregate = TweetAggregateConverter.convertTwitterAggregate(serverAggregate);
     }
-
-
-  }
-
-  private void transformTwitterAggregate() {
-    TweetAggregate serverAggregate = persistenceService.getAggregate();
-    twitterAggregate = new TwitterAggregate();
-    twitterAggregate.setFilter(serverAggregate.getFilter());
-
-    List<org.jboss.jbw2011.keynote.demo.model.Tweet> svrTweets = serverAggregate.getTweets();
-    List<Tweet> tweets = new ArrayList<Tweet>();
-
-    for (org.jboss.jbw2011.keynote.demo.model.Tweet svrTweet : svrTweets) {
-      Tweet tweet = new Tweet();
-      tweet.setText(svrTweet.getMessage());
-      tweet.setScreenName(svrTweet.getScreenName());
-      tweet.setProfileImageUrl(svrTweet.getProfileImageURL());
-      tweet.setId(svrTweet.getUserId());
-      tweet.setHashTags(svrTweet.getHashtagsAsArray());
-      tweets.add(tweet);
-    }
-
-    twitterAggregate.setTweets(tweets);
-
-    List<Hashtag> svrHashtags = serverAggregate.getTopHashtags();
-    List<HashTag> hashTags = new ArrayList<HashTag>();
-
-    for (Hashtag svrHashtag : svrHashtags) {
-      HashTag tag = new HashTag();
-      tag.setHashtag(svrHashtag.getHashtag());
-      tag.setCount(svrHashtag.getCount());
-      hashTags.add(tag);
-    }
-
-    twitterAggregate.setTopHashTags(hashTags);
-
-    List<org.jboss.jbw2011.keynote.demo.model.Tweeter> svrTweeters = serverAggregate.getTopTweeters();
-    List<Tweeter> tweeters = new ArrayList<Tweeter>();
-
-    for (org.jboss.jbw2011.keynote.demo.model.Tweeter svrTweeter : svrTweeters) {
-      Tweeter tweeter = new Tweeter();
-      tweeter.setUser(svrTweeter.getUser());
-      tweeter.setUserId(svrTweeter.getUserId());
-      tweeter.setProfileImgUrl(svrTweeter.getProfileImgUrl());
-      tweeter.setTweetCount(svrTweeter.getTweetCount());
-      tweeters.add(tweeter);
-    }
-
-    twitterAggregate.setTopTweeters(tweeters);
 
   }
 
