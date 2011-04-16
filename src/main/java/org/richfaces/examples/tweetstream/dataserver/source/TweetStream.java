@@ -21,30 +21,54 @@
  */
 package org.richfaces.examples.tweetstream.dataserver.source;
 
+import org.jboss.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
+import javax.enterprise.util.AnnotationLiteral;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
+import java.lang.annotation.Annotation;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 
 @ApplicationScoped
 public class TweetStream
 {
-
    @Inject
-   TwitterSource twitterSource;
+   Logger log;
 
-   @Produces
-   TwitterSource getTwitterSource(@TwitterLocal TwitterSource twitterLocal,
-                                @TwitterServer TwitterSource twitterServer){
-      return twitterServer != null ? twitterServer : twitterLocal;
-   }
+   @Inject @Any Instance<TwitterSource> twitterSource;
+
+   class TwitterServerQualifier extends AnnotationLiteral<TwitterServer> implements TwitterServer {}
+   class TwitterLocalQualifier extends AnnotationLiteral<TwitterLocal> implements TwitterLocal {}
+
+//   @Produces
+//   TwitterSource getTwitterSource(@TwitterLocal TwitterSource twitterLocal,
+//                                @TwitterServer TwitterSource twitterServer){
+//      return twitterServer.checkDemo() ? twitterServer : twitterLocal;
+//   }
 
    @PostConstruct
    private void init(){
-      twitterSource.init();
+
+      boolean demoexists = false;
+      try {
+         Class.forName("org.jboss.jbw2011.keynote.demo.model.TweetAggregate");
+         log.info("Running in JBW2011 Demo Mode.");
+         demoexists = true;
+      } catch (ClassNotFoundException ex) {
+         log.info("Running in local JUDCon2011 Demo Mode.");
+      }
+
+
+      Annotation qualifier = demoexists ?
+      new TwitterServerQualifier() : new TwitterLocalQualifier();
+
+      twitterSource.select(qualifier).get().init();
    }
 
 

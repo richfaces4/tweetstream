@@ -21,7 +21,7 @@ import java.util.List;
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 @ManagedBean
-@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate.class")
+@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate")
 public class TweetAggregateConverter {
 
   public static TwitterAggregate convertTwitterAggregate(TweetAggregate serverAggregate) {

@@ -28,7 +28,7 @@ import org.jboss.jbw2011.keynote.demo.model.TweetAggregate ;
 import org.jboss.seam.solder.core.Requires;
 
 @Local
-@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate.class")
+@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate")
 public interface TweetStreamPersistenceService
 {
     public void saveTweet(final long timestamp, final String tweet, final String hashtags, final long id, final String name, final String screenName, final String profileImageURL) ;

@@ -46,7 +46,7 @@ import java.util.List;
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 @TwitterLocal
-@ManagedBean
+@ApplicationScoped
 public class TwitterSourceLocal implements TwitterSource {
 
   @Inject
@@ -82,7 +82,12 @@ public class TwitterSourceLocal implements TwitterSource {
     log.info("Initialization of twitter source local complete");
   }
 
-  @Override
+   public boolean checkDemo()
+   {
+      return false;
+   }
+
+   @Override
   public String getSearchTerm() {
     return twitterAggregate.getFilter();
   }

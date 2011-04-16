@@ -44,7 +44,7 @@ import org.jboss.seam.solder.core.Requires;
 @Singleton
 @ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 @Lock(LockType.READ)
-@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate.class")
+@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate")
 public class TweetStreamPersistenceServiceBean implements TweetStreamPersistenceService
 {
     @Inject

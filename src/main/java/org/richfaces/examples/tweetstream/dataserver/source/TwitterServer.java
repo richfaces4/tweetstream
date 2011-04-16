@@ -34,7 +34,6 @@ import java.lang.annotation.Target;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
-@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate.class")
 public @interface TwitterServer
 {
 }

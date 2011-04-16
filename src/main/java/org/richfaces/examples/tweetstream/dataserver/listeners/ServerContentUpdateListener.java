@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Singleton
 @Local(ServerContentListener.class)
-@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate.class")
+@Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate")
 public class ServerContentUpdateListener implements ServerContentListener {
   private static final String EVERY = "*";
 
