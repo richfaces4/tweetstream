@@ -48,15 +48,14 @@ public class TweetStream implements Serializable
    class TwitterLocalQualifier extends AnnotationLiteral<TwitterLocal> implements TwitterLocal {}
 
    boolean initialCheck = true;
+   boolean demoexists = false;
 
    @Produces
    public TwitterSource getTwitterSource(){
-      boolean demoexists = false;
+
       if(initialCheck){
-         System.out.println("-------------initialCheck-" + initialCheck);
          try {
             Class.forName("org.jboss.jbw2011.keynote.demo.model.TweetAggregate");
-            System.out.println("-------------JBW2011-");
             log.info("Running in JBW2011 Demo Mode.");
             demoexists = true;
          } catch (ClassNotFoundException ex) {
@@ -67,14 +66,11 @@ public class TweetStream implements Serializable
 
       Annotation qualifier = demoexists ?
       new TwitterServerQualifier() : new TwitterLocalQualifier();
-      System.out.println("-------------demoexists-" + demoexists);
-
       return twitterSource.select(qualifier).get();
    }
 
    @PostConstruct
    private void init(){
-      System.out.println("-------------init-");
       getTwitterSource().init();
    }
 

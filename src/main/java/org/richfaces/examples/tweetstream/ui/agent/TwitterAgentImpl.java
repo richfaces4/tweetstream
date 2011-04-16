@@ -50,32 +50,30 @@ public class TwitterAgentImpl implements TwitterAgent, Serializable {
     private Tweet selectedTweet;
 
     @Inject
-    private TweetStream tweetStream;
-
-    TwitterSource source = tweetStream.getTwitterSource();
+    private TweetStream source;
 
     public void updateTweets(){
-      source.fetchContent();
+      source.getTwitterSource().fetchContent();
     }
 
     @Override
     public String getSearchTerm() {
-        return source.getSearchTerm();
+        return source.getTwitterSource().getSearchTerm();
     }
 
     @Override
     public List<Tweet> getTweets() {
-        return source.getTweets();
+        return source.getTwitterSource().getTweets();
     }
 
     @Override
     public List<Tweeter> getTweeters() {
-        return source.getTopTweeters();
+        return source.getTwitterSource().getTopTweeters();
     }
 
     @Override
     public List<HashTag> getHashtags() {
-        return source.getTopHashtags();
+        return source.getTwitterSource().getTopHashtags();
     }
 
     public Tweet getSelectedTweet() {
