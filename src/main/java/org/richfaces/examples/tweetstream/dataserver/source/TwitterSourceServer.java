@@ -65,18 +65,6 @@ public class TwitterSourceServer implements TwitterSource {
 
   private long lastSearch = -1l;
 
-   //one time check to determine which version we are running.
-  public boolean checkDemo(){
-     boolean demoexists = false;
-      try {
-         Class.forName("org.jboss.jbw2011.keynote.demo.model.TweetAggregate");
-         log.info("Running in JBW2011 Demo Mode.");
-         demoexists = true;
-      } catch (ClassNotFoundException ex) {
-         log.info("Running in local JUDCon2011 Demo Mode.");
-      }
-     return demoexists;
-  }
 
    public void init() {
      System.out.println("-------TwitterSourceServer--");

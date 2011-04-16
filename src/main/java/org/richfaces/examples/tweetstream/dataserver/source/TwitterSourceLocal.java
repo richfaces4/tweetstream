@@ -82,11 +82,6 @@ public class TwitterSourceLocal implements TwitterSource {
     log.info("Initialization of twitter source local complete");
   }
 
-   public boolean checkDemo()
-   {
-      return false;
-   }
-
    @Override
   public String getSearchTerm() {
     return twitterAggregate.getFilter();

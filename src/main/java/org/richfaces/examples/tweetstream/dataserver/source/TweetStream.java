@@ -46,29 +46,31 @@ public class TweetStream
    class TwitterServerQualifier extends AnnotationLiteral<TwitterServer> implements TwitterServer {}
    class TwitterLocalQualifier extends AnnotationLiteral<TwitterLocal> implements TwitterLocal {}
 
-//   @Produces
-//   TwitterSource getTwitterSource(@TwitterLocal TwitterSource twitterLocal,
-//                                @TwitterServer TwitterSource twitterServer){
-//      return twitterServer.checkDemo() ? twitterServer : twitterLocal;
-//   }
+   boolean initialCheck = true;
 
-   @PostConstruct
-   private void init(){
-
+   //@Produces
+   public TwitterSource getTwitterSource(){
       boolean demoexists = false;
-      try {
-         Class.forName("org.jboss.jbw2011.keynote.demo.model.TweetAggregate");
-         log.info("Running in JBW2011 Demo Mode.");
-         demoexists = true;
-      } catch (ClassNotFoundException ex) {
-         log.info("Running in local JUDCon2011 Demo Mode.");
+      if(initialCheck){
+         try {
+            Class.forName("org.jboss.jbw2011.keynote.demo.model.TweetAggregate");
+            log.info("Running in JBW2011 Demo Mode.");
+            demoexists = true;
+         } catch (ClassNotFoundException ex) {
+            log.info("Running in local JUDCon2011 Demo Mode.");
+         }
+         initialCheck = false;
       }
-
 
       Annotation qualifier = demoexists ?
       new TwitterServerQualifier() : new TwitterLocalQualifier();
 
-      twitterSource.select(qualifier).get().init();
+      return twitterSource.select(qualifier).get();
+   }
+
+   @PostConstruct
+   private void init(){
+      getTwitterSource().init();
    }
 
 

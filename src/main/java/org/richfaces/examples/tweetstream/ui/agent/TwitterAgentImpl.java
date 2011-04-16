@@ -22,6 +22,7 @@
 
 package org.richfaces.examples.tweetstream.ui.agent;
 
+import org.richfaces.examples.tweetstream.dataserver.source.TweetStream;
 import org.richfaces.examples.tweetstream.dataserver.source.TwitterSource;
 import org.richfaces.examples.tweetstream.domain.HashTag;
 import org.richfaces.examples.tweetstream.domain.Tweet;
@@ -49,7 +50,9 @@ public class TwitterAgentImpl implements TwitterAgent, Serializable {
     private Tweet selectedTweet;
 
     @Inject
-    private TwitterSource source;
+    private TweetStream tweetStream;
+
+    TwitterSource source = tweetStream.getTwitterSource();
 
     public void updateTweets(){
       source.fetchContent();

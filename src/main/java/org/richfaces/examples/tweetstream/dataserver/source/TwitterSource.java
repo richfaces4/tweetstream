@@ -38,8 +38,6 @@ public interface TwitterSource extends Serializable {
 
    public void init();
 
-   public boolean checkDemo();
-
    public void fetchContent();
 
     public String getSearchTerm();
