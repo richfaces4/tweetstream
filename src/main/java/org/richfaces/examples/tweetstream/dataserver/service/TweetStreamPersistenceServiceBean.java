@@ -137,7 +137,7 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
 	}
 
 	private ArrayList<Tweeter> getTopTweeters() {
-		ArrayList<Tweeter> topTweeters = new ArrayList<Tweeter>( 25 );
+		ArrayList<Tweeter> topTweeters = new ArrayList<Tweeter>( 10 );
 		int usersAddedCounter = 0;
 		for (ScoredTerm scoredTweeter : getTopScreenNames()){
 			List<Tweet> messagesByScreenName = messagesByScreenName( scoredTweeter.term, 1);
@@ -150,7 +150,7 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
 				tweeter.setUser( aTweetForThisUser.getScreenName() );
 				topTweeters.add( tweeter );
 				usersAddedCounter++;
-				if (usersAddedCounter>=25)
+				if (usersAddedCounter>=10)
 					break;
 			}
 		}
@@ -158,7 +158,7 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
 	}
 
 	private ArrayList<Hashtag> getAggregateTopHashTags() {
-		ArrayList<Hashtag> hashTags = new ArrayList<Hashtag>( 25 );
+		ArrayList<Hashtag> hashTags = new ArrayList<Hashtag>( 10 );
 		Set<ScoredTerm> topHashTags = getTopHashTags();
 		int tagsAddedCounter = 0;
 		for (ScoredTerm hashtag : topHashTags){
@@ -167,7 +167,7 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
 			tag.setHashtag( hashtag.term );
 			hashTags.add( tag );
 			tagsAddedCounter++;
-			if (tagsAddedCounter==25)
+			if (tagsAddedCounter==10)
 				break;
 		}
 		return hashTags;
