@@ -31,12 +31,13 @@ import javax.enterprise.inject.Produces;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 
-@ApplicationScoped
-public class TweetStream
+@ManagedBean
+public class TweetStream implements Serializable
 {
    @Inject
    Logger log;
@@ -48,12 +49,14 @@ public class TweetStream
 
    boolean initialCheck = true;
 
-   //@Produces
+   @Produces
    public TwitterSource getTwitterSource(){
       boolean demoexists = false;
       if(initialCheck){
+         System.out.println("-------------initialCheck-" + initialCheck);
          try {
             Class.forName("org.jboss.jbw2011.keynote.demo.model.TweetAggregate");
+            System.out.println("-------------JBW2011-");
             log.info("Running in JBW2011 Demo Mode.");
             demoexists = true;
          } catch (ClassNotFoundException ex) {
@@ -64,12 +67,14 @@ public class TweetStream
 
       Annotation qualifier = demoexists ?
       new TwitterServerQualifier() : new TwitterLocalQualifier();
+      System.out.println("-------------demoexists-" + demoexists);
 
       return twitterSource.select(qualifier).get();
    }
 
    @PostConstruct
    private void init(){
+      System.out.println("-------------init-");
       getTwitterSource().init();
    }
 
