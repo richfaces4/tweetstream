@@ -26,7 +26,8 @@ import java.util.List;
  */
 @Singleton
 public class ServerContentUpdateListener implements ServerContentListener {
-  private static final long INTERVAL = 1000l;
+  private static final String INTERVAL = "10";
+  private static final String EVERY = "*";
 
   @Inject
   Logger log;
@@ -42,31 +43,37 @@ public class ServerContentUpdateListener implements ServerContentListener {
   @Override
   public void startServerListener() {
 
-    //TODO trigger teh polling of the server to start
-    // Investigating if it will start on its own
-    // but blocked by null entityManager
+    //TODO Status the timer for the push.
+    //  This should not call pollServer right away
+    //  If it is called too early the you could get
+    //  Service Tracker has not been initialized error
+
+    //this.pollServer();
 
   }
 
-  @Schedule(second = "0/10")
+  //TODO Fix this so it does not start polling right away
+  @Schedule(dayOfMonth = EVERY, month = EVERY, year = EVERY, second = INTERVAL, minute = EVERY, hour = EVERY)
+  @Timeout
   private void pollServer(){
-    log.info("ServerContentListener polling triggered");
+    log.debug("ServerContentListener polling triggered");
 
     //check if updates have been made
     if (updateContentAvailable()) {
 
       //Fetch the updates
       TweetAggregate svrAggregate = persistenceService.getAggregate();
-      System.out.println("--------------svrAggregate.getTweets().size()-" + svrAggregate.getTweets().size());
+
       //Convert to local domain model
       TwitterAggregate twitterAggregate = TweetAggregateConverter.convertTwitterAggregate(svrAggregate);
 
       //Send push controller updated content to publish
-      pubControl.publishView(twitterAggregate);
+
+      //pubControl.publishView(twitterAggregate);
 
     }
 
-    log.info("ServerContentListener polling completed");
+    log.debug("ServerContentListener polling completed");
   }
 
   private boolean updateContentAvailable() {
@@ -75,15 +82,15 @@ public class ServerContentUpdateListener implements ServerContentListener {
     Tweet currentTweet = curTweetList.isEmpty() ? null : curTweetList.get(0);
 
     if ((lastTweet == null) || (currentTweet == null)) {
-      log.info("First check for new server content, or content still empty from server");
+      log.debug("First check for new server content, or content still empty from server");
       lastTweet = currentTweet;
       return true;
     } else if (lastTweet.getTimestamp() != currentTweet.getTimestamp()) {
-      log.info("Server content has been updated, content update required");
+      log.debug("Server content has been updated, content update required");
       lastTweet = currentTweet;
       return true;
     } else {
-      log.info("Server content has not been updated, no content update required");
+      log.debug("Server content has not been updated, no content update required");
       return false;
     }
   }

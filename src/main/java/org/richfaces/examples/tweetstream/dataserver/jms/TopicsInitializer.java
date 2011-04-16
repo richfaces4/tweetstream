@@ -35,50 +35,49 @@ import java.text.MessageFormat;
  * JSF System event, and initializes the JMS topic for push support
  *
  * @author <a href="mailto:whales@redhat.com">Wesley Hales</a>
- *
  */
 
-public class TopicsInitializer implements SystemEventListener
-{
+public class TopicsInitializer implements SystemEventListener {
 
-    public void processEvent(SystemEvent event) throws AbortProcessingException
-    {
-        TopicsContext topicsContext = TopicsContext.lookup();
+  public void processEvent(SystemEvent event) throws AbortProcessingException {
 
-        Topic topic = topicsContext.getOrCreateTopic(new TopicKey("twitter"));
+    TopicsContext topicsContext = TopicsContext.lookup();
 
-        topic.setMessageDataSerializer(DefaultMessageDataSerializer.instance());
+    Topic topic = topicsContext.getOrCreateTopic(new TopicKey("twitter"));
 
-        topic.addTopicListener(new SessionTopicListener() {
+    topic.setMessageDataSerializer(DefaultMessageDataSerializer.instance());
 
-            public void processUnsubscriptionEvent(SessionUnsubscriptionEvent event) throws EventAbortedException
-            {
-                TopicKey topicKey = event.getTopicKey();
-                Session session = event.getSession();
-                System.out.println(MessageFormat.format("Session {0} disconnected from {1}", session.getId(),
-                   topicKey.getTopicAddress()));
-            }
+    topic.addTopicListener(new SessionTopicListener() {
 
-            public void processSubscriptionEvent(SessionSubscriptionEvent event) throws EventAbortedException {
-                TopicKey topicKey = event.getTopicKey();
-                Session session = event.getSession();
+      public void processUnsubscriptionEvent(SessionUnsubscriptionEvent event) throws EventAbortedException {
+        TopicKey topicKey = event.getTopicKey();
+        Session session = event.getSession();
+        System.out.println(MessageFormat.format("Session {0} disconnected from {1}", session.getId(),
+                topicKey.getTopicAddress()));
+      }
 
-                FacesContext facesContext = FacesContext.getCurrentInstance();
-                HttpServletRequest hsr = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+      public void processSubscriptionEvent(SessionSubscriptionEvent event) throws EventAbortedException {
+        System.out.println("INIT FOR TOPICS processSubscriptionEvent!!!!!");
+        TopicKey topicKey = event.getTopicKey();
+        Session session = event.getSession();
 
-                System.out.println(MessageFormat.format("Session {0} connected to {1} from {2}", session.getId(),
-                    topicKey.getTopicAddress(), hsr.getRemoteAddr()));
-            }
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletRequest hsr = (HttpServletRequest) facesContext.getExternalContext().getRequest();
 
-            public void processPreSubscriptionEvent(SessionPreSubscriptionEvent event) throws EventAbortedException {
+        System.out.println(MessageFormat.format("Session {0} connected to {1} from {2}", session.getId(),
+                topicKey.getTopicAddress(), hsr.getRemoteAddr()));
+      }
 
-            }
-        });
-    }
+      public void processPreSubscriptionEvent(SessionPreSubscriptionEvent event) throws EventAbortedException {
 
-    public boolean isListenerForSource(Object source) {
-        return true;
-    }
+      }
+    });
+
+  }
+
+  public boolean isListenerForSource(Object source) {
+    return true;
+  }
 
 }
 

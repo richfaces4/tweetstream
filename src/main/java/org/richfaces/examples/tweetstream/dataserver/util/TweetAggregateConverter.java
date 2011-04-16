@@ -25,8 +25,12 @@ public class TweetAggregateConverter {
 
     twAggragate.setFilter(serverAggregate.getFilter());
 
+    System.out.println("TEMP: TweetAggregate filter : " + twAggragate.getFilter());
+
     List<Tweet> svrTweets = serverAggregate.getTweets();
     List<org.richfaces.examples.tweetstream.domain.Tweet> tweets = new ArrayList<org.richfaces.examples.tweetstream.domain.Tweet>();
+
+    System.out.println("TEMP: TweetAggregate contains : " + svrTweets.size() + " Tweets");
 
     for (org.jboss.jbw2011.keynote.demo.model.Tweet svrTweet : svrTweets) {
       org.richfaces.examples.tweetstream.domain.Tweet tweet = new org.richfaces.examples.tweetstream.domain.Tweet();
@@ -43,6 +47,8 @@ public class TweetAggregateConverter {
     List<Hashtag> svrHashtags = serverAggregate.getTopHashtags();
     List<HashTag> hashTags = new ArrayList<HashTag>();
 
+    System.out.println("TEMP: TweetAggregate contains : " + svrHashtags.size() + " HashTags");
+
     for (Hashtag svrHashtag : svrHashtags) {
       HashTag tag = new HashTag();
       tag.setHashtag(svrHashtag.getHashtag());
@@ -54,6 +60,8 @@ public class TweetAggregateConverter {
 
     List<org.jboss.jbw2011.keynote.demo.model.Tweeter> svrTweeters = serverAggregate.getTopTweeters();
     List<Tweeter> tweeters = new ArrayList<Tweeter>();
+
+    System.out.println("TEMP: TweetAggregate contains : " + svrTweeters.size() + " Tweeters");
 
     for (org.jboss.jbw2011.keynote.demo.model.Tweeter svrTweeter : svrTweeters) {
       Tweeter tweeter = new Tweeter();

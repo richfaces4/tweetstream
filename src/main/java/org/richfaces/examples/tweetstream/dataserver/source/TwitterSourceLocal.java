@@ -72,7 +72,6 @@ public class TwitterSourceLocal implements TwitterSource {
 
     //Populate cache with seed data from this class
     cacheBuilder.getCache().put("tweetaggregate", twitterAggregate);
-    System.out.println("-------cacheBuilder.getCache().--" + cacheBuilder.getCache().containsKey("tweetaggregate"));
 
     //Start the twitter streaming
     tweetListener.startTwitterStream();
