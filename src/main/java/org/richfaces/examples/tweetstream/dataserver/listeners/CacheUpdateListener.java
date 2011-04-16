@@ -29,6 +29,7 @@ import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
 
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
 /**
@@ -36,13 +37,14 @@ import javax.inject.Inject;
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
 @Listener
+@ManagedBean
 public class CacheUpdateListener {
 
   //@Inject
   //private Logger log;
 
-   @Inject
-   PublishController pubControl;
+
+   PublishController pubControl = new PublishController();
 
   @CacheEntryModified
   @CacheEntryCreated
