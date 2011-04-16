@@ -82,7 +82,6 @@ public class PublishController implements Serializable {
 
     try {
       log.debug("Pushing Message : " + tweetString);
-      //TODO Wesley - so you want a separate JMS pub for each type of data?  Can we condense to one?
       getTopicsContext().publish(new TopicKey("twitter", "incoming_tweets"), MessageFormat.format("{0}", tweetString));
     } catch (Exception e) {
       log.error(e.getMessage(), e);
