@@ -70,7 +70,6 @@ public class TwitterSourceLocal implements TwitterSource
 
    public void init()
    {
-      System.out.println("-------TwitterSourceLocal--");
       //TODO Wrap in what ever try/catch is needed
       fetchContent();
 
