@@ -69,7 +69,7 @@ public class TwitterSourceServer implements TwitterSource {
     fetchContent();
 
     //Trigger polling of server, which will push updates to clients
-    serverListener.startServerListener();
+    //serverListener.startServerListener();
 
     log.info("Initialization of twitter source server complete");
   }
@@ -109,17 +109,14 @@ public class TwitterSourceServer implements TwitterSource {
   private boolean performSearch() {
     if (lastSearch > 0) {
       long current = new Date().getTime();
-      if (current - lastSearch > 5000) {
-        log.debug("****** Enough time past - fetching new data--" + current + "-" + lastSearch + "=" + (current - lastSearch));
+      if (current - lastSearch > 1000) {
         lastSearch = current;
         return true;
       } else {
-        log.debug("****** NOT enough time past - NOT fetching new data--" + current + "-" + lastSearch + "=" + (current - lastSearch));
         return false;
       }
     } else {
       lastSearch = new Date().getTime();
-      log.debug("****** First time through - fetching new data");
       return true;
     }
   }

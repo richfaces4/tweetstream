@@ -36,6 +36,11 @@
 
     <ui:define name="body">
         <h:form>
+            <!-- TODO temp polling server for updates - replace with push -->
+            <a4j:poll id="poll" interval="2500" enabled="true"
+                      render="browser_form" action="#{twitterAgent.updateTweets}"/>
+        </h:form>
+        <h:form id="browser_form">
             <div id="browser">
                 <div id="header" class="header-gradient">
                     <h1>TweetStream Tablet</h1>
