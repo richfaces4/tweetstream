@@ -50,6 +50,12 @@ public class TweetStream implements Serializable
    boolean initialCheck = true;
    boolean demoexists = false;
 
+   @PostConstruct
+   private void init(){
+      getTwitterSource().init();
+   }
+
+
    @Produces
    public TwitterSource getTwitterSource(){
 
@@ -69,10 +75,6 @@ public class TweetStream implements Serializable
       return twitterSource.select(qualifier).get();
    }
 
-   @PostConstruct
-   private void init(){
-      getTwitterSource().init();
-   }
 
 
 }
