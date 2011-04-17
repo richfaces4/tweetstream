@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
+
+   <context-param>
+      <param-name>org.richfaces.push.jms.connectionUsername</param-name>
+      <param-value>guest</param-value>
+   </context-param>
+   <context-param>
+      <param-name>org.richfaces.push.jms.connectionPassword</param-name>
+      <param-value>guest</param-value>
+   </context-param>
+    <context-param>
+      <param-name>org.richfaces.examples.tweetstream.searchTermBase</param-name>
+      <param-value>#jboss</param-value>
+   </context-param>
+    <filter>
+        <filter-name>PushFilter</filter-name>
+        <filter-class>org.richfaces.webapp.PushFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>PushFilter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+
+
+   <!-- Activate the JSF 2.0 servlet -->
+   <servlet>
+      <servlet-name>Faces Servlet</servlet-name>
+      <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+
+   <!-- Tell the context which URLs to process as facelets.  -->
+   <servlet-mapping>
+      <servlet-name>Faces Servlet</servlet-name>
+      <url-pattern>*.jsf</url-pattern>
+   </servlet-mapping>
+
+   <!-- This is an optional parameter, but it makes troubleshooting errors much easier.  -->
+   <!-- You may want to delete it before final deployment -->
+   <context-param>
+      <param-name>facelets.DEVELOPMENT</param-name>
+      <param-value>true</param-value>
+   </context-param>
+
+</web-app>

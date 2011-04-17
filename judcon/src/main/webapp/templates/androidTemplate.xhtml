@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="commonTemplate.xhtml">
+
+   <ui:define name="metadata">
+
+      <ui:insert name="metadata"/>
+   </ui:define>
+
+   <ui:define name="head">
+
+      <title>TweetStream Android Device</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+      <!--this particular viewport setting accounts for all device widths (android and iphone)-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+      <!-- enable full-screen mode -->
+      <meta name="apple-mobile-web-app-capable" content="yes"/>
+      <!-- controls the appearance of the status bar in full-screen mode -->
+      <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+      <h:outputStylesheet name="css/iphone.css"/>
+
+      <script type="text/javascript">
+         //TODO - create global .js to be used only for mobile devices
+         function hideURLbar()
+         {
+            setTimeout(scrollTo, 0, 0, 1);
+         }
+      </script>
+      <ui:insert name="head"/>
+   </ui:define>
+   <ui:param name="onLoadFunction" value="hideURLbar()"/>
+   <ui:define name="body">
+
+      <ui:insert name="body"/>
+   </ui:define>
+</ui:composition>

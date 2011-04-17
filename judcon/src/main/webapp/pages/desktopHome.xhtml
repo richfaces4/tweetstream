@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/templates/desktopTemplate.xhtml">
+
+   <ui:define name="metadata">
+      <f:metadata>
+         <f:event type="preRenderView" listener="#{twitterAgent.updateTweets}"/>
+      </f:metadata>
+   </ui:define>
+
+
+   <ui:define name="head">
+
+      <script type="text/javascript">
+         <!--
+         function stageTweets(e)
+         {
+
+            var arr = JSON.parse(e);
+            document.getElementById('tweet-list').innerHTML = '';
+            for (var i = 0; i < arr.tweets.length; i++)
+            {
+               var tweet = arr.tweets[i];
+
+               //document.getElementById('tweetstreamOutput').innerHTML += tweet.text;
+               var tweetcontainer = document.createElement("div");
+               tweetcontainer.innerHTML = tweet.text;
+               tweetcontainer.style.border = '1px solid black';
+               document.getElementById('tweet-list').appendChild(tweetcontainer);
+            }
+         }
+         // -->
+      </script>
+      <ui:insert name="head"/>
+   </ui:define>
+
+
+   <ui:define name="content">
+      <h2>Tweets</h2>
+
+      <h:form>
+
+         <a4j:push address="incoming_tweets@twitter"
+
+                   onerror="alert(event.rf.data)"
+                   ondataavailable="stageTweets(event.rf.data)">
+         </a4j:push>
+
+      </h:form>
+
+      <div id="tweet-list"></div>
+      <div id="incoming-tweet"></div>
+
+
+      <rich:panel styleClass="tweetOutput" id="tweetstreamOutput"
+                  bodyClass="tweetstreamOutput"/>
+
+      <h:dataTable var="_tweet" value="#{twitterAgent.tweets}">
+         <h:column>
+            <f:facet name="header">From</f:facet>
+            #{_tweet.screenName}
+         </h:column>
+         <h:column>
+            <f:facet name="header">Text</f:facet>
+            #{_tweet.text}
+         </h:column>
+      </h:dataTable>
+   </ui:define>
+</ui:composition>

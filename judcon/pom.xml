@@ -3,62 +3,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.richfaces.examples.tweetstream</groupId>
-  <artifactId>parent</artifactId>
-  <packaging>pom</packaging>
-  <name>tweetstream-demo</name>
+  <artifactId>judcon</artifactId>
+  <packaging>war</packaging>
+  <name>tweetstream-judcon</name>
   <version>1.0.0-SNAPSHOT</version>
 
-  <properties>
-    <!--
-       Explicitly declaring the source encoding eliminates the following message:
-       [WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
-    -->
-     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-     <!--
-        To set the jboss.home environment variable the Maven way, set the jboss.home property in an active profile in
-        the Maven 2 settings.xml file
-     -->
-     <!--<jboss.home>${env.JBOSS_HOME}</jboss.home>-->
-     <jboss.domain>default</jboss.domain>
-     <!-- The version of Weld extensions in use -->
-     <weld.extensions.version>1.0.0-CR2</weld.extensions.version>
-  </properties>
+   <parent>
+    <groupId>org.richfaces.examples.tweetstream</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
 
-  <repositories>
-    <!-- Several key Java EE APIs and RIs are missing from the Maven Central Repository -->
-     <!-- The goal is to eventually eliminate the reliance on the JBoss repository -->
-     <repository>
-      <id>jboss-public-repository-group</id>
-      <name>JBoss Public Maven Repository Group</name>
-      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-      <layout>default</layout>
-      <releases>
-        <enabled>true</enabled>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>never</updatePolicy>
-      </snapshots>
-    </repository>
-  </repositories>
 
-  <dependencyManagement>
     <dependencies>
-      <!-- Import scope will provide versions for dependencies below. -->
-       <dependency>
-        <groupId>org.jboss.weld</groupId>
-        <artifactId>weld-extensions-bom</artifactId>
-        <version>${weld.extensions.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-       <!-- CDI (JSR-299) -->
+    <!-- CDI (JSR-299) -->
        <dependency>
       <groupId>javax.enterprise</groupId>
       <artifactId>cdi-api</artifactId>
-       <version>1.0</version>
       <scope>provided</scope>
     </dependency>
        <!-- EJB -->
@@ -66,21 +28,18 @@
       <groupId>org.jboss.ejb3</groupId>
       <artifactId>jboss-ejb3-api</artifactId>
       <scope>provided</scope>
-      <version>3.1.0</version>
     </dependency>
        <!-- Common annotations (e.g., @PostConstruct, @PreDestroy, @Generated, @Resource) -->
        <dependency>
       <groupId>javax.annotation</groupId>
       <artifactId>jsr250-api</artifactId>
       <scope>provided</scope>
-       <version>1.0</version>
     </dependency>
        <!-- Bean Validation (JSR-303) -->
        <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
       <scope>provided</scope>
-       <version>1.0.0.GA</version>
     </dependency>
        <!-- Bean Validation Implementation -->
        <!-- Provides portable constraints such as @NotEmpty, @Email and @Url -->
@@ -88,7 +47,6 @@
        <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
-      <version>4.0.0.GA</version>
       <scope>provided</scope>
     </dependency>
        <!-- JSF -->
@@ -96,14 +54,12 @@
       <groupId>javax.faces</groupId>
       <artifactId>jsf-api</artifactId>
       <scope>provided</scope>
-       <version>2.0.2-FCS</version>
     </dependency>
 
     <dependency>
       <groupId>javax.faces</groupId>
       <artifactId>jsf-impl</artifactId>
       <scope>provided</scope>
-       <version>2.0.2-FCS</version>
     </dependency>
 
        <!-- JPA -->
@@ -111,14 +67,12 @@
       <groupId>javax.persistence</groupId>
       <artifactId>persistence-api</artifactId>
       <scope>provided</scope>
-       <version>1.0</version>
     </dependency>
 
        <!-- Optional, but highly recommended. -->
        <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>5.10</version>
       <scope>test</scope>
       <classifier>jdk15</classifier>
     </dependency>
@@ -129,8 +83,7 @@
       <artifactId>el-impl</artifactId>
       <scope>runtime</scope>
           <!-- FIXME this version should be in the Weld API BOM -->
-          <version>2.1.2-b04</version>
-      <exclusions>
+          <exclusions>
         <exclusion>
           <groupId>javax.el</groupId>
           <artifactId>el-api</artifactId>
@@ -141,137 +94,105 @@
     <dependency>
       <groupId>org.twitter4j</groupId>
       <artifactId>twitter4j-core</artifactId>
-      <version>[2.2.1,)</version>
     </dependency>
 
     <dependency>
       <groupId>org.twitter4j</groupId>
       <artifactId>twitter4j-stream</artifactId>
-      <version>[2.2.1,)</version>
     </dependency>
 
     <dependency>
       <groupId>org.atmosphere</groupId>
       <artifactId>atmosphere-runtime</artifactId>
-      <version>0.6.4</version>
     </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <scope>provided</scope>
-       <version>2.5</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
       <artifactId>jsp-api</artifactId>
       <scope>provided</scope>
-       <version>2.2</version>
     </dependency>
 
     <dependency>
       <groupId>org.richfaces.ui</groupId>
       <artifactId>richfaces-components-ui</artifactId>
-      <version>4.0.0.Final</version>
     </dependency>
     <dependency>
       <groupId>org.richfaces.ui</groupId>
       <artifactId>richfaces-components-api</artifactId>
-      <version>4.0.0.Final</version>
     </dependency>
     <dependency>
       <groupId>org.richfaces.core</groupId>
       <artifactId>richfaces-core-impl</artifactId>
-      <version>4.0.0.Final</version>
     </dependency>
 
     <dependency>
       <groupId>org.jboss.weld</groupId>
       <artifactId>weld-core</artifactId>
-      <version>1.1.0.CR3</version>
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
+       <!--<dependency>-->
+       <!--<groupId>org.jboss.weld</groupId>-->
+       <!--<artifactId>weld-extensions</artifactId>-->
+       <!--<version>1.0.0.Beta1</version>-->
+       <!--<scope>provided</scope>-->
+       <!--</dependency>-->
+
+       <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
-      <version>3.0.0.Beta4</version>
       <scope>provided</scope>
     </dependency>
 
      <dependency>
        <groupId>org.jboss.seam.solder</groupId>
        <artifactId>seam-solder</artifactId>
-       <version>3.0.0.Beta1</version>
      </dependency>
 
     <dependency>
       <groupId>org.infinispan</groupId>
       <artifactId>infinispan-core</artifactId>
-      <version>5.0.0.BETA1</version>
     </dependency>
 
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>2.3</version>
     </dependency>
 
+
+
+
   </dependencies>
-    </dependencyManagement>
-  <build>
-    <finalName>${artifactId}</finalName>
-    <plugins>
-      <!-- Compiler plugin enforces Java 1.6 compatiblity -->
-       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
 
-       <!-- Eclipse plugin can force download of source and JavaDoc jars -->
-       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <configuration>
-          <wtpversion>2.0</wtpversion>
-           <!--
-           <downloadSources>true</downloadSources>
-           <downloadJavadocs>true</downloadJavadocs>
-           -->
-        </configuration>
-      </plugin>
-
-       <!-- Configure the JBoss AS Maven deploy plugin -->
-       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jboss-maven-plugin</artifactId>
-        <configuration>
-          <jbossHome>${jboss.home}</jbossHome>
-          <serverName>${jboss.domain}</serverName>
-          <fileNames>
-            <fileName>${project.build.directory}/${build.finalName}.war</fileName>
-          </fileNames>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
-   <modules>
-       <module>judcon</module>
-    </modules>
-
-  <profiles>
+   <profiles>
     <profile>
       <id>keynote</id>
+       <dependencies>
+         <dependency>
+          <groupId>org.jboss.jbw2011.keynote</groupId>
+          <artifactId>demo-persistence</artifactId>
+          <version>1.0-SNAPSHOT</version>
+        </dependency>
 
-       <modules>
-          <module>jbw</module>
-          <module>judcon</module>
-       </modules>
+          <dependency>
+          <groupId>org.richfaces.examples.tweetstream</groupId>
+            <artifactId>jbw</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+           <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-core</artifactId>
+              <scope>provided</scope>
+          </dependency>
+        </dependencies>
     </profile>
   </profiles>
+
+
 </project>

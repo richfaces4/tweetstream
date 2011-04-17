@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.richfaces.examples.tweetstream</groupId>
+  <artifactId>jbw</artifactId>
+  <packaging>jar</packaging>
+  <name>tweetstream-jbw</name>
+  <version>1.0.0-SNAPSHOT</version>
+
+   <parent>
+    <groupId>org.richfaces.examples.tweetstream</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+
+  <repositories>
+    <!-- Several key Java EE APIs and RIs are missing from the Maven Central Repository -->
+     <!-- The goal is to eventually eliminate the reliance on the JBoss repository -->
+     <repository>
+      <id>jboss-public-repository-group</id>
+      <name>JBoss Public Maven Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
+
+    <dependencies>
+
+<dependency>
+      <groupId>javax.enterprise</groupId>
+      <artifactId>cdi-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+       <!-- EJB -->
+       <dependency>
+      <groupId>org.jboss.ejb3</groupId>
+      <artifactId>jboss-ejb3-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+       <!-- Common annotations (e.g., @PostConstruct, @PreDestroy, @Generated, @Resource) -->
+       <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>jsr250-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+       <!-- Bean Validation (JSR-303) -->
+       <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+       <!-- Bean Validation Implementation -->
+       <!-- Provides portable constraints such as @NotEmpty, @Email and @Url -->
+       <!-- Hibernate Validator is only the JSR-303 implementation at the moment, so we can assume it's provided -->
+       <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <scope>provided</scope>
+    </dependency>
+       <!-- JSF -->
+       <dependency>
+      <groupId>javax.faces</groupId>
+      <artifactId>jsf-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.faces</groupId>
+      <artifactId>jsf-impl</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+       <!-- JPA -->
+       <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>persistence-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+       <!-- Optional, but highly recommended. -->
+       <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <scope>test</scope>
+      <classifier>jdk15</classifier>
+    </dependency>
+
+       <!-- Needed on JBoss AS as EL is out of date -->
+       <dependency>
+      <groupId>org.glassfish.web</groupId>
+      <artifactId>el-impl</artifactId>
+      <scope>runtime</scope>
+          <!-- FIXME this version should be in the Weld API BOM -->
+          <exclusions>
+        <exclusion>
+          <groupId>javax.el</groupId>
+          <artifactId>el-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+       <dependency>
+      <groupId>org.jboss.weld</groupId>
+      <artifactId>weld-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+       <!--<dependency>-->
+       <!--<groupId>org.jboss.weld</groupId>-->
+       <!--<artifactId>weld-extensions</artifactId>-->
+       <!--<version>1.0.0.Beta1</version>-->
+       <!--<scope>provided</scope>-->
+       <!--</dependency>-->
+
+       <dependency>
+      <groupId>org.jboss.logging</groupId>
+      <artifactId>jboss-logging</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+     <dependency>
+       <groupId>org.jboss.seam.solder</groupId>
+       <artifactId>seam-solder</artifactId>
+     </dependency>
+
+
+        <dependency>
+          <groupId>org.jboss.jbw2011.keynote</groupId>
+          <artifactId>demo-persistence</artifactId>
+          <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-core</artifactId>
+          <version>3.6.3.Final</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-entitymanager</artifactId>
+          <version>3.6.3.Final</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.hibernate.ogm</groupId>
+          <artifactId>hibernate-ogm-core</artifactId>
+          <version>3.0.0-SNAPSHOT</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.infinispan</groupId>
+          <artifactId>infinispan-core</artifactId>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.twitter4j</groupId>
+          <artifactId>twitter4j-core</artifactId>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.twitter4j</groupId>
+          <artifactId>twitter4j-stream</artifactId>
+          <scope>provided</scope>
+        </dependency>
+         <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
+
+
+
+</project>
