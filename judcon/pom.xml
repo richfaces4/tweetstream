@@ -63,14 +63,14 @@
     </dependency>
 
        <!-- JPA -->
-       <dependency>
+    <dependency>
       <groupId>javax.persistence</groupId>
       <artifactId>persistence-api</artifactId>
       <scope>provided</scope>
     </dependency>
 
        <!-- Optional, but highly recommended. -->
-       <dependency>
+    <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <scope>test</scope>
@@ -78,7 +78,7 @@
     </dependency>
 
        <!-- Needed on JBoss AS as EL is out of date -->
-       <dependency>
+    <dependency>
       <groupId>org.glassfish.web</groupId>
       <artifactId>el-impl</artifactId>
       <scope>runtime</scope>
@@ -163,9 +163,6 @@
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
     </dependency>
-
-
-
 
   </dependencies>
 
