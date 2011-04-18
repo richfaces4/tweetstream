@@ -191,7 +191,7 @@
     <profile>
       <id>keynote</id>
        <activation>
-          <activeByDefault>true</activeByDefault>
+          <property>!judcon</property>
        </activation>
        <dependencies>
          <dependency>
