@@ -17,6 +17,7 @@
 
 
     <dependencies>
+
     <!-- CDI (JSR-299) -->
        <dependency>
       <groupId>javax.enterprise</groupId>
@@ -157,6 +158,7 @@
     <dependency>
       <groupId>org.infinispan</groupId>
       <artifactId>infinispan-core</artifactId>
+       <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -167,8 +169,15 @@
     <dependency>
        <groupId>org.slf4j</groupId>
        <artifactId>slf4j-api</artifactId>
+       <version>1.5.9.RC1</version>
        <scope>provided</scope>
      </dependency>
+
+        <dependency>
+          <groupId>org.richfaces.examples.tweetstream</groupId>
+            <artifactId>shared</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 
     <!--<dependency>-->
        <!--<groupId>org.jgroups</groupId>-->
@@ -186,6 +195,16 @@
           <groupId>org.jboss.jbw2011.keynote</groupId>
           <artifactId>demo-persistence</artifactId>
           <version>1.0-SNAPSHOT</version>
+            <exclusions>
+               <exclusion>
+                  <groupId>org.hibernate.ogm</groupId>
+                  <artifactId>hibernate-ogm-core</artifactId>
+               </exclusion>
+               <exclusion>
+                  <groupId>org.hibernate</groupId>
+                  <artifactId>hibernate-search</artifactId>
+               </exclusion>
+            </exclusions>
         </dependency>
 
           <dependency>

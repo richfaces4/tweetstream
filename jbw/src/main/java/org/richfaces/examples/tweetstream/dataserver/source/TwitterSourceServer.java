@@ -23,15 +23,19 @@ package org.richfaces.examples.tweetstream.dataserver.source;
 
 
 //import org.jboss.jbw2011.keynote.demo.model.TweetAggregate;
+import org.jboss.jbw2011.keynote.demo.model.TweetAggregate;
 import org.jboss.logging.Logger;
 import org.jboss.seam.solder.core.Requires;
 
+import org.richfaces.examples.tweetstream.dataserver.service.TweetStreamPersistenceService;
+import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
 import org.richfaces.examples.tweetstream.domain.HashTag;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.Tweeter;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Inject;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +57,8 @@ public class TwitterSourceServer implements TwitterSource
    Logger log;
 
 
-
+   @Inject
+   TweetStreamPersistenceService persistenceService;
 
    private TwitterAggregate twitterAggregate;
 
@@ -107,8 +112,8 @@ public class TwitterSourceServer implements TwitterSource
       //Check if updating data is required
       if (performSearch())
       {
-         //TweetAggregate serverAggregate = persistenceService.getAggregate();
-         //twitterAggregate = TweetAggregateConverter.convertTwitterAggregate(serverAggregate);
+         TweetAggregate serverAggregate = persistenceService.getAggregate();
+         twitterAggregate = TweetAggregateConverter.convertTwitterAggregate(serverAggregate);
       }
 
    }

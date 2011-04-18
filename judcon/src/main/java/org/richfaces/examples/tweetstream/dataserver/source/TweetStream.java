@@ -24,14 +24,20 @@ package org.richfaces.examples.tweetstream.dataserver.source;
 import org.jboss.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.Bean;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 
@@ -45,11 +51,13 @@ public class TweetStream implements Serializable
    @Any
    Instance<TwitterSource> twitterSource;
 
-   class TwitterServerQualifier extends AnnotationLiteral<TwitterServer> implements TwitterServer
+   @Inject BeanManager beanManager;
+
+   class TwitterLocalQualifier extends AnnotationLiteral<TwitterLocal> implements TwitterLocal
    {
    }
 
-   class TwitterLocalQualifier extends AnnotationLiteral<TwitterLocal> implements TwitterLocal
+   class TwitterServerQualifier extends AnnotationLiteral<TwitterServer> implements TwitterServer
    {
    }
 
@@ -66,11 +74,11 @@ public class TweetStream implements Serializable
    @Produces
    public TwitterSource getTwitterSource()
    {
-
       if (initialCheck)
       {
          try
          {
+            //TODO - try to lookup bean via CDI instead of checking for class as done above
             Class.forName("org.jboss.jbw2011.keynote.demo.model.TweetAggregate");
             log.info("Running in JBW2011 Demo Mode.");
             demoexists = true;
@@ -86,6 +94,24 @@ public class TweetStream implements Serializable
          new TwitterServerQualifier() : new TwitterLocalQualifier();
       return twitterSource.select(qualifier).get();
    }
+
+
+   public Bean getBeanByClass(String name)
+    {
+     //Bean bean = bm.getBeans(name).iterator().next();
+     for(Bean bean : beanManager.getBeans(name)){
+        CreationalContext ctx = beanManager.createCreationalContext(bean);
+        return (Bean)beanManager.getReference(bean, bean.getClass(), ctx);
+     }
+      return null;
+    }
+
+   public BeanManager getBeanManager()
+    {
+        return (BeanManager)
+              ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext())
+                   .getAttribute("javax.enterprise.inject.spi.BeanManager");
+    }
 
 
 }
