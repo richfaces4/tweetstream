@@ -9,15 +9,15 @@
   <version>1.0.0-SNAPSHOT</version>
 
   <properties>
-     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-     <jboss.domain>default</jboss.domain>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jboss.domain>default</jboss.domain>
 
   </properties>
 
   <repositories>
     <!-- Several key Java EE APIs and RIs are missing from the Maven Central Repository -->
-     <!-- The goal is to eventually eliminate the reliance on the JBoss repository -->
-     <repository>
+    <!-- The goal is to eventually eliminate the reliance on the JBoss repository -->
+    <repository>
       <id>jboss-public-repository-group</id>
       <name>JBoss Public Maven Repository Group</name>
       <url>https://repository.jboss.org/nexus/content/groups/public/</url>
@@ -36,177 +36,177 @@
   <dependencyManagement>
     <dependencies>
 
-       <!-- CDI (JSR-299) -->
-       <dependency>
-      <groupId>javax.enterprise</groupId>
-      <artifactId>cdi-api</artifactId>
-       <version>1.0</version>
-      <scope>provided</scope>
-    </dependency>
-       <!-- EJB -->
-       <dependency>
-      <groupId>org.jboss.ejb3</groupId>
-      <artifactId>jboss-ejb3-api</artifactId>
-      <scope>provided</scope>
-      <version>3.1.0</version>
-    </dependency>
-       <!-- Common annotations (e.g., @PostConstruct, @PreDestroy, @Generated, @Resource) -->
-       <dependency>
-      <groupId>javax.annotation</groupId>
-      <artifactId>jsr250-api</artifactId>
-      <scope>provided</scope>
-       <version>1.0</version>
-    </dependency>
-       <!-- Bean Validation (JSR-303) -->
-       <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
-      <scope>provided</scope>
-       <version>1.0.0.GA</version>
-    </dependency>
-       <!-- Bean Validation Implementation -->
-       <!-- Provides portable constraints such as @NotEmpty, @Email and @Url -->
-       <!-- Hibernate Validator is only the JSR-303 implementation at the moment, so we can assume it's provided -->
-       <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-      <version>4.2.0.Beta2</version>
-      <scope>provided</scope>
-    </dependency>
-       <!-- JSF -->
-       <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-api</artifactId>
-      <scope>provided</scope>
-       <version>2.0.2-FCS</version>
-    </dependency>
+      <!-- CDI (JSR-299) -->
+      <dependency>
+        <groupId>javax.enterprise</groupId>
+        <artifactId>cdi-api</artifactId>
+        <version>1.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <!-- EJB -->
+      <dependency>
+        <groupId>org.jboss.ejb3</groupId>
+        <artifactId>jboss-ejb3-api</artifactId>
+        <scope>provided</scope>
+        <version>3.1.0</version>
+      </dependency>
+      <!-- Common annotations (e.g., @PostConstruct, @PreDestroy, @Generated, @Resource) -->
+      <dependency>
+        <groupId>javax.annotation</groupId>
+        <artifactId>jsr250-api</artifactId>
+        <scope>provided</scope>
+        <version>1.0</version>
+      </dependency>
+      <!-- Bean Validation (JSR-303) -->
+      <dependency>
+        <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <scope>provided</scope>
+        <version>1.0.0.GA</version>
+      </dependency>
+      <!-- Bean Validation Implementation -->
+      <!-- Provides portable constraints such as @NotEmpty, @Email and @Url -->
+      <!-- Hibernate Validator is only the JSR-303 implementation at the moment, so we can assume it's provided -->
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>4.2.0.Beta2</version>
+        <scope>provided</scope>
+      </dependency>
+      <!-- JSF -->
+      <dependency>
+        <groupId>javax.faces</groupId>
+        <artifactId>jsf-api</artifactId>
+        <scope>provided</scope>
+        <version>2.0.2-FCS</version>
+      </dependency>
 
-    <dependency>
-      <groupId>javax.faces</groupId>
-      <artifactId>jsf-impl</artifactId>
-      <scope>provided</scope>
-       <version>2.0.2-FCS</version>
-    </dependency>
+      <dependency>
+        <groupId>javax.faces</groupId>
+        <artifactId>jsf-impl</artifactId>
+        <scope>provided</scope>
+        <version>2.0.2-FCS</version>
+      </dependency>
 
-       <!-- JPA -->
-       <dependency>
-      <groupId>javax.persistence</groupId>
-      <artifactId>persistence-api</artifactId>
-      <scope>provided</scope>
-       <version>1.0-rev-1</version>
-    </dependency>
+      <!-- JPA -->
+      <dependency>
+        <groupId>javax.persistence</groupId>
+        <artifactId>persistence-api</artifactId>
+        <scope>provided</scope>
+        <version>1.0-rev-1</version>
+      </dependency>
 
-       <!-- Optional, but highly recommended. -->
-       <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>5.10</version>
-      <scope>test</scope>
-      <classifier>jdk15</classifier>
-    </dependency>
+      <!-- Optional, but highly recommended. -->
+      <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>5.10</version>
+        <scope>test</scope>
+        <classifier>jdk15</classifier>
+      </dependency>
 
-       <!-- Needed on JBoss AS as EL is out of date -->
-       <dependency>
-      <groupId>org.glassfish.web</groupId>
-      <artifactId>el-impl</artifactId>
-      <scope>runtime</scope>
-          <!-- FIXME this version should be in the Weld API BOM -->
-          <version>2.1.2-b04</version>
-      <exclusions>
-        <exclusion>
-          <groupId>javax.el</groupId>
-          <artifactId>el-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+      <!-- Needed on JBoss AS as EL is out of date -->
+      <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>el-impl</artifactId>
+        <scope>runtime</scope>
+        <!-- FIXME this version should be in the Weld API BOM -->
+        <version>2.1.2-b04</version>
+        <exclusions>
+          <exclusion>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
 
-    <dependency>
-      <groupId>org.twitter4j</groupId>
-      <artifactId>twitter4j-core</artifactId>
-      <version>[2.2.1,)</version>
-    </dependency>
+      <dependency>
+        <groupId>org.twitter4j</groupId>
+        <artifactId>twitter4j-core</artifactId>
+        <version>[2.2.1,)</version>
+      </dependency>
 
-    <dependency>
-      <groupId>org.twitter4j</groupId>
-      <artifactId>twitter4j-stream</artifactId>
-      <version>[2.2.1,)</version>
-    </dependency>
+      <dependency>
+        <groupId>org.twitter4j</groupId>
+        <artifactId>twitter4j-stream</artifactId>
+        <version>[2.2.1,)</version>
+      </dependency>
 
-    <dependency>
-      <groupId>org.atmosphere</groupId>
-      <artifactId>atmosphere-runtime</artifactId>
-      <version>0.6.4</version>
-    </dependency>
+      <dependency>
+        <groupId>org.atmosphere</groupId>
+        <artifactId>atmosphere-runtime</artifactId>
+        <version>0.6.4</version>
+      </dependency>
 
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <scope>provided</scope>
-       <version>2.5</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>jsp-api</artifactId>
-      <scope>provided</scope>
-       <version>2.2</version>
-    </dependency>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <scope>provided</scope>
+        <version>2.5</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.servlet.jsp</groupId>
+        <artifactId>jsp-api</artifactId>
+        <scope>provided</scope>
+        <version>2.2</version>
+      </dependency>
 
-    <dependency>
-      <groupId>org.richfaces.ui</groupId>
-      <artifactId>richfaces-components-ui</artifactId>
-      <version>4.0.0.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>org.richfaces.ui</groupId>
-      <artifactId>richfaces-components-api</artifactId>
-      <version>4.0.0.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>org.richfaces.core</groupId>
-      <artifactId>richfaces-core-impl</artifactId>
-      <version>4.0.0.Final</version>
-    </dependency>
+      <dependency>
+        <groupId>org.richfaces.ui</groupId>
+        <artifactId>richfaces-components-ui</artifactId>
+        <version>4.0.0.Final</version>
+      </dependency>
+      <dependency>
+        <groupId>org.richfaces.ui</groupId>
+        <artifactId>richfaces-components-api</artifactId>
+        <version>4.0.0.Final</version>
+      </dependency>
+      <dependency>
+        <groupId>org.richfaces.core</groupId>
+        <artifactId>richfaces-core-impl</artifactId>
+        <version>4.0.0.Final</version>
+      </dependency>
 
-    <dependency>
-      <groupId>org.jboss.weld</groupId>
-      <artifactId>weld-core</artifactId>
-      <version>1.1.0.CR3</version>
-      <scope>provided</scope>
-    </dependency>
+      <dependency>
+        <groupId>org.jboss.weld</groupId>
+        <artifactId>weld-core</artifactId>
+        <version>1.1.0.CR3</version>
+        <scope>provided</scope>
+      </dependency>
 
-    <dependency>
-      <groupId>org.jboss.logging</groupId>
-      <artifactId>jboss-logging</artifactId>
-      <version>3.0.0.Beta4</version>
-      <scope>provided</scope>
-    </dependency>
+      <dependency>
+        <groupId>org.jboss.logging</groupId>
+        <artifactId>jboss-logging</artifactId>
+        <version>3.0.0.Beta4</version>
+        <scope>provided</scope>
+      </dependency>
 
-     <dependency>
-       <groupId>org.jboss.seam.solder</groupId>
-       <artifactId>seam-solder</artifactId>
-       <version>3.0.0.Beta1</version>
-     </dependency>
+      <dependency>
+        <groupId>org.jboss.seam.solder</groupId>
+        <artifactId>seam-solder</artifactId>
+        <version>3.0.0.Beta1</version>
+      </dependency>
 
-    <dependency>
-      <groupId>org.infinispan</groupId>
-      <artifactId>infinispan-core</artifactId>
-      <version>5.0.0.BETA1</version>
-    </dependency>
+      <dependency>
+        <groupId>org.infinispan</groupId>
+        <artifactId>infinispan-core</artifactId>
+        <version>5.0.0.BETA1</version>
+      </dependency>
 
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.3</version>
-    </dependency>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.3</version>
+      </dependency>
 
 
-  </dependencies>
-    </dependencyManagement>
+    </dependencies>
+  </dependencyManagement>
   <build>
     <finalName>${artifactId}</finalName>
     <plugins>
       <!-- Compiler plugin enforces Java 1.6 compatiblity -->
-       <plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -215,21 +215,21 @@
         </configuration>
       </plugin>
 
-       <!-- Eclipse plugin can force download of source and JavaDoc jars -->
-       <plugin>
+      <!-- Eclipse plugin can force download of source and JavaDoc jars -->
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-eclipse-plugin</artifactId>
         <configuration>
           <wtpversion>2.0</wtpversion>
-           <!--
-           <downloadSources>true</downloadSources>
-           <downloadJavadocs>true</downloadJavadocs>
-           -->
+          <!--
+          <downloadSources>true</downloadSources>
+          <downloadJavadocs>true</downloadJavadocs>
+          -->
         </configuration>
       </plugin>
 
-       <!-- Configure the JBoss AS Maven deploy plugin -->
-       <plugin>
+      <!-- Configure the JBoss AS Maven deploy plugin -->
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>jboss-maven-plugin</artifactId>
         <configuration>
@@ -243,24 +243,24 @@
     </plugins>
   </build>
 
-   <modules>
-      <module>shared</module>
-      <module>tweetstream</module>
-    </modules>
+  <modules>
+    <module>shared</module>
+    <module>tweetstream</module>
+  </modules>
 
   <profiles>
     <profile>
       <id>keynote</id>
-        <activation>
-           <!--TODO: Adding by default until docs get updated on wiki-->
-          <activeByDefault>true</activeByDefault>
-       </activation>
-       <modules>
-          <module>shared</module>
-          <module>jbw</module>
-          <module>tweetstream</module>
+      <activation>
+        <!--TODO: Adding by default until docs get updated on wiki-->
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>shared</module>
+        <module>jbw</module>
+        <module>tweetstream</module>
 
-       </modules>
+      </modules>
     </profile>
   </profiles>
 </project>
