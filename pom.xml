@@ -245,7 +245,7 @@
 
    <modules>
       <module>shared</module>
-      <module>judcon</module>
+      <module>tweetstream</module>
     </modules>
 
   <profiles>
@@ -258,7 +258,7 @@
        <modules>
           <module>shared</module>
           <module>jbw</module>
-          <module>judcon</module>
+          <module>tweetstream</module>
 
        </modules>
     </profile>
