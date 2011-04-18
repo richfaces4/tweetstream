@@ -30,6 +30,7 @@ import java.util.Set;
 @Requires("org.jboss.jbw2011.keynote.demo.model.TweetAggregate")
 public interface TweetStreamPersistenceService
 {
+
    public void saveTweet(final long timestamp, final String tweet, final String hashtags, final long id, final String name, final String screenName, final String profileImageURL);
 
    public List<Tweet> messagesMentioning(final String keyword, final int maxResult);
@@ -45,4 +46,5 @@ public interface TweetStreamPersistenceService
    public Set<ScoredTerm> getTopScreenNames();
 
    public TweetAggregate getAggregate();
+
 }
