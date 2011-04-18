@@ -244,8 +244,8 @@
   </build>
 
    <modules>
-       <module>judcon</module>
-       <module>shared</module>
+      <module>shared</module>
+      <module>judcon</module>
     </modules>
 
   <profiles>
@@ -253,9 +253,10 @@
       <id>keynote</id>
 
        <modules>
+          <module>shared</module>
           <module>jbw</module>
           <module>judcon</module>
-           <module>shared</module>
+
        </modules>
     </profile>
   </profiles>
