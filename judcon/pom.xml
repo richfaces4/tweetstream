@@ -200,10 +200,10 @@
                   <groupId>org.hibernate.ogm</groupId>
                   <artifactId>hibernate-ogm-core</artifactId>
                </exclusion>
-               <exclusion>
-                  <groupId>org.hibernate</groupId>
-                  <artifactId>hibernate-search</artifactId>
-               </exclusion>
+               <!--<exclusion>-->
+                  <!--<groupId>org.hibernate</groupId>-->
+                  <!--<artifactId>hibernate-search</artifactId>-->
+               <!--</exclusion>-->
             </exclusions>
         </dependency>
 
