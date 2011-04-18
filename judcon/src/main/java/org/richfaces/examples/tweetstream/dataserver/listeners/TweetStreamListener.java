@@ -68,7 +68,7 @@ public class TweetStreamListener implements StatusListener, Serializable
 
    public void onStatus(Status status)
    {
-      System.out.println("-------status: " + status.getText());
+      log.info("-------status: " + status.getText());
       Tweet tweet = new Tweet();
       tweet.setText(status.getText());
       tweet.setId(status.getId());
@@ -83,7 +83,7 @@ public class TweetStreamListener implements StatusListener, Serializable
 
       List<Tweet> tweets = tweetAggregate.getTweets();
       tweets.add(tweet);
-      System.out.println("-------tweets.size(): " + tweets.size());
+      log.info("-------tweets.size(): " + tweets.size());
 
       //clip to top 50
       if (tweets.size() > 50)

@@ -67,7 +67,6 @@ public class TwitterSourceServer implements TwitterSource
 
    public void init()
    {
-      System.out.println("-------TwitterSourceServer--");
       log.info("Initialization of twitter source server started");
 
       //First go fetch update data
