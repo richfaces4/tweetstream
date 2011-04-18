@@ -54,12 +54,6 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
 
    private final PersistenceServiceImpl impl = new PersistenceServiceImpl();
 
-   @Lock(LockType.WRITE)
-   public void saveTweet(final long timestamp, final String tweet, final String hashtags, final long id, final String name, final String screenName, final String profileImageURL)
-   {
-      impl.saveTweet(entityManagerFactory, timestamp, tweet, hashtags, id, name, screenName, profileImageURL);
-   }
-
    /** Searches for all tweets from a specific account. This is case-sensitive. */
    public List<Tweet> messagesByName(final String name, final int maxResult)
    {
