@@ -117,21 +117,15 @@ public class ServerContentUpdateListener implements ServerContentListener {
       session = topicConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       producer = session.createProducer(topic);
 
-      //Retrieve the aggregate JSON string
-      String json = twitterAggregate.toJSON();
-
-      message = session.createTextMessage(json);
-      message.setText(json);
-
-      //Don't have to set this property is using JSON.parse() on the client
-      //message.setBooleanProperty("org_richfaces_push_SerializedData",true);
+      message = session.createTextMessage();
+      message.setText("content");
 
       //set the subtopic for the message to "aggregate"
-      message.setStringProperty("rf_push_subtopic", "aggregate");
+      message.setStringProperty("rf_push_subtopic", "content");
 
       producer.send(message);
 
-      log.info("Tweetstream push message sent" + json);
+      log.debug("Tweetstream content update push message sent");
     } catch (Exception e) {
       log.error("Exception attempting to send a message to tweetstream client - " + e.getLocalizedMessage());
     } finally {
@@ -140,7 +134,7 @@ public class ServerContentUpdateListener implements ServerContentListener {
         if (session != null) session.close();
         if (topicConnection != null) topicConnection.close();
       } catch (JMSException ex) {
-        log.error("Exception closing stream  - " + ex);
+        log.error("Exception closing stream JMS - " + ex);
       }
     }
 
@@ -157,11 +151,11 @@ public class ServerContentUpdateListener implements ServerContentListener {
         lastTweet = currentTweet;
         return true;
       } else if (lastTweet.getTimestamp() != currentTweet.getTimestamp()) {
-        log.info("Server content has been updated, content update required");
+        log.debug("Server content has been updated, content update required");
         lastTweet = currentTweet;
         return true;
       } else {
-        log.info("Server content has not been updated, no content update required");
+        log.debug("Server content has not been updated, no content update required");
         return false;
       }
     }
