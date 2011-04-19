@@ -55,9 +55,9 @@ public class ServerContentUpdateListener implements ServerContentListener {
 
     log.info("Creating a  timer to poll for updated content");
 
-    // Create a schedule expression to fire every 10 seconds
+    // Create a schedule expression to fire every 5 seconds
     ScheduleExpression scheduleExpression = new ScheduleExpression();
-    scheduleExpression.year(EVERY).month(EVERY).dayOfMonth(EVERY).hour(EVERY).minute(EVERY).second("*/10");
+    scheduleExpression.year(EVERY).month(EVERY).dayOfMonth(EVERY).hour(EVERY).minute(EVERY).second("*/5");
 
     //Configure a timer so it is not persisted in the container
     TimerConfig timerConfig = new TimerConfig();
