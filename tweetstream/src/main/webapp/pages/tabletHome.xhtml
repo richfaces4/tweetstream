@@ -25,44 +25,10 @@
       <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 
       <script type="text/javascript">
-         //TODO - create global .js to be used only for mobile devices
          function hideURLbar()
          {
+            //TODO figure out why this is not working on the ipad
             setTimeout(scrollTo, 0, 0, 1);
-         }
-
-
-         //Take a JSON version of the twitterAggregate object
-         // and update the UI's below with the new values
-         function refreshTweets(twAggStr){
-
-            var twAgg = JSON.parse(twAggStr);
-
-            //Clear and then update tweets
-            var list = document.getElementById('list').innerHTML = '';
-
-            var tweets = twAgg.tweets;
-
-             alert("4 - " + tweets.length);
-
-             for(var i in tweets)
-            {
-                alert(i);
-               var tweet = tweets[i];
-
-               li = document.createElement ("li");
-               li.appendChild (document.createTextNode (tweet[text]));
-               list.appendChild (li);
-
-
-               //document.getElementById('tweetstreamOutput').innerHTML += tweet.text;
-               //var tweetcontainer = document.createElement("div");
-               //tweetcontainer.innerHTML = tweet.text;
-               //tweetcontainer.style.border = '1px solid black';
-               //document.getElementById('tweet-list').appendChild(tweetcontainer);
-            }
-
-
          }
       </script>
       <h:outputStylesheet name="css/ipad.css"/>
@@ -73,8 +39,7 @@
       <h:form>
           <a4j:jsFunction name="updateContent" action="#{twitterAgent.updateTweets}"
                           render="browser_form"/>
-         <!-- TODO temp polling server for updates - replace with push -->
-          <a4j:push address="aggregate@twitter"
+          <a4j:push address="content@twitter"
                    onerror="alert('Error retrieving pushed data')"
                    ondataavailable="updateContent()">
          </a4j:push>
@@ -87,7 +52,7 @@
 
             <div id="stream" class="landscape-leftbar">
                <rich:panel>
-                  <ul id="list">
+                  <ul id="tweet_list">
                      <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
                         <li id="listRowTemplate" class="listRowTemplate_template first" style=""
                             onclick="itemClicked(event)">

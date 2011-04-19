@@ -14,27 +14,6 @@
 
 
    <ui:define name="head">
-
-      <script type="text/javascript">
-         <!--
-         function stageTweets(e)
-         {
-
-            var arr = JSON.parse(e);
-            document.getElementById('tweet-list').innerHTML = '';
-            for (var i = 0; i < arr.tweets.length; i++)
-            {
-               var tweet = arr.tweets[i];
-
-               //document.getElementById('tweetstreamOutput').innerHTML += tweet.text;
-               var tweetcontainer = document.createElement("div");
-               tweetcontainer.innerHTML = tweet.text;
-               tweetcontainer.style.border = '1px solid black';
-               document.getElementById('tweet-list').appendChild(tweetcontainer);
-            }
-         }
-         // -->
-      </script>
       <ui:insert name="head"/>
    </ui:define>
 
@@ -43,23 +22,15 @@
       <h2>Tweets</h2>
 
       <h:form>
-
-         <a4j:push address="incoming_tweets@twitter"
-
-                   onerror="alert(event.rf.data)"
-                   ondataavailable="stageTweets(event.rf.data)">
-         </a4j:push>
-
+          <a4j:jsFunction name="updateContent" action="#{twitterAgent.updateTweets}"
+                          render="tweet_table"/>
+          <a4j:push address="content@twitter"
+                   onerror="alert('Error retrieving pushed data')"
+                   ondataavailable="updateContent()">
+          </a4j:push>
       </h:form>
 
-      <div id="tweet-list"></div>
-      <div id="incoming-tweet"></div>
-
-
-      <rich:panel styleClass="tweetOutput" id="tweetstreamOutput"
-                  bodyClass="tweetstreamOutput"/>
-
-      <h:dataTable var="_tweet" value="#{twitterAgent.tweets}">
+      <h:dataTable id="tweet_table" var="_tweet" value="#{twitterAgent.tweets}">
          <h:column>
             <f:facet name="header">From</f:facet>
             #{_tweet.screenName}
