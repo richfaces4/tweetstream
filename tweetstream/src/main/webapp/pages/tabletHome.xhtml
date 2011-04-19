@@ -30,6 +30,10 @@
          {
             setTimeout(scrollTo, 0, 0, 1);
          }
+
+         function refreshTweets(e){
+
+         }
       </script>
       <h:outputStylesheet name="css/ipad.css"/>
 
@@ -38,8 +42,10 @@
    <ui:define name="body">
       <h:form>
          <!-- TODO temp polling server for updates - replace with push -->
-         <a4j:poll id="poll" interval="2500" enabled="true"
-                   render="browser_form" action="#{twitterAgent.updateTweets}"/>
+          <a4j:push address="aggregate@twitter"
+                   onerror="alert(event.rf.data)"
+                   ondataavailable="refreshTweets(event.rf.data)">
+         </a4j:push>
       </h:form>
       <h:form id="browser_form">
          <div id="browser">
