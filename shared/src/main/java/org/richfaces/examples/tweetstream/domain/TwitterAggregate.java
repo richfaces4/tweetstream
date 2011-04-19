@@ -21,6 +21,8 @@
  */
 package org.richfaces.examples.tweetstream.domain;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,59 +35,139 @@ import java.util.List;
  *
  * @author <a href="mailto:jbalunas@redhat.com">Jay Balunas</a>
  */
-public class TwitterAggregate implements Serializable
-{
+public class TwitterAggregate implements Serializable {
 
-   /** The current twitter stream filter, i.e. "#jboss" or "#jbwvote" etc... From the tweetstream app this i */
-   private String filter;
+  /**
+   * The current twitter stream filter, i.e. "#jboss" or "#jbwvote" etc... From the tweetstream app this i
+   */
+  private String filter;
 
-   /** The top N ( likely 25 ) tweets in date order. */
-   private List<Tweet> tweets;
+  /**
+   * The top N ( likely 25 ) tweets in date order.
+   */
+  private List<Tweet> tweets;
 
-   /** The top 10 most active tweeters */
-   private List<Tweeter> topTweeters;
+  /**
+   * The top 10 most active tweeters
+   */
+  private List<Tweeter> topTweeters;
 
-   /** The top 10 most used sub-tags. */
-   private List<HashTag> topHashTags;
+  /**
+   * The top 10 most used sub-tags.
+   */
+  private List<HashTag> topHashTags;
 
 
-   public String getFilter()
-   {
-      return filter;
-   }
+  public String getFilter() {
+    return filter;
+  }
 
-   public void setFilter(String filter)
-   {
-      this.filter = filter;
-   }
+  public void setFilter(String filter) {
+    this.filter = filter;
+  }
 
-   public List<Tweet> getTweets()
-   {
-      return tweets;
-   }
+  public List<Tweet> getTweets() {
+    return tweets;
+  }
 
-   public void setTweets(List<Tweet> tweets)
-   {
-      this.tweets = tweets;
-   }
+  public void setTweets(List<Tweet> tweets) {
+    this.tweets = tweets;
+  }
 
-   public List<Tweeter> getTopTweeters()
-   {
-      return topTweeters;
-   }
+  public List<Tweeter> getTopTweeters() {
+    return topTweeters;
+  }
 
-   public void setTopTweeters(List<Tweeter> topTweeters)
-   {
-      this.topTweeters = topTweeters;
-   }
+  public void setTopTweeters(List<Tweeter> topTweeters) {
+    this.topTweeters = topTweeters;
+  }
 
-   public List<HashTag> getTopHashTags()
-   {
-      return topHashTags;
-   }
+  public List<HashTag> getTopHashTags() {
+    return topHashTags;
+  }
 
-   public void setTopHashTags(List<HashTag> topHashTags)
-   {
-      this.topHashTags = topHashTags;
-   }
+  public void setTopHashTags(List<HashTag> topHashTags) {
+    this.topHashTags = topHashTags;
+  }
+
+  public String toJSON() {
+    String json = "{\"aggregate\":[";
+
+    json += tweetsToJSON() + ",";
+    json += tweeterToJSON()+ ",";
+    json += hashTagsToJSON();
+
+    json += "]}";
+
+    return json;
+  }
+
+  public String tweetsToJSON() {
+    String json = "{\"tweets\":[";
+
+    if (tweets != null) {
+      for (int i = 0; i < tweets.size(); i++) {
+        Tweet tweet = tweets.get(i);
+
+        json += "{\"id\":" + tweet.getId()
+                + ",\"text\":\"" + StringEscapeUtils.escapeHtml(tweet.getText())
+                + "\",\"profileImageURL\":\"" + StringEscapeUtils.escapeHtml(tweet.getProfileImageUrl())
+                + "\",\"screenName\":\"" + tweet.getScreenName()
+                + "\",\"retweet\":" + tweet.isRetweet() + "}";
+
+        if (i + 1 != tweets.size()) {
+          json += ",";
+        }
+
+      }
+    }
+    json += "]}";
+
+    return json;
+  }
+
+  public String tweeterToJSON() {
+    String json = "{\"tweeters\":[";
+
+    if (topTweeters != null) {
+      for (int i = 0; i < topTweeters.size(); i++) {
+        Tweeter tweeter = topTweeters.get(i);
+
+        json += "{\"user\":" + tweeter.getUser()
+                + "\",\"profileImageURL\":\"" + StringEscapeUtils.escapeHtml(tweeter.getProfileImgUrl())
+                + ",\"text\":\"" + tweeter.getTweetCount()
+                + "}";
+
+        if (i + 1 != topTweeters.size()) {
+          json += ",";
+        }
+
+      }
+    }
+    json += "]}";
+
+    return json;
+  }
+
+  public String hashTagsToJSON() {
+    String json = "{\"tags\":[";
+
+    if (topHashTags != null) {
+      for (int i = 0; i < topHashTags.size(); i++) {
+        HashTag hashtag = topHashTags.get(i);
+
+        json += "{\"tag\":" + hashtag.getHashtag()
+                + ",\"count\":\"" + hashtag.getCount()
+                + "}";
+
+        if (i + 1 != topHashTags.size()) {
+          json += ",";
+        }
+
+      }
+    }
+    json += "]}";
+
+    return json;
+  }
 }

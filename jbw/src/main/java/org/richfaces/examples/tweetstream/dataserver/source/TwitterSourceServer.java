@@ -27,6 +27,7 @@ import org.jboss.jbw2011.keynote.demo.model.TweetAggregate;
 import org.jboss.logging.Logger;
 import org.jboss.seam.solder.core.Requires;
 
+import org.richfaces.examples.tweetstream.dataserver.listeners.ServerContentListener;
 import org.richfaces.examples.tweetstream.dataserver.service.TweetStreamPersistenceService;
 import org.richfaces.examples.tweetstream.dataserver.util.TweetAggregateConverter;
 import org.richfaces.examples.tweetstream.domain.HashTag;
@@ -60,6 +61,9 @@ public class TwitterSourceServer implements TwitterSource
    @Inject
    TweetStreamPersistenceService persistenceService;
 
+  @Inject
+  ServerContentListener serverContentListener;
+
    private TwitterAggregate twitterAggregate;
 
    private long lastSearch = -1l;
@@ -73,7 +77,7 @@ public class TwitterSourceServer implements TwitterSource
       fetchContent();
 
       //Trigger polling of server, which will push updates to clients
-      //serverListener.startServerListener();
+      serverContentListener.startServerListener();
 
       log.info("Initialization of twitter source server complete");
    }
