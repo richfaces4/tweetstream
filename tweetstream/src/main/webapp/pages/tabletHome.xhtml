@@ -31,7 +31,37 @@
             setTimeout(scrollTo, 0, 0, 1);
          }
 
-         function refreshTweets(e){
+
+         //Take a JSON version of the twitterAggregate object
+         // and update the UI's below with the new values
+         function refreshTweets(twAggStr){
+
+            var twAgg = JSON.parse(twAggStr);
+
+            //Clear and then update tweets
+            var list = document.getElementById('list').innerHTML = '';
+
+            var tweets = twAgg.tweets;
+
+             alert("4 - " + tweets.length);
+
+             for(var i in tweets)
+            {
+                alert(i);
+               var tweet = tweets[i];
+
+               li = document.createElement ("li");
+               li.appendChild (document.createTextNode (tweet[text]));
+               list.appendChild (li);
+
+
+               //document.getElementById('tweetstreamOutput').innerHTML += tweet.text;
+               //var tweetcontainer = document.createElement("div");
+               //tweetcontainer.innerHTML = tweet.text;
+               //tweetcontainer.style.border = '1px solid black';
+               //document.getElementById('tweet-list').appendChild(tweetcontainer);
+            }
+
 
          }
       </script>
@@ -41,10 +71,12 @@
 
    <ui:define name="body">
       <h:form>
+          <a4j:jsFunction name="updateContent" action="#{twitterAgent.updateTweets}"
+                          render="browser_form"/>
          <!-- TODO temp polling server for updates - replace with push -->
           <a4j:push address="aggregate@twitter"
-                   onerror="alert(event.rf.data)"
-                   ondataavailable="refreshTweets(event.rf.data)">
+                   onerror="alert('Error retrieving pushed data')"
+                   ondataavailable="updateContent()">
          </a4j:push>
       </h:form>
       <h:form id="browser_form">
