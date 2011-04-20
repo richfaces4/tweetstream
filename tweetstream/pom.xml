@@ -190,9 +190,7 @@
   <profiles>
     <profile>
       <id>keynote</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
+
       <dependencies>
         <dependency>
           <groupId>org.jboss.jbw2011.keynote</groupId>
