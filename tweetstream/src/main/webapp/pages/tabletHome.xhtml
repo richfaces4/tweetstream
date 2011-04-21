@@ -1,5 +1,5 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -8,96 +8,104 @@
                 xmlns:rich="http://richfaces.org/rich"
                 template="/templates/iPadTemplate.xhtml">
 
-   <ui:define name="metadata">
-      <f:metadata>
-         <f:event type="preRenderView" listener="#{twitterAgent.updateTweets}"/>
-      </f:metadata>
-   </ui:define>
+  <ui:define name="metadata">
+    <f:metadata>
+      <f:event type="preRenderView" listener="#{twitterAgent.updateTweets}"/>
+    </f:metadata>
+  </ui:define>
 
-   <ui:define name="head">
-      <title>TweetStream Tablet</title>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <ui:define name="head">
+    <title>TweetStream</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-      <!-- enable full-screen mode -->
-      <meta name="apple-mobile-web-app-capable" content="yes"/>
-      <!-- controls the appearance of the status bar in full-screen mode -->
-      <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <!-- enable full-screen mode -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <!-- controls the appearance of the status bar in full-screen mode -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 
-      <script type="text/javascript">
-         function hideURLbar()
-         {
-            //TODO figure out why this is not working on the ipad
-            setTimeout(scrollTo, 0, 0, 1);
-         }
-      </script>
-      <h:outputStylesheet name="css/ipad.css"/>
+    <script type="text/javascript">
+      function hideURLbar() {
+        //TODO figure out why this is not working on the ipad
+        setTimeout(scrollTo, 0, 0, 1);
+      }
+    </script>
+    <h:outputStylesheet name="css/ipad.css"/>
 
-   </ui:define>
+  </ui:define>
 
-   <ui:define name="body">
-      <h:form>
-          <a4j:jsFunction name="updateContent" action="#{twitterAgent.updateTweets}"
-                          render="browser_form"/>
-          <a4j:push address="content@twitter"
-                   onerror="alert('Error retrieving pushed data')"
-                   ondataavailable="updateContent()">
-         </a4j:push>
-      </h:form>
-      <h:form id="browser_form">
-         <div id="browser">
-            <div id="header" class="header-gradient">
-               <h1>TweetStream Tablet</h1>
-            </div>
+  <ui:define name="body">
+    <h:form>
+      <a4j:jsFunction name="updateContent" action="#{twitterAgent.updateTweets}"
+                      render="browser_form"/>
+      <a4j:push address="content@twitter"
+                onerror="alert('Error retrieving pushed data')"
+                ondataavailable="updateContent()">
+      </a4j:push>
+    </h:form>
+    <h:form id="browser_form">
+      <div id="browser">
+        <div id="header" class="header-gradient">
+          <h1>TweetStream</h1>
+        </div>
 
-            <div id="stream" class="landscape-leftbar">
-               <rich:panel>
-                  <ul id="tweet_list">
-                     <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
-                        <li id="listRowTemplate" class="listRowTemplate_template first" style=""
-                            onclick="itemClicked(event)">
-                           <div class="rowTitle_template" id="rowTitle">#{tweet.text}...</div>
-                           <div id="rowArrow" class="rowArrow_template"></div>
-                        </li>
-                     </ui:repeat>
-                  </ul>
-               </rich:panel>
-            </div>
+        <div id="tweets">
+          <rich:panel>
+            <ul id="tweets_list">
+              <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
+                <li>
+                  <div class="tweet_div">
+                    <img src="#{tweet.profileImageUrl}" alt="tw_img" class="tweet_profile_img"/>
 
-            <div id="top_tags" class="landscape-rightbar">
-               <rich:panel header="Top Tags">
-                  <ul id="top_tags_list">
-                     <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
-                        <li id="top_tags_listRowTemplate" class="listRowTemplate_template first" style=""
-                            onclick="itemClicked(event)">
-                           <div class="rowTitle_template"
-                                id="top_tags_rowTitle">#{tag.hashtag} -- count #{tag.count}...
-                           </div>
-                           <div id="top_tags_rowArrow" class="rowArrow_template"></div>
-                        </li>
-                     </ui:repeat>
-                  </ul>
-               </rich:panel>
-            </div>
+                    <div class="tweet_txt_div">
+                      <h:outputText value="#{tweet.screenName}:" class="tweeter"/>
+                      <h:outputText value="#{tweet.text}" class="tweet_text"/>
+                    </div>
+                  </div>
+                </li>
+              </ui:repeat>
+            </ul>
+          </rich:panel>
+        </div>
 
-            <div id="top_tweeters" class="landscape-rightbar">
-               <rich:panel header="Top Tweeters">
-                  <ul id="top_tweeters_list">
-                     <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
-                        <li id="top_tweeters_listRowTemplate" class="listRowTemplate_template first" style=""
-                            onclick="itemClicked(event)">
-                           <div class="rowTitle_template"
-                                id="top_tweeters_rowTitle">#{tweeter.user} -- count #{tweeter.tweetCount}...
-                           </div>
-                           <div id="top_tweeters_rowArrow" class="rowArrow_template"></div>
-                        </li>
-                     </ui:repeat>
-                  </ul>
-               </rich:panel>
+        <div id="tops">
+          <div id="top_tags">
+            <rich:panel header="Top Tags" headerClass="top_headers">
+              <ul id="top_tags_list">
+                <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
+                  <li>
+                    <div class="top_tag_div">
+                      <h:outputText value=" ##{tag.hashtag}" class="tag"/>
+                      <h:outputText value="#{tag.count}" class="tag_count"/>
+                    </div>
+                  </li>
+                </ui:repeat>
+              </ul>
+            </rich:panel>
+          </div>
 
-            </div>
-         </div>
-      </h:form>
-   </ui:define>
+          <div id="top_tweeters">
+            <rich:panel header="Top Tweeters" headerClass="top_headers">
+              <ul id="top_tweeters_list">
+                <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
+                  <li>
+                    <div class="top_tweeter_div">
+                      <img src="#{tweeter.profileImgUrl}" alt="ttw_img" class="top_tweeter_profile_img"/>
+
+                      <div class="top_tweeters_txt_div">
+                        <h:outputText value="#{tweeter.user}" class="top_tweeter"/>
+                        <h:outputText value="#{tweeter.tweetCount}" class="top_tweeter_count"/>
+                      </div>
+                    </div>
+                  </li>
+                </ui:repeat>
+              </ul>
+            </rich:panel>
+
+          </div>
+        </div>
+      </div>
+    </h:form>
+  </ui:define>
 
 </ui:composition>
