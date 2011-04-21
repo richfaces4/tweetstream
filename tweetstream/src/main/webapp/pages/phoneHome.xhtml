@@ -16,23 +16,22 @@
 
 <ui:define name="head">
 <style type="text/css">
-
+/*Global*/
 body {
    background-image: url(#{request.contextPath}/resources/images/iphone/backgroundStripes.png);
    background-repeat: repeat;
-   margin: 0px;
-   padding: 0px;
+   margin: 0;
+   padding: 0;
    min-height: 416px;
-   font-family: Helvetica;
+   font: 80% / 1.5em "Helvetica", "Lucida Sans", Verdana, Arial, sans-serif;
 }
 
 #header {
    position: relative;
    height: 44px;
    width: auto;
-   font-family: Helvetica;
    font-weight: bold;
-   color: rgb(255, 255, 255);
+   color: #fff;
    text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
    font-size: 16pt;
    border: 0;
@@ -41,11 +40,14 @@ body {
    -webkit-user-select: none;
 }
 
+</style>
+
+<style type="text/css">
+/*Buttons and bars*/
 .back_button {
-   font-family: Helvetica;
    font-weight: bold;
    font-size: 12px;
-   color: rgb(255, 255, 255);
+   color: #fff;
    text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
    text-align: center;
    text-overflow: ellipsis;
@@ -58,10 +60,9 @@ body {
 }
 
 .agenda_button {
-   font-family: Helvetica;
    font-weight: bold;
    font-size: 12px;
-   color: rgb(255, 255, 255);
+   color: #fff;
    text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
    text-align: center;
    text-overflow: ellipsis;
@@ -94,6 +95,10 @@ body {
    webkitbox-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
 }
 
+</style>
+
+<style type="text/css">
+/*utils - functions */
 .hide {
    opacity: 0;
 }
@@ -120,6 +125,23 @@ body {
    display: block;
 }
 
+.stage-center {
+   top: 0;
+   left: 0;
+   width: 100%;
+}
+
+.transition {
+   -moz-transition-duration: 1.5s;
+   -webkit-transition-duration: 1.5s;
+   -o-transition-duration: 1.5s;
+}
+
+
+</style>
+
+<style type="text/css">
+/*client specific styles*/
 #tweet-detail {
    position: absolute;
 
@@ -169,18 +191,11 @@ body {
    }
 }
 
-.stage-center {
-   top: 0;
-   left: 0;
-   width: 100%;
-}
+</style>
 
-.transition {
-   -moz-transition-duration: 1.5s;
-   -webkit-transition-duration: 1.5s;
-   -o-transition-duration: 1.5s;
-}
+<style type="text/css">
 
+/*flip transition related*/
 #browser {
    height: auto;
    -webkit-margin-top-collapse: separate;
@@ -327,6 +342,7 @@ body {
                         </li>
                      </ui:repeat>
                   </ul>
+
                </h:form>
 
                <div id="agenda" class="hide">
