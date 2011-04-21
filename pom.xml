@@ -190,7 +190,7 @@
       <dependency>
         <groupId>org.infinispan</groupId>
         <artifactId>infinispan-core</artifactId>
-        <version>5.0.0.BETA1</version>
+        <version>5.0.0.BETA2</version>
       </dependency>
 
       <dependency>
@@ -251,10 +251,6 @@
   <profiles>
     <profile>
       <id>keynote</id>
-      <activation>
-        <!--TODO: Adding by default until docs get updated on wiki-->
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <modules>
         <module>shared</module>
         <module>jbw</module>
