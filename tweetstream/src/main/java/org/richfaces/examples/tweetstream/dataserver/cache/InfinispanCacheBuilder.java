@@ -27,6 +27,8 @@ import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.jboss.logging.Logger;
 
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.Serializable;
