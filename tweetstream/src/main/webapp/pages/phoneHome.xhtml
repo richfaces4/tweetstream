@@ -62,85 +62,21 @@ a {
    height: auto;
    overflow: hidden;
    z-index: 0;
-   background-color: #fff;
    min-height: 372px;
 }
 
 
 
-#list {
-   background-color: white;
+.list {
    overflow: hidden;
-
    padding: 0px;
    margin: 0px;
    height: auto;
-   -webkit-margin-top-collapse: separate;
-   -webkit-margin-bottom-collapse: separate;
    position: relative;
    width: auto;
    cursor: default;
    -webkit-user-select: none;
 }
-
-.listRowTemplate_template {
-   position: relative;
-   list-style-type: none;
-   overflow: hidden;
-   margin: 0px;
-   padding: 0px;
-   -webkit-margin-top-collapse: separate;
-   -webkit-margin-bottom-collapse: separate;
-   border-style: solid;
-   border-top-width: 0px;
-   border-right-width: 0px;
-   border-bottom-width: 1px;
-   border-left-width: 0px;
-   border-color: rgb(224, 224, 224);
-   width: auto;
-   height: 47px;
-}
-
-.listRowTemplate_template .DC_selectionBG {
-   background: rgb(38, 127, 239) url(#{request.contextPath}/resources/images/iphone/selectedRowiPhone.png);
-   -webkit-background-size: 100%;
-}
-
-.listRowTemplate_template.selected .rowTitle_template {
-   color: white;
-}
-
-.rowTitle_template {
-   position: absolute;
-   left: 10px;
-   top: 12px;
-   height: 23px;
-   right: 30px;
-   width: auto;
-   color: black;
-   font-family: Helvetica;
-   font-weight: bold;
-   font-size: 20px;
-   text-overflow: ellipsis;
-   overflow: hidden;
-   white-space: nowrap;
-}
-
-.rowArrow_template {
-   position: absolute;
-   width: 8px;
-   height: 13px;
-   background-image: url(#{request.contextPath}/resources/images/iphone/chevron.png);
-   background-repeat: no-repeat;
-   top: 17px;
-   right: 11px;
-   margin-left: auto;
-}
-
-.listRowTemplate_template.selected .rowArrow_template {
-   background-image: url(#{request.contextPath}/resources/images/iphone/chevron_white.png);
-}
-
 
 
 .detail-box {
@@ -306,11 +242,11 @@ a {
    -webkit-transition-delay: 0.3s;
 }
 
-.display-none {
+.none {
    display: none;
 }
 
-.display-block {
+.block {
    display: block;
 }
 
@@ -412,6 +348,14 @@ a {
    left: 0;
 }
 
+#top-hashtags {
+   position: absolute;
+}
+
+#top-tweeters {
+   position: absolute;
+}
+
 /*// should technically achieve a similar result to the above query,*/
 /*// targeting based on screen resolution (the iPhone 4 has 326 ppi/dpi)*/
 /*@media only screen and (min-resolution: 300dpi) {*/
@@ -422,45 +366,82 @@ a {
 
    function showDetail(e)
    {
-
       //change the class name so we get the css transition for old and new page
-      document.getElementById('back-button').className = 'button back_button show transition';
-      document.getElementById('list').className = 'stage-left transition';
-      document.getElementById('tweet-detail').className = 'stage-center transition'
+      swap('back-button','button back_button show transition');
+      swap('home-page','iphone-page stage-left transition');
+      swap('tweet-detail','stage-center transition');
+      hideURLbar();
    }
 
    function hideDetail(e)
    {
       //change the class name so we get the css transition for old and new page
-      document.getElementById('back-button').className = 'button back_button hide transition';
-      document.getElementById('list').className = 'stage-center transition';
-      document.getElementById('tweet-detail').className = 'stage-right transition'
+      swap('back-button','button back_button hide transition');
+      swap('home-page','iphone-page stage-center transition');
+      swap('tweet-detail','stage-right transition hide');
    }
 
    function flip(e)
    {
       //change the class name so we get the css transition for old and new page
-      document.getElementById('flippable').className = 'flip-face flip-back';
-      document.getElementById('agenda').className = 'agenda-flip-show show-delay';
-      document.getElementById('list').className = 'hide-delay';
-
+      swap('flippable','flip-face flip-back');
+      swap('agenda','agenda-flip-show show-delay');
+      swap('home-page','hide-delay');
 
       //hide tweet detail if coming from that screen
-      document.getElementById('tweet-detail').className = 'display-none';
+      swap('tweet-detail','none');
       //change the button
-      document.getElementById('agenda-back-button').className = 'button agenda_button';
-      document.getElementById('agenda-button').className = 'display-none';
-      document.getElementById('back-button').className = 'button back_button hide';
+      swap('agenda-back-button','button agenda_button');
+      swap('agenda-button','none');
+      swap('back-button','button back_button hide');
    }
 
-   function flipBack()
+    function flipBack()
    {
-      document.getElementById('flippable').className = 'flip-face';
-      document.getElementById('agenda').className = 'hide-delay';
+      swap('flippable','flip-face');
+      swap('agenda','hide-delay');
+      swap('home-page','list stage-center transition');
+      swap('agenda-back-button','none');
+      swap('agenda-button','button agenda_button');
+   }
 
-      document.getElementById('list').className = 'stage-center transition';
-      document.getElementById('agenda-back-button').className = 'display-none';
-      document.getElementById('agenda-button').className = 'button agenda_button';
+   function showTweeters() {
+      swap('tweeters-back-button','button back_button show transition');
+      swap('home-page','iphone-page stage-left transition');
+      swap('top-tweeters','stage-center transition');
+   }
+
+   function hideTweeters() {
+      swap('tweeters-back-button','hide');
+      swap('home-page','iphone-page stage-center transition');
+      swap('top-tweeters','stage-right transition hide');
+   }
+
+   function showHashtags() {
+      swap('tags-back-button','button back_button show transition');
+      swap('home-page','iphone-page stage-left transition');
+      swap('top-hashtags','stage-center transition');
+
+   }
+
+   function hideHashtags() {
+      swap('tags-back-button','hide');
+      swap('home-page','iphone-page stage-center transition');
+      swap('top-hashtags','stage-right transition hide');
+   }
+
+
+
+
+
+   function swap(id,classString) {
+      //var element = document.getElementById(id);
+      //classString = element.className + ' ' + classString;
+      document.getElementById(id).className = classString;
+   }
+
+   function jumpToTop(){
+      window.location = window.location + "#browser";
    }
 </script>
 <ui:insert name="head"/>
@@ -471,51 +452,95 @@ a {
       <div id="header" class="header-gradient">
          TweetStream
          <div id="back-button" class="button back_button hide" onclick="hideDetail()">Back</div>
-         <div id="agenda-button" class="button agenda_button" onclick="flip()">Agenda</div>
+         <div id="tweeters-back-button" class="hide" onclick="hideTweeters()">Back</div>
+         <div id="tags-back-button" class="hide" onclick="hideHashtags()">Back</div>
+         <div id="agenda-button" class="button agenda_button" onclick="flip()">About</div>
          <div id="agenda-back-button" class="hide" onclick="flipBack()">Back</div>
       </div>
       <div id="flippable" class="flip-face">
 
          <div id="page-container">
 
+            <!--TODO - conditional rendering-->
               <div class="iphone-page">
-
                  <div id="tweet-detail" class="stage-right">
                   <a4j:outputPanel id="list-panel" ajaxRendered="true">
-
-                     <div class="detail-box">
-                        <div class="detail-title"><img src="#{twitterAgent.selectedTweet.profileImageUrl}" alt=""/></div>
-                        <div class="detail-subtitle">#{twitterAgent.selectedTweet.screenName}</div>
-                        <div class="detail-description">#{twitterAgent.selectedTweet.text}</div>
+                     <div class="tweet-box">
+                        <span class="tweet-username">#{twitterAgent.selectedTweet.screenName}</span>
+                        <div class="tweet-description"><img src="#{twitterAgent.selectedTweet.profileImageUrl}" alt="" align="left"/>#{twitterAgent.selectedTweet.text}</div>
+                        <br clear="all"/>
                      </div>
-
                   </a4j:outputPanel>
                  </div>
+              </div>
 
+              <div class="iphone-page">
+                 <div id="top-tweeters" class="stage-right hide">
+                    <div id="tweeters-container" class="">
+                     Top tweeters
+
+                    <ul>
+                      <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
+                        <li>
+                          <div>
+                            <img src="#{tweeter.profileImgUrl}" alt="ttw_img" class=""/>
+
+                            <div class="">
+                              <h:outputText value="#{tweeter.user}" class=""/>
+                              <h:outputText value="#{tweeter.tweetCount}" class=""/>
+                            </div>
+                          </div>
+                        </li>
+                      </ui:repeat>
+                    </ul>
+
+                    </div>
+                 </div>
+              </div>
+
+               <div class="iphone-page">
+                 <div id="top-hashtags" class="stage-right hide">
+                    <div id="hashtags-container" class="">
+                    Top hashtags
+
+                    <ul>
+                      <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
+                        <li>
+                          <div class="">
+                            <h:outputText value=" ##{tag.hashtag}" class=""/>
+                            <h:outputText value="#{tag.count}" class=""/>
+                          </div>
+                        </li>
+                      </ui:repeat>
+                    </ul>
+
+                    </div>
+                 </div>
               </div>
 
 
-               <div class="iphone-page">
+               <div class="iphone-page" id="home-page">
 
-                <h:form id="list-form">
-                  <ul id="list">
-                     <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
-                        <li id="listRowTemplate-#{tweet.id}" class="" tabindex="-1">
-                           <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}" oncomplete="showDetail()">
-                              <div class="tweet-box">
-                                 <span class="tweet-username">#{tweet.screenName}</span>
-                                 <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt="" align="left"/>#{tweet.text}</div>
-                                 <br clear="all"/>
-                              </div>
-                              <ui:remove>
-                                 <div class="rowTitle_template tweet-text" id="rowTitle">...</div>
-                                 <div id="rowArrow" class="rowArrow_template"></div>
-                              </ui:remove>
-                           </a4j:commandLink>
-                        </li>
-                     </ui:repeat>
-                  </ul>
-               </h:form>
+                   <div id="top-button-container">
+                        <div class="button" onclick="showTweeters()">Top Tweeters</div>
+                        <div class="button" onclick="showHashtags()">Top Hashtags</div>
+                    </div>
+
+                   <h:form id="list-form">
+                     <ul id="tweet-list" class="list">
+                        <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
+                           <li id="list-row-#{tweet.id}" class="" tabindex="-1">
+                              <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}" oncomplete="showDetail()">
+                                 <div class="tweet-box">
+                                    <span class="tweet-username">#{tweet.screenName}</span>
+                                    <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt="" align="left"/>#{tweet.text}</div>
+                                    <br clear="all"/>
+                                 </div>
+                              </a4j:commandLink>
+                           </li>
+                        </ui:repeat>
+                     </ul>
+                  </h:form>
 
                </div>
 
@@ -524,6 +549,7 @@ a {
 
                  <div id="agenda" class="hide">
                   <img src="#{request.contextPath}/resources/images/judcon-logo.gif" alt=""/>
+                    About this project or the conference....
                  </div>
 
               </div>
