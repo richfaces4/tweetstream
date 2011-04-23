@@ -208,18 +208,78 @@ a {
    mozborder-radius: 7px;
    webkitborder-radius: 7px;
    border: none;
-   box-shadow: 0 0 6px rgba(235, 195, 146, 1) inset;
-   mozbox-shadow: 0 0 6px rgba(235, 195, 146, 1) inset;
-   webkitbox-shadow: 0 0 6px rgba(235, 195, 146, 1) inset;
 }
 
 .header-gradient {
    background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
    background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
    border: none;
-   box-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
-   mozbox-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
-   webkitbox-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
+}
+
+.summit-button {
+   background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+   background: #af7124 -webkit-gradient(linear, left top, left bottom, from(#cd3333), to(#992828));
+   border-radius: 7px;
+   mozborder-radius: 7px;
+   webkitborder-radius: 7px;
+   border: none;
+}
+
+.summit-header-gradient {
+   background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+   background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(#717172), to(#0f0f10), color-stop(0.5, #3a3a3a), color-stop(0.5, #0d0d0f));
+   border: none;
+}
+
+.nav-button {
+   font-family: "Helvetica Neue", Helvetica, sans-serif;
+   font-size: 0.8em;
+   font-weight: bold;
+   padding: 0 5px 0 5px;
+   height: 24px;
+   border: 1px solid #4c525a;
+   background: -webkit-gradient( linear, left top, left bottom, from(#9fafc1), to(#6c83a1), color-stop(0.5, #798eaa), color-stop(0.5, #6c83a1) );
+   margin: 0;
+   text-shadow: 0px 1px 0 #000;
+   -webkit-background-origin: padding-box;
+   -webkit-background-clip: border-box;
+   -webkit-border-radius: 8px;
+   line-height: 23px;
+   color: #fff;
+}
+
+.nav-button-left {
+   -webkit-border-bottom-left-radius:8px;
+   -webkit-border-top-left-radius: 8px;
+   -webkit-border-bottom-right-radius: 0;
+   -webkit-border-top-right-radius: 0;
+   width:45%;
+   float:left;
+   margin: 0;
+   border-width: 1px 1px 1px 1px;
+
+}
+
+.nav-button-right {
+   -webkit-border-bottom-left-radius: 0;
+   -webkit-border-top-left-radius: 0;
+   -webkit-border-bottom-right-radius: 8px;
+   -webkit-border-top-right-radius: 8px;
+   width: 45%;
+   float:left;
+   margin: 0;
+   border-width: 1px 1px 1px 0;
+}
+
+#nav-button-container {
+   width: 80%;
+   margin: 5px auto 0 auto;
+   text-align: center;
+}
+
+.nav-button:hover, nav-button:active {
+   color: #fff;
+   text-shadow: none;
 }
 
 
@@ -449,12 +509,12 @@ a {
 <ui:define name="body">
 
    <div id="browser">
-      <div id="header" class="header-gradient">
+      <div id="header" class="summit-header-gradient">
          TweetStream
-         <div id="back-button" class="button back_button hide" onclick="hideDetail()">Back</div>
+         <div id="back-button" class="summit-button back_button hide" onclick="hideDetail()">Back</div>
          <div id="tweeters-back-button" class="hide" onclick="hideTweeters()">Back</div>
          <div id="tags-back-button" class="hide" onclick="hideHashtags()">Back</div>
-         <div id="agenda-button" class="button agenda_button" onclick="flip()">About</div>
+         <div id="agenda-button" class="summit-button agenda_button" onclick="flip()">About</div>
          <div id="agenda-back-button" class="hide" onclick="flipBack()">Back</div>
       </div>
       <div id="flippable" class="flip-face">
@@ -462,6 +522,35 @@ a {
          <div id="page-container">
 
             <!--TODO - conditional rendering-->
+
+            <div class="iphone-page" id="home-page">
+
+               <div id="nav-button-container">
+                    <div class="nav-button nav-button-left" onclick="showTweeters()">Top Tweeters</div>
+                    <div class="nav-button nav-button-right" onclick="showHashtags()">Top Hashtags</div>
+                    <br clear="all"/>
+                </div>
+
+               <h:form id="list-form">
+                 <ul id="tweet-list" class="list">
+                    <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
+                       <li id="list-row-#{tweet.id}" class="" tabindex="-1">
+                          <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}" oncomplete="showDetail()">
+                             <div class="tweet-box">
+                                <span class="tweet-username">#{tweet.screenName}</span>
+                                <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt="" align="left"/>#{tweet.text}</div>
+                                <br clear="all"/>
+                             </div>
+                          </a4j:commandLink>
+                       </li>
+                    </ui:repeat>
+                 </ul>
+              </h:form>
+
+           </div>
+
+
+
               <div class="iphone-page">
                  <div id="tweet-detail" class="stage-right">
                   <a4j:outputPanel id="list-panel" ajaxRendered="true">
@@ -519,30 +608,6 @@ a {
               </div>
 
 
-               <div class="iphone-page" id="home-page">
-
-                   <div id="top-button-container">
-                        <div class="button" onclick="showTweeters()">Top Tweeters</div>
-                        <div class="button" onclick="showHashtags()">Top Hashtags</div>
-                    </div>
-
-                   <h:form id="list-form">
-                     <ul id="tweet-list" class="list">
-                        <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
-                           <li id="list-row-#{tweet.id}" class="" tabindex="-1">
-                              <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}" oncomplete="showDetail()">
-                                 <div class="tweet-box">
-                                    <span class="tweet-username">#{tweet.screenName}</span>
-                                    <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt="" align="left"/>#{tweet.text}</div>
-                                    <br clear="all"/>
-                                 </div>
-                              </a4j:commandLink>
-                           </li>
-                        </ui:repeat>
-                     </ul>
-                  </h:form>
-
-               </div>
 
 
               <div class="iphone-page">
