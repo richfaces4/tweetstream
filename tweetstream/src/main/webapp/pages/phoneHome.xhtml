@@ -65,12 +65,11 @@ a {
 
 
 
-.list {
+#page-container ul{
    overflow: hidden;
    padding: 0px;
    margin: 0px;
    height: auto;
-   position: relative;
    width: auto;
    cursor: default;
    -webkit-user-select: none;
@@ -320,7 +319,9 @@ a {
    -o-transition-duration: 1.5s;
 }
 
-
+.iphone-page {
+   position: absolute;
+}
 
 /*client specific styles*/
 
@@ -410,21 +411,6 @@ a {
    left: 0;
 }
 
-#top-hashtags-page {
-   position: absolute;
-}
-
-#top-tweeters-page {
-   position: absolute;
-}
-
-#tweet-detail-page {
-   position: absolute;
-}
-
-#home-page{
-   position: absolute;
-}
 
 #tweet-detail a {
    text-decoration: none;
@@ -439,73 +425,82 @@ a {
 </style>
 <script type="text/javascript">
 
+   var currentPage;
+
    function showDetail(e)
    {
-      //change the class name so we get the css transition for old and new page
       swap('back-button','button back_button show transition');
-      swap('home-page','iphone-page stage-left transition');
-      swap('tweet-detail-page','iphone-page stage-center transition');
+      exit('home-page','left');
+      showPage('tweet-detail-page');
       hideURLbar();
    }
 
    function hideDetail(e)
    {
-      //change the class name so we get the css transition for old and new page
-      swap('back-button','button back_button hide transition');
-      swap('home-page','iphone-page stage-center transition');
-      swap('tweet-detail-page','stage-right transition hide');
+      swap('back-button','none');
+      exit('tweet-detail-page','right');
+      resetHome();
    }
 
    function flip(e)
    {
-      //change the class name so we get the css transition for old and new page
       swap('flippable','flip-face flip-back');
-      swap('agenda','agenda-flip-show show-delay');
+      swap('about-page','iphone-page agenda-flip-show show-delay');
       swap('home-page','hide-delay');
+      swap('agenda-back-button','button agenda_button');
 
       //hide tweet detail if coming from that screen
-      swap('tweet-detail','none');
-      //change the button
-      swap('agenda-back-button','button agenda_button');
+      swap('tweet-detail-page','none');
       swap('agenda-button','none');
-      swap('back-button','button back_button hide');
+      swap('back-button','none');
    }
 
     function flipBack()
    {
       swap('flippable','flip-face');
       swap('agenda','hide-delay');
-      swap('home-page','list stage-center transition');
       swap('agenda-back-button','none');
       swap('agenda-button','button agenda_button');
+      resetHome();
    }
 
    function showTweeters() {
       swap('tweeters-back-button','button back_button show transition');
-      swap('home-page','iphone-page stage-left transition');
-      swap('top-tweeters-page','stage-center transition');
+      exit('home-page','left');
+      showPage('top-tweeters-page');
    }
 
    function hideTweeters() {
-      swap('tweeters-back-button','hide');
-      swap('home-page','iphone-page stage-center transition');
-      swap('top-tweeters-page','stage-right transition hide');
+      swap('tweeters-back-button','none');
+      exit('top-tweeters-page','right');
+      resetHome();
    }
 
    function showHashtags() {
       swap('tags-back-button','button back_button show transition');
-      swap('home-page','iphone-page stage-left transition');
-      swap('top-hashtags-page','stage-center transition');
+      exit('home-page','left');
+      showPage('top-hashtags-page');
 
    }
 
    function hideHashtags() {
-      swap('tags-back-button','hide');
-      swap('home-page','iphone-page stage-center transition');
-      swap('top-hashtags-page','stage-right transition hide');
+      swap('tags-back-button','none');
+      exit('top-hashtags-page','right');
+      resetHome();
    }
 
+   function resetHome() {
+      //reset back to home page
+      swap('home-page','iphone-page stage-center transition');
+   }
 
+   function exit(pageId,direction) {
+      swap(pageId,'iphone-page stage-' + direction + ' transition hide');
+   }
+
+   function showPage(pageId) {
+      swap(pageId,'iphone-page stage-center transition');
+   }
 
 
 
@@ -561,10 +556,7 @@ a {
                     </ui:repeat>
                  </ul>
               </h:form>
-
-           </div>
-
-
+             </div>
 
               <div class="iphone-page stage-right hide" id="tweet-detail-page">
                  <div id="tweet-detail">
@@ -586,13 +578,10 @@ a {
                     <ul>
                       <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
                         <li>
-                          <div>
-                            <img src="#{tweeter.profileImgUrl}" alt="ttw_img" class=""/>
-
-                            <div class="">
-                              <h:outputText value="#{tweeter.user}" class=""/>
-                              <h:outputText value="#{tweeter.tweetCount}" class=""/>
-                            </div>
+                          <div class="tweet-box">
+                             <span class="tweet-username">#{tweeter.user}</span>
+                             <div class="tweet-description"><img src="#{tweeter.profileImgUrl}" alt="" align="left"/>#{tweeter.tweetCount}</div>
+                             <br clear="all"/>
                           </div>
                         </li>
                       </ui:repeat>
@@ -606,23 +595,21 @@ a {
                  <div id="top-hashtags">
                     <div id="hashtags-container" class="">
                     Top hashtags
-
                     <ul>
                       <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
                         <li>
-                          <div class="">
-                            <h:outputText value=" ##{tag.hashtag}" class=""/>
-                            <h:outputText value="#{tag.count}" class=""/>
+                           <div class="tweet-box">
+                             <div class="tweet-description">
+                                 Tag: #{tag.hashtag}  Count: #{tag.count}
+                             </div>
+                             <br clear="all"/>
                           </div>
                         </li>
                       </ui:repeat>
                     </ul>
-
                     </div>
                  </div>
               </div>
-
-
 
 
               <div class="iphone-page hide" id="about-page">
@@ -630,7 +617,6 @@ a {
                   <img src="#{request.contextPath}/resources/images/judcon-logo.gif" alt=""/>
                     About this project or the conference....
                  </div>
-
               </div>
 
 
