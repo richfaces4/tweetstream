@@ -73,6 +73,7 @@ a {
    width: auto;
    cursor: default;
    -webkit-user-select: none;
+   list-style:none;
 }
 
 
@@ -168,7 +169,7 @@ a {
 
 
 /*Buttons and bars*/
-.back_button {
+.left-header-button {
    font-weight: bold;
    font-size: 12px;
    color: #fff;
@@ -183,7 +184,7 @@ a {
    line-height: 30px;
 }
 
-.agenda_button {
+.right-header-button {
    font-weight: bold;
    font-size: 12px;
    color: #fff;
@@ -268,7 +269,7 @@ a {
    border-width: 1px 1px 1px 0;
 }
 
-#nav-button-container {
+.button-container {
    width: 80%;
    margin: 5px auto 0 auto;
    text-align: center;
@@ -398,9 +399,7 @@ a {
 }
 
 
-#agenda {
-   width: 100%;
-   height: 100%;
+.flipped {
    -webkit-user-select: element;
    -webkit-transform: rotateY(180deg);
 }
@@ -417,11 +416,6 @@ a {
 
 }
 
-/*// should technically achieve a similar result to the above query,*/
-/*// targeting based on screen resolution (the iPhone 4 has 326 ppi/dpi)*/
-/*@media only screen and (min-resolution: 300dpi) {*/
-/*// CSS goes here*/
-/*}*/
 </style>
 <script type="text/javascript">
 
@@ -429,7 +423,7 @@ a {
 
    function showDetail(e)
    {
-      swap('back-button','button back_button show transition');
+      showHeaderButton('back-button','left');
       exit('home-page','left');
       showPage('tweet-detail-page');
       hideURLbar();
@@ -444,15 +438,18 @@ a {
 
    function flip(e)
    {
+      hideAll();
       swap('flippable','flip-face flip-back');
       swap('about-page','iphone-page agenda-flip-show show-delay');
       swap('home-page','hide-delay');
-      swap('agenda-back-button','button agenda_button');
+      showHeaderButton('agenda-back-button','right');
 
       //hide tweet detail if coming from that screen
       swap('tweet-detail-page','none');
       swap('agenda-button','none');
       swap('back-button','none');
+      swap('about-button-container','show-delay button-container flipped');
+      swap('nav-button-container','none');
    }
 
     function flipBack()
@@ -460,13 +457,15 @@ a {
       swap('flippable','flip-face');
       swap('about-page','iphone-page hide-delay');
       swap('agenda-back-button','none');
-      swap('agenda-button','button agenda_button');
+      swap('about-button-container','none');
+      swap('nav-button-container','show-delay button-container');
+      showHeaderButton('agenda-button','right');
       resetHome();
    }
 
    function showTweeters() {
-      hideHashtags();
-      swap('tweeters-back-button','button back_button show transition');
+      hideAll();
+      showHeaderButton('tweeters-back-button','left');
       exit('home-page','left');
       showPage('top-tweeters-page');
    }
@@ -478,8 +477,8 @@ a {
    }
 
    function showHashtags() {
-      hideTweeters();
-      swap('tags-back-button','button back_button show transition');
+      hideAll();
+      showHeaderButton('tags-back-button','left');
       exit('home-page','left');
       showPage('top-hashtags-page');
    }
@@ -503,6 +502,16 @@ a {
       swap(pageId,'iphone-page stage-center transition');
    }
 
+   function showHeaderButton(buttonId,position){
+      swap(buttonId,'jbw-button '+ position + '-header-button show transition');
+   }
+
+   function hideAll(){
+      hideDetail();
+      hideHashtags();
+      hideTweeters();
+   }
+
 
 
    function swap(id,classString) {
@@ -522,19 +531,27 @@ a {
    <div id="browser">
       <div id="header" class="jbw-header-gradient">
          TweetStream
-         <div id="back-button" class="jbw-button back_button hide" onclick="hideDetail()">Back</div>
+         <div id="back-button" class="jbw-button left-header-button hide" onclick="hideDetail()">Back</div>
          <div id="tweeters-back-button" class="hide" onclick="hideTweeters()">Back</div>
          <div id="tags-back-button" class="hide" onclick="hideHashtags()">Back</div>
-         <div id="agenda-button" class="jbw-button agenda_button" onclick="flip()">About</div>
+         <div id="agenda-button" class="jbw-button right-header-button" onclick="flip()">About</div>
          <div id="agenda-back-button" class="hide" onclick="flipBack()">Back</div>
       </div>
+
+
       <div id="flippable" class="flip-face">
 
-         <div id="nav-button-container">
+          <div id="nav-button-container" class="button-container">
               <div class="nav-button nav-button-left" onclick="showTweeters()">Top Tweeters</div>
               <div class="nav-button nav-button-right" onclick="showHashtags()">Top Hashtags</div>
               <br clear="all"/>
           </div>
+
+            <div id="about-button-container" class="none button-container flipped">
+                 <div class="nav-button nav-button-left" >JUDCon2011</div>
+                 <div class="nav-button nav-button-right" >JBoss World 2011</div>
+                 <br clear="all"/>
+             </div>
 
          <div id="page-container">
 
@@ -615,7 +632,7 @@ a {
 
 
               <div class="iphone-page hide" id="about-page">
-                 <div id="agenda">
+                 <div class="flipped">
                   <img src="#{request.contextPath}/resources/images/judcon-logo.gif" alt=""/>
                     About this project or the conference....
                  </div>
