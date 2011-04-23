@@ -22,7 +22,8 @@ body {
    background-repeat: repeat;
    margin: 0;
    padding: 0;
-   min-height: 416px;
+   height:100%;
+   /*min-height: 416px;*/
    font: 80% / 1.5em "Helvetica", "Lucida Sans", Verdana, Arial, sans-serif;
 }
 
@@ -31,11 +32,11 @@ a {
 }
 
 #browser {
-   height: auto;
+   /*height: auto;*/
    -webkit-margin-top-collapse: separate;
    -webkit-margin-bottom-collapse: separate;
    position: relative;
-   min-height: 416px;
+   /*min-height: 416px;*/
    width: auto;
 }
 
@@ -55,18 +56,17 @@ a {
 
 #page-container {
    position: relative;
-   min-height: 400px;
+   /*min-height: 400px;*/
    width: auto;
-   height: auto;
-   overflow: hidden;
-   z-index: 0;
-   min-height: 372px;
+   min-height: 500px;
+   /*overflow: hidden;*/
+
 }
 
 
 
 #page-container ul{
-   overflow: hidden;
+   /*overflow: hidden;*/
    padding: 0px;
    margin: 0px;
    height: auto;
@@ -321,6 +321,7 @@ a {
 
 .iphone-page {
    position: absolute;
+   /*height: 100%;*/
 }
 
 /*client specific styles*/
@@ -387,7 +388,6 @@ a {
    -webkit-transition-duration: 1s, 0;
    -webkit-transform-style: preserve-3d;
    -webkit-transition-delay: 0, 0.3s;
-   overflow: hidden;
    -webkit-transform: rotateY(0deg);
 
 }
@@ -465,6 +465,7 @@ a {
    }
 
    function showTweeters() {
+      hideHashtags();
       swap('tweeters-back-button','button back_button show transition');
       exit('home-page','left');
       showPage('top-tweeters-page');
@@ -477,10 +478,10 @@ a {
    }
 
    function showHashtags() {
+      hideTweeters();
       swap('tags-back-button','button back_button show transition');
       exit('home-page','left');
       showPage('top-hashtags-page');
-
    }
 
    function hideHashtags() {
@@ -555,6 +556,7 @@ a {
                        </li>
                     </ui:repeat>
                  </ul>
+                  <br clear="all"/>
               </h:form>
              </div>
 
