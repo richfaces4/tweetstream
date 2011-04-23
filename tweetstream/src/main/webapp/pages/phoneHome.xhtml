@@ -55,9 +55,7 @@ a {
 
 #page-container {
    position: relative;
-   left: 0px;
-   top: 0px;
-   min-height: 20px;
+   min-height: 400px;
    width: auto;
    height: auto;
    overflow: hidden;
@@ -216,7 +214,7 @@ a {
    border: none;
 }
 
-.summit-button {
+.jbw-button {
    background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
    background: #af7124 -webkit-gradient(linear, left top, left bottom, from(#cd3333), to(#992828));
    border-radius: 7px;
@@ -225,7 +223,7 @@ a {
    border: none;
 }
 
-.summit-header-gradient {
+.jbw-header-gradient {
    background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
    background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(#717172), to(#0f0f10), color-stop(0.5, #3a3a3a), color-stop(0.5, #0d0d0f));
    border: none;
@@ -313,7 +311,7 @@ a {
 .stage-center {
    top: 0;
    left: 0;
-   width: 100%;
+   /*width: 100%;*/
 }
 
 .transition {
@@ -325,26 +323,22 @@ a {
 
 
 /*client specific styles*/
-#tweet-detail {
-   position: absolute;
 
-}
-
-#tweet-detail a {
-   text-decoration: none;
-
-}
 
 /*iphone landscape screen width*/
 @media screen and (min-device-width: 321px) {
    .stage-left {
-      left: -480px;
       opacity: 0;
+      left: -480px;
    }
 
    .stage-right {
       opacity: 0;
       left: 480px;
+   }
+
+   .iphone-page {
+      width: 480px;
    }
 }
 
@@ -359,6 +353,10 @@ a {
       opacity: 0;
       left: 320px;
    }
+
+   .iphone-page {
+      width: 320px;
+   }
 }
 
 /*catch all for larger than iphone landscape device widths*/
@@ -371,6 +369,10 @@ a {
    .stage-right {
       opacity: 0;
       left: 1024px;
+   }
+
+   .iphone-page {
+      width: 480px;
    }
 }
 
@@ -408,12 +410,25 @@ a {
    left: 0;
 }
 
-#top-hashtags {
+#top-hashtags-page {
    position: absolute;
 }
 
-#top-tweeters {
+#top-tweeters-page {
    position: absolute;
+}
+
+#tweet-detail-page {
+   position: absolute;
+}
+
+#home-page{
+   position: absolute;
+}
+
+#tweet-detail a {
+   text-decoration: none;
+
 }
 
 /*// should technically achieve a similar result to the above query,*/
@@ -429,7 +444,7 @@ a {
       //change the class name so we get the css transition for old and new page
       swap('back-button','button back_button show transition');
       swap('home-page','iphone-page stage-left transition');
-      swap('tweet-detail','stage-center transition');
+      swap('tweet-detail-page','iphone-page stage-center transition');
       hideURLbar();
    }
 
@@ -438,7 +453,7 @@ a {
       //change the class name so we get the css transition for old and new page
       swap('back-button','button back_button hide transition');
       swap('home-page','iphone-page stage-center transition');
-      swap('tweet-detail','stage-right transition hide');
+      swap('tweet-detail-page','stage-right transition hide');
    }
 
    function flip(e)
@@ -468,26 +483,26 @@ a {
    function showTweeters() {
       swap('tweeters-back-button','button back_button show transition');
       swap('home-page','iphone-page stage-left transition');
-      swap('top-tweeters','stage-center transition');
+      swap('top-tweeters-page','stage-center transition');
    }
 
    function hideTweeters() {
       swap('tweeters-back-button','hide');
       swap('home-page','iphone-page stage-center transition');
-      swap('top-tweeters','stage-right transition hide');
+      swap('top-tweeters-page','stage-right transition hide');
    }
 
    function showHashtags() {
       swap('tags-back-button','button back_button show transition');
       swap('home-page','iphone-page stage-left transition');
-      swap('top-hashtags','stage-center transition');
+      swap('top-hashtags-page','stage-center transition');
 
    }
 
    function hideHashtags() {
       swap('tags-back-button','hide');
       swap('home-page','iphone-page stage-center transition');
-      swap('top-hashtags','stage-right transition hide');
+      swap('top-hashtags-page','stage-right transition hide');
    }
 
 
@@ -509,28 +524,28 @@ a {
 <ui:define name="body">
 
    <div id="browser">
-      <div id="header" class="summit-header-gradient">
+      <div id="header" class="jbw-header-gradient">
          TweetStream
-         <div id="back-button" class="summit-button back_button hide" onclick="hideDetail()">Back</div>
+         <div id="back-button" class="jbw-button back_button hide" onclick="hideDetail()">Back</div>
          <div id="tweeters-back-button" class="hide" onclick="hideTweeters()">Back</div>
          <div id="tags-back-button" class="hide" onclick="hideHashtags()">Back</div>
-         <div id="agenda-button" class="summit-button agenda_button" onclick="flip()">About</div>
+         <div id="agenda-button" class="jbw-button agenda_button" onclick="flip()">About</div>
          <div id="agenda-back-button" class="hide" onclick="flipBack()">Back</div>
       </div>
       <div id="flippable" class="flip-face">
+
+         <div id="nav-button-container">
+              <div class="nav-button nav-button-left" onclick="showTweeters()">Top Tweeters</div>
+              <div class="nav-button nav-button-right" onclick="showHashtags()">Top Hashtags</div>
+              <br clear="all"/>
+          </div>
 
          <div id="page-container">
 
             <!--TODO - conditional rendering-->
 
+
             <div class="iphone-page" id="home-page">
-
-               <div id="nav-button-container">
-                    <div class="nav-button nav-button-left" onclick="showTweeters()">Top Tweeters</div>
-                    <div class="nav-button nav-button-right" onclick="showHashtags()">Top Hashtags</div>
-                    <br clear="all"/>
-                </div>
-
                <h:form id="list-form">
                  <ul id="tweet-list" class="list">
                     <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
@@ -551,8 +566,8 @@ a {
 
 
 
-              <div class="iphone-page">
-                 <div id="tweet-detail" class="stage-right">
+              <div class="iphone-page stage-right hide" id="tweet-detail-page">
+                 <div id="tweet-detail">
                   <a4j:outputPanel id="list-panel" ajaxRendered="true">
                      <div class="tweet-box">
                         <span class="tweet-username">#{twitterAgent.selectedTweet.screenName}</span>
@@ -563,8 +578,8 @@ a {
                  </div>
               </div>
 
-              <div class="iphone-page">
-                 <div id="top-tweeters" class="stage-right hide">
+              <div class="iphone-page stage-right hide" id="top-tweeters-page">
+                 <div id="top-tweeters">
                     <div id="tweeters-container" class="">
                      Top tweeters
 
@@ -587,8 +602,8 @@ a {
                  </div>
               </div>
 
-               <div class="iphone-page">
-                 <div id="top-hashtags" class="stage-right hide">
+               <div class="iphone-page stage-right hide" id="top-hashtags-page">
+                 <div id="top-hashtags">
                     <div id="hashtags-container" class="">
                     Top hashtags
 
@@ -610,9 +625,8 @@ a {
 
 
 
-              <div class="iphone-page">
-
-                 <div id="agenda" class="hide">
+              <div class="iphone-page hide" id="about-page">
+                 <div id="agenda">
                   <img src="#{request.contextPath}/resources/images/judcon-logo.gif" alt=""/>
                     About this project or the conference....
                  </div>
