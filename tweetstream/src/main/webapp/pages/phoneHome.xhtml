@@ -76,7 +76,6 @@ a {
    list-style:none;
 }
 
-
 .detail-box {
    padding: 8px;
    border: 1px solid rgb(172, 172, 172);
@@ -158,12 +157,13 @@ a {
    font-size: 13px;
    text-overflow: ellipsis;
    overflow: hidden;
-   float: right;
+   float: left;
    width: auto;
 }
 
 .tweet-description img {
    padding: 1px 7px 0 0;
+   width: 48px;
 }
 
 
@@ -322,14 +322,14 @@ a {
 
 .iphone-page {
    position: absolute;
-   /*height: 100%;*/
+   width: 100%;
 }
 
 /*client specific styles*/
 
 
 /*iphone landscape screen width*/
-@media screen and (min-device-width: 321px) {
+@media screen and (max-device-width: 480px) and (orientation:landscape) {
    .stage-left {
       opacity: 0;
       left: -480px;
@@ -346,7 +346,7 @@ a {
 }
 
 /*iphone portrait screen width*/
-@media screen and (max-device-width: 320px) {
+@media screen and (max-device-width: 320px) and (orientation:portrait) {
    .stage-left {
       left: -320px;
       opacity: 0;
@@ -374,9 +374,20 @@ a {
       left: 1024px;
    }
 
-   .iphone-page {
-      width: 480px;
-   }
+   /*.iphone-page {*/
+      /*width: 480px;*/
+   /*}*/
+}
+
+/*------------------------android devices*/
+@media only screen and (-webkit-device-pixel-ratio:.75){
+    /* Put CSS for low density (ldpi) Android layouts in here */
+}
+@media only screen and (-webkit-device-pixel-ratio:1) {
+    /* Put CSS for medium density (mdpi) Android layouts in here */
+}
+@media only screen and (-webkit-device-pixel-ratio:1.5) {
+    /* Put CSS for high density (hdpi) Android layouts in here */
 }
 
 
