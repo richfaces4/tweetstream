@@ -444,8 +444,8 @@ a {
 
    function hideDetail(e)
    {
-      swap('back-button','none');
       exit('tweet-detail-page','right');
+      swap('back-button','none');
       resetHome();
    }
 
@@ -508,7 +508,7 @@ a {
    }
 
    function exit(pageId,direction) {
-      swap(pageId,'iphone-page stage-' + direction + ' transition hide');
+      swap(pageId,'iphone-page stage-' + direction + ' hide transition');
    }
 
    function showPage(pageId) {
@@ -544,11 +544,11 @@ a {
    <div id="browser">
       <div id="header" class="jbw-header-gradient">
          TweetStream
-         <div id="back-button" class="jbw-button left-header-button hide" onclick="hideDetail()">Back</div>
-         <div id="tweeters-back-button" class="jbw-button left-header-button hide" onclick="hideTweeters()">Back</div>
-         <div id="tags-back-button" class="jbw-button left-header-button hide" onclick="hideHashtags()">Back</div>
+         <div id="back-button" class="jbw-button left-header-button none" onclick="hideDetail()">Back</div>
+         <div id="tweeters-back-button" class="jbw-button left-header-button none" onclick="hideTweeters()">Back</div>
+         <div id="tags-back-button" class="jbw-button left-header-button none" onclick="hideHashtags()">Back</div>
          <div id="agenda-button" class="jbw-button right-header-button" onclick="flip()">About</div>
-         <div id="agenda-back-button" class="jbw-button right-header-button hide" onclick="flipBack()">Back</div>
+         <div id="agenda-back-button" class="jbw-button right-header-button none" onclick="flipBack()">Back</div>
       </div>
 
 
