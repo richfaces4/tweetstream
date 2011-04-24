@@ -17,6 +17,9 @@
 <ui:define name="head">
 <style type="text/css">
 /*Global*/
+html {
+   height:100%;
+}
 body {
    background-image: url(#{request.contextPath}/resources/images/iphone/backgroundStripes.png);
    background-repeat: repeat;
@@ -36,8 +39,11 @@ a {
    -webkit-margin-top-collapse: separate;
    -webkit-margin-bottom-collapse: separate;
    position: relative;
-   /*min-height: 416px;*/
+   min-height: 416px;
    width: auto;
+   height: 100%;
+   overflow-x: hidden;
+   overflow-y: scroll;
 }
 
 #header {
@@ -56,11 +62,6 @@ a {
 
 #page-container {
    position: relative;
-   /*min-height: 400px;*/
-   width: auto;
-   min-height: 500px;
-   /*overflow: hidden;*/
-
 }
 
 
@@ -383,10 +384,10 @@ a {
 @media only screen and (-webkit-device-pixel-ratio:.75){
     /* Put CSS for low density (ldpi) Android layouts in here */
 }
-@media only screen and (-webkit-device-pixel-ratio:1) {
+@media only screen and (-webkit-device-pixel-ratio:1){
     /* Put CSS for medium density (mdpi) Android layouts in here */
 }
-@media only screen and (-webkit-device-pixel-ratio:1.5) {
+@media only screen and (-webkit-device-pixel-ratio:1.5){
     /* Put CSS for high density (hdpi) Android layouts in here */
 }
 
