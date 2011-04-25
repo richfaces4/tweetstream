@@ -44,28 +44,10 @@
       </a4j:push>
     </h:form>
     <h:form id="browser_form">
+
       <div id="browser">
         <div id="header" class="header-gradient">
           <h1>TweetStream</h1>
-        </div>
-
-        <div id="tweets">
-          <rich:panel>
-            <ul id="tweets_list">
-              <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
-                <li>
-                  <div class="tweet_div">
-                    <img src="#{tweet.profileImageUrl}" alt="tw_img" class="tweet_profile_img"/>
-
-                    <div class="tweet_txt_div">
-                      <h:outputText value="#{tweet.screenName}:" class="tweeter"/>
-                      <h:outputText value="#{tweet.text}" class="tweet_text"/>
-                    </div>
-                  </div>
-                </li>
-              </ui:repeat>
-            </ul>
-          </rich:panel>
         </div>
 
         <div id="tops">
@@ -101,9 +83,29 @@
                 </ui:repeat>
               </ul>
             </rich:panel>
-
           </div>
         </div>
+
+        <div id="tweets">
+          <rich:panel>
+            <ul id="tweets_list">
+              <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
+                <li>
+                  <div class="tweet_div">
+                    <img src="#{tweet.profileImageUrl}" alt="tw_img" class="tweet_profile_img"/>
+
+                    <div class="tweet_txt_div">
+                      <h:outputText value="#{tweet.screenName}:" class="tweeter"/>
+                      <h:outputText value="#{tweet.text}" class="tweet_text"/>
+                    </div>
+                  </div>
+                </li>
+              </ui:repeat>
+            </ul>
+          </rich:panel>
+        </div>
+
+
       </div>
     </h:form>
   </ui:define>
