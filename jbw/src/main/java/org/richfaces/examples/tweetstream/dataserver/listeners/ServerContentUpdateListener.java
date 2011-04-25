@@ -147,7 +147,7 @@ public class ServerContentUpdateListener implements ServerContentListener {
       Tweet currentTweet = curTweetList.isEmpty() ? null : curTweetList.get(0);
 
       if ((lastTweet == null) || (currentTweet == null)) {
-        log.info("First check for new server content, or content still empty from server");
+        log.debug("First check for new server content, or content still empty from server");
         lastTweet = currentTweet;
         return true;
       } else if (lastTweet.getTimestamp() != currentTweet.getTimestamp()) {
