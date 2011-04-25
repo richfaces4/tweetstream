@@ -43,7 +43,7 @@ a {
    width: auto;
    height: 100%;
    overflow-x: hidden;
-   overflow-y: scroll;
+   overflow-y: auto;
 }
 
 #header {
@@ -113,9 +113,6 @@ a {
    font-size: 13px;
    text-overflow: ellipsis;
    overflow: hidden;
-   position: absolute;
-   top: 7px;
-   left: 63px;
 }
 
 
@@ -419,7 +416,7 @@ a {
 
 .agenda-flip-show {
    position: absolute;
-   top: 44px;
+   top: 0;
    left: 0;
 }
 
@@ -461,7 +458,6 @@ a {
       swap('tweet-detail-page','none');
       swap('agenda-button','none');
       swap('back-button','none');
-      swap('about-button-container','show-delay button-container flipped');
       swap('nav-button-container','none');
    }
 
@@ -470,7 +466,6 @@ a {
       swap('flippable','flip-face');
       swap('about-page','iphone-page hide-delay');
       swap('agenda-back-button','none');
-      swap('about-button-container','none');
       swap('nav-button-container','show-delay button-container');
       showHeaderButton('agenda-button','right');
       resetHome();
@@ -560,11 +555,7 @@ a {
               <br clear="all"/>
           </div>
 
-            <div id="about-button-container" class="none button-container flipped">
-                 <div class="nav-button nav-button-left" >JUDCon2011</div>
-                 <div class="nav-button nav-button-right" >JBoss World 2011</div>
-                 <br clear="all"/>
-             </div>
+
 
          <div id="page-container">
 
@@ -646,8 +637,16 @@ a {
 
               <div class="iphone-page hide" id="about-page">
                  <div class="flipped">
-                  <img src="#{request.contextPath}/resources/images/judcon-logo.gif" alt=""/>
-                    About this project or the conference....
+                  <div id="judcon-talk">
+                    <div class="detail-box">
+                      <div class="detail-title"><img src="#{request.contextPath}/resources/images/judcon-logo.gif" alt=""/>
+                          <br/><br/>Filling The Gap : Going Mobile With JBoss Technologies Today</div>
+                      <div class="detail-subtitle">Jay Balunas and Wesley Hales</div>
+                      <div class="detail-description">Mobile devices are rapidly becoming the primary web client for many users. Taking your existing skills from traditional web application development and applying them to a mobile interface can be daunting. In this session Jay and Wesley will walk through best-practices to build a mobile solution using JSF and the Richfaces component suite.
+                                                      Attendees will learn which front-end mobile frameworks work best with JBoss technologies and how they can be used to kick start your own applications. The presentation will kick off with an overview of technologies used to create a RichFaces mobile demo and will then jump into the code to give a step-by-step tutorial.
+                                                      This will include a walk through of how we built the RichFaces mobile demo, issues we had and how we got around them. Some of the questions that will be answered are: How to determine the client device? Do's, and don't's of Mobile skinning? Options for client-side caching? How might WebWorkers be used with Richfaces? Where do CDI and RestEasy fit into this picture? and more!!</div>
+                    </div>
+                    </div>
                  </div>
               </div>
 
