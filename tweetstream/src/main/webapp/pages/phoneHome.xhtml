@@ -15,14 +15,16 @@
 </ui:define>
 
 <ui:define name="head">
+<ui:param name="demoMode" value="judcon"/>
 <style type="text/css">
 /*Global*/
 html {
    height:100%;
 }
 body {
-   background-image: url(#{request.contextPath}/resources/images/iphone/backgroundStripes.png);
-   background-repeat: repeat;
+   /*background-image: url(#{request.contextPath}/resources/images/iphone/backgroundStripes.png);*/
+   /*background-repeat: repeat;*/
+   background-color: #321818;
    margin: 0;
    padding: 0;
    height:100%;
@@ -46,7 +48,21 @@ a {
    overflow-y: auto;
 }
 
-#header {
+#jbw-header {
+   position: relative;
+   height: 44px;
+   width: auto;
+   font-weight: bold;
+   color: #fff;
+   text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+   font-size: 16pt;
+   border: 0;
+   text-align: center;
+   line-height: 47px;
+   -webkit-user-select: none;
+}
+
+#judcon-header {
    position: relative;
    height: 44px;
    width: auto;
@@ -197,7 +213,7 @@ a {
    line-height: 30px;
 }
 
-.button {
+.judcon-button {
    background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
    background: #af7124 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
    border-radius: 7px;
@@ -206,9 +222,9 @@ a {
    border: none;
 }
 
-.header-gradient {
-   background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-   background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
+.judcon-header-gradient {
+   /*background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);*/
+   /*background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));*/
    border: none;
 }
 
@@ -515,7 +531,7 @@ a {
    }
 
    function showHeaderButton(buttonId,position){
-      swap(buttonId,'jbw-button '+ position + '-header-button show transition');
+      swap(buttonId,'#{demoMode}-button '+ position + '-header-button show transition');
    }
 
    function hideAll(){
@@ -541,13 +557,13 @@ a {
 <ui:define name="body">
 
    <div id="browser">
-      <div id="header" class="jbw-header-gradient">
+      <div id="#{demoMode}-header" class="#{demoMode}-header-gradient">
          TweetStream
-         <div id="back-button" class="jbw-button left-header-button none" onclick="hideDetail()">Back</div>
-         <div id="tweeters-back-button" class="jbw-button left-header-button none" onclick="hideTweeters()">Back</div>
-         <div id="tags-back-button" class="jbw-button left-header-button none" onclick="hideHashtags()">Back</div>
-         <div id="agenda-button" class="jbw-button right-header-button" onclick="flip()">About</div>
-         <div id="agenda-back-button" class="jbw-button right-header-button none" onclick="flipBack()">Back</div>
+         <div id="back-button" class="#{demoMode}-button left-header-button none" onclick="hideDetail()">Back</div>
+         <div id="tweeters-back-button" class="#{demoMode}-button left-header-button none" onclick="hideTweeters()">Back</div>
+         <div id="tags-back-button" class="#{demoMode}-button left-header-button none" onclick="hideHashtags()">Back</div>
+         <div id="agenda-button" class="#{demoMode}-button right-header-button" onclick="flip()">About</div>
+         <div id="agenda-back-button" class="#{demoMode}-button right-header-button none" onclick="flipBack()">Back</div>
       </div>
 
 
