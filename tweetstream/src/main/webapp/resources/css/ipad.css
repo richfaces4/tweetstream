@@ -80,9 +80,19 @@ h2 {
 }
 
 .header-gradient {
-  background-color:#A60000;
+  background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+  background: #000 -webkit-gradient(linear, left top, left bottom, from(#ca1400), to(#800700));
   border: none;
-  box-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
+
+  /*Since IE and Firefox do not work with the gradients above setting this makes
+    it acceptable on those browsers */
+  background-color:  #ca1400;
+}
+
+#rh-logo {
+   position: absolute;
+   top: 3px;
+   left: 25px;
 }
 
 ul {
@@ -108,7 +118,6 @@ li {
   border-bottom-width: 1px;
   border-left-width: 0px;
   border-color: rgb(224, 224, 224);
-
 }
 
 #tweets_list li {
