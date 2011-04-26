@@ -1,5 +1,5 @@
 body {
-  background-color: #321818;
+  background: #323232 url(http://www.redhat.com/summit/img/grey_tile.png) repeat-x;
   margin: 0px;
   padding: 0px;
   min-height: 416px;
@@ -80,12 +80,9 @@ h2 {
 }
 
 .header-gradient {
-  background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-  background: #af7124 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
+  background-color:#A60000;
   border: none;
   box-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
-  mozbox-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
-  webkitbox-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
 }
 
 ul {
@@ -111,10 +108,12 @@ li {
   border-bottom-width: 1px;
   border-left-width: 0px;
   border-color: rgb(224, 224, 224);
+
 }
 
 #tweets_list li {
-  margin: 2px;
+  margin: 3px;
+  -webkit-border-radius: 8px 8px;
 }
 
 #tweet_div {
