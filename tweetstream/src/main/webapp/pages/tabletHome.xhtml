@@ -60,6 +60,7 @@
               <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
                 <li>
                   <div class="top_tag_div">
+
                     <h:outputText value=" ##{tag.hashtag}" class="tag"/>
                     <h:outputText value="#{tag.count}" class="tag_count"/>
                   </div>

@@ -24,16 +24,16 @@ h2 {
 /*@media all and (orientation:landscape) {*/
 
   body {
-    min-width:768px;
+    min-width: 768px;
   }
 
   #tweets {
-    margin : 5px;
+    margin: 5px;
   }
 
   #tops {
     margin: 5px;
-    height: 350px;
+    height: 268px;
 
   }
 
@@ -54,12 +54,12 @@ h2 {
 /*@media all and (orientation:portrait) {*/
 
   body {
-    min-width:1024px;
+    min-width: 1024px;
   }
 
   #tweets {
     width: 63%;
-    margin : 10px;
+    margin: 10px;
     float: left;
   }
 
@@ -71,6 +71,10 @@ h2 {
 
   #top_tweeters {
     margin-top: 10px;
+  }
+
+  #top_tags {
+
   }
 
 }
@@ -86,11 +90,11 @@ h2 {
 
 ul {
   padding: 0px;
-   margin: 0px;
-   height: auto;
-   width: auto;
-   cursor: default;
-   -webkit-user-select: none;
+  margin: 0px;
+  height: auto;
+  width: auto;
+  cursor: default;
+  -webkit-user-select: none;
 }
 
 li {
@@ -109,8 +113,8 @@ li {
   border-color: rgb(224, 224, 224);
 }
 
-#tweets_list li{
-  margin : 2px;
+#tweets_list li {
+  margin: 2px;
 }
 
 #tweet_div {
@@ -132,27 +136,26 @@ li {
 }
 
 .tweet_profile_img {
-  width : 48px ;
-  height: 48px ;
+  width: 48px;
+  height: 48px;
   float: left;
   margin-right: 10px;
   margin-top: 3px;
 }
 
-
 .top_tweeters_txt_div {
   min-height: 24px;
-  padding-top: 8px;
+  padding-top: 0px;
   font-size: 18px;
 
 }
 
 .top_tweeter_profile_img {
-  width : 24px ;
-  height: 24px ;
-  float : left;
-  margin-right: 5px;
-  margin-top: 3px;
+  width: 24px;
+  height: 24px;
+  float: left;
+  margin-right: 10px;
+  margin-top: 0px;
 }
 
 .top_tweeter_count {
@@ -160,13 +163,13 @@ li {
   margin-right: 30px;
   margin-left: 5px;
   font-size: 18px;
-  font-weight:bold;
+  font-weight: bold;
 
 }
 
 .top_tag_div {
-  font-size: 18px;
-  margin-top: 2px;
+  font-size: 19px;
+  margin-top: 0px;
   min-height: 20px
 }
 
@@ -175,5 +178,5 @@ li {
   margin-right: 30px;
   margin-left: 5px;
   font-size: 18px;
-  font-weight:bold;
+  font-weight: bold;
 }
