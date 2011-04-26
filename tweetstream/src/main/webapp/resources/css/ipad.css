@@ -1,6 +1,5 @@
 body {
-  background-image: url(/resources/images/iphone/backgroundStripes.png);
-  background-repeat: repeat;
+  background-color: #321818;
   margin: 0px;
   padding: 0px;
   min-height: 416px;
@@ -13,60 +12,93 @@ h1 {
   text-align: center;
 }
 
+h2 {
+  margin: 0px;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+}
+
 /* catch ipad portrait orientation*/
 @media all and (orientation:portrait) {
 /*@media all and (orientation:landscape) {*/
+
+  body {
+    min-width:768px;
+  }
+
   #tweets {
-    /*height: 66%;*/
+    margin : 5px;
   }
 
   #tops {
-    margin-top: 0px;
-    height: 455px;
+    margin: 5px;
+    height: 350px;
 
   }
 
   #top_tags {
     float: left;
+    margin-right: 5px;
     width: 50%;
-    /*height:450px;*/
   }
 
   #top_tweeters {
     float: right;
-    width: 50%;
+    width: 49%;
   }
 }
 
 /* catch ipad landscape orientation */
 @media all and (orientation:landscape) {
 /*@media all and (orientation:portrait) {*/
+
+  body {
+    min-width:1024px;
+  }
+
   #tweets {
-    /*//height: 100%;*/
-    width: 66%;
+    width: 63%;
+    margin : 10px;
     float: left;
   }
 
   #tops {
     float: right;
+    margin: 10px;
     width: 33%;
+  }
+
+  #top_tweeters {
+    margin-top: 10px;
   }
 
 }
 
 .header-gradient {
-  background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-  background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
+  background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+  background: #af7124 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
   border: none;
   box-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
   mozbox-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
   webkitbox-shadow: 0 0 6px rgba(204, 216, 223, 1) inset;
 }
 
+ul {
+  padding: 0px;
+   margin: 0px;
+   height: auto;
+   width: auto;
+   cursor: default;
+   -webkit-user-select: none;
+}
+
 li {
+  background: white;
   list-style-type: none;
   margin: 0px;
   padding: 0px;
+  padding-left: 4px;
   -webkit-margin-top-collapse: separate;
   -webkit-margin-bottom-collapse: separate;
   border-style: solid;
@@ -77,7 +109,8 @@ li {
   border-color: rgb(224, 224, 224);
 }
 
-#tweets_list{
+#tweets_list li{
+  margin : 2px;
 }
 
 #tweet_div {
@@ -93,7 +126,7 @@ li {
 }
 
 .tweet_txt_div {
-  min-height: 55px;
+  min-height: 51px;
   padding-top: 3px;
   font-size: 15px;
 }
@@ -106,16 +139,17 @@ li {
   margin-top: 3px;
 }
 
+
 .top_tweeters_txt_div {
-  min-height: 30px;
+  min-height: 24px;
   padding-top: 8px;
   font-size: 18px;
 
 }
 
 .top_tweeter_profile_img {
-  width : 32px ;
-  height: 32px ;
+  width : 24px ;
+  height: 24px ;
   float : left;
   margin-right: 5px;
   margin-top: 3px;

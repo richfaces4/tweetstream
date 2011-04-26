@@ -52,42 +52,45 @@
 
         <div id="tops">
           <div id="top_tags">
-            <rich:panel header="Top Tags" headerClass="top_headers">
-              <ul id="top_tags_list">
-                <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
-                  <li>
-                    <div class="top_tag_div">
-                      <h:outputText value=" ##{tag.hashtag}" class="tag"/>
-                      <h:outputText value="#{tag.count}" class="tag_count"/>
-                    </div>
-                  </li>
-                </ui:repeat>
-              </ul>
-            </rich:panel>
+            <div id="top_tags_header" class="header-gradient">
+              <h2>Top Tags</h2>
+            </div>
+
+            <ul id="top_tags_list">
+              <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
+                <li>
+                  <div class="top_tag_div">
+                    <h:outputText value=" ##{tag.hashtag}" class="tag"/>
+                    <h:outputText value="#{tag.count}" class="tag_count"/>
+                  </div>
+                </li>
+              </ui:repeat>
+            </ul>
+
           </div>
 
           <div id="top_tweeters">
-            <rich:panel header="Top Tweeters" headerClass="top_headers">
-              <ul id="top_tweeters_list">
-                <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
-                  <li>
-                    <div class="top_tweeter_div">
-                      <img src="#{tweeter.profileImgUrl}" alt="ttw_img" class="top_tweeter_profile_img"/>
+            <div id="top_tweeters_header" class="header-gradient">
+              <h2>Top Tweeters</h2>
+            </div>
+            <ul id="top_tweeters_list">
+              <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
+                <li>
+                  <div class="top_tweeter_div">
+                    <img src="#{tweeter.profileImgUrl}" alt="ttw_img" class="top_tweeter_profile_img"/>
 
-                      <div class="top_tweeters_txt_div">
-                        <h:outputText value="#{tweeter.user}" class="top_tweeter"/>
-                        <h:outputText value="#{tweeter.tweetCount}" class="top_tweeter_count"/>
-                      </div>
+                    <div class="top_tweeters_txt_div">
+                      <h:outputText value="#{tweeter.user}" class="top_tweeter"/>
+                      <h:outputText value="#{tweeter.tweetCount}" class="top_tweeter_count"/>
                     </div>
-                  </li>
-                </ui:repeat>
-              </ul>
-            </rich:panel>
+                  </div>
+                </li>
+              </ui:repeat>
+            </ul>
           </div>
         </div>
 
         <div id="tweets">
-          <rich:panel>
             <ul id="tweets_list">
               <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
                 <li>
@@ -102,7 +105,6 @@
                 </li>
               </ui:repeat>
             </ul>
-          </rich:panel>
         </div>
 
 
