@@ -15,19 +15,16 @@
 </ui:define>
 
 <ui:define name="head">
-<ui:param name="demoMode" value="judcon"/>
+<ui:param name="demoMode" value="jbw"/>
 <style type="text/css">
 /*Global*/
 html {
    height:100%;
 }
 body {
-   /*background-image: url(#{request.contextPath}/resources/images/iphone/backgroundStripes.png);*/
-   /*background-repeat: repeat;*/
-   background-color: #321818;
    margin: 0;
    padding: 0;
-   height:100%;
+   height: 100%;
    /*min-height: 416px;*/
    font: 80% / 1.5em "Helvetica", "Lucida Sans", Verdana, Arial, sans-serif;
 }
@@ -38,8 +35,8 @@ a {
 
 #browser {
    /*height: auto;*/
-   -webkit-margin-top-collapse: separate;
-   -webkit-margin-bottom-collapse: separate;
+   background: #000 -moz-linear-gradient(top, #0e0e0e, #313131);
+   background: #000 -webkit-gradient(linear, left top, left bottom, from(#0e0e0e), to(#313131));
    position: relative;
    min-height: 416px;
    width: auto;
@@ -229,8 +226,8 @@ a {
 }
 
 .jbw-button {
-   background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-   background: #af7124 -webkit-gradient(linear, left top, left bottom, from(#cd3333), to(#992828));
+   background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+   background: #000 -webkit-gradient(linear, left top, left bottom, from(#717172), to(#0f0f10), color-stop(0.5, #3a3a3a), color-stop(0.5, #0d0d0f));
    border-radius: 7px;
    mozborder-radius: 7px;
    webkitborder-radius: 7px;
@@ -238,8 +235,8 @@ a {
 }
 
 .jbw-header-gradient {
-   background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-   background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(#717172), to(#0f0f10), color-stop(0.5, #3a3a3a), color-stop(0.5, #0d0d0f));
+   background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+   background: #000 -webkit-gradient(linear, left top, left bottom, from(#ca1400),  to(#800700));
    border: none;
 }
 
@@ -285,7 +282,7 @@ a {
 
 .button-container {
    width: 80%;
-   margin: 5px auto 0 auto;
+   margin: 10px auto 0 auto;
    text-align: center;
 }
 
@@ -445,6 +442,12 @@ a {
 
 }
 
+#rh-logo {
+   position: absolute;
+   top: 7px;
+   left: 25px;
+}
+
 </style>
 <script type="text/javascript">
 
@@ -559,6 +562,7 @@ a {
    <div id="browser">
       <div id="#{demoMode}-header" class="#{demoMode}-header-gradient">
          TweetStream
+         <img src="#{request.contextPath}/resources/images/SMrgbeps.png" width="30" height="29" alt="" id="rh-logo"/>
          <div id="back-button" class="#{demoMode}-button left-header-button none" onclick="hideDetail()">Back</div>
          <div id="tweeters-back-button" class="#{demoMode}-button left-header-button none" onclick="hideTweeters()">Back</div>
          <div id="tags-back-button" class="#{demoMode}-button left-header-button none" onclick="hideHashtags()">Back</div>
@@ -590,7 +594,7 @@ a {
                           <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}" oncomplete="showDetail()">
                              <div class="tweet-box">
                                 <span class="tweet-username">#{tweet.screenName}</span><br clear="all"/>
-                                <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt="" align="left"/>#{tweet.text}</div>
+                                <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt="" align="left" width="48" height="48"/>#{tweet.text}</div>
                                 <br clear="all"/>
                              </div>
                           </a4j:commandLink>
@@ -606,7 +610,7 @@ a {
                   <a4j:outputPanel id="list-panel" ajaxRendered="true">
                      <div class="tweet-box">
                         <span class="tweet-username">#{twitterAgent.selectedTweet.screenName}</span>
-                        <div class="tweet-description"><img src="#{twitterAgent.selectedTweet.profileImageUrl}" alt="" align="left"/>#{twitterAgent.selectedTweet.text}</div>
+                        <div class="tweet-description"><img src="#{twitterAgent.selectedTweet.profileImageUrl}" alt="" width="48" height="48" align="left"/>#{twitterAgent.selectedTweet.text}</div>
                         <br clear="all"/>
                      </div>
                   </a4j:outputPanel>
@@ -623,7 +627,7 @@ a {
                         <li>
                           <div class="tweet-box">
                              <span class="tweet-username">#{tweeter.user}</span>
-                             <div class="tweet-description"><img src="#{tweeter.profileImgUrl}" alt="" align="left"/>#{tweeter.tweetCount}</div>
+                             <div class="tweet-description"><img src="#{tweeter.profileImgUrl}" alt="" width="48" height="48" align="left"/>#{tweeter.tweetCount}</div>
                              <br clear="all"/>
                           </div>
                         </li>
@@ -659,7 +663,7 @@ a {
                  <div class="flipped">
                   <div id="judcon-talk">
                     <div class="detail-box">
-                      <div class="detail-title"><img src="#{request.contextPath}/resources/images/judcon-logo.gif" alt=""/>
+                      <div class="detail-title"><img src="#{request.contextPath}/resources/images/judcon-logo.gif" width="249" height="29" alt=""/>
                           <br/><br/>Filling The Gap : Going Mobile With JBoss Technologies Today</div>
                       <div class="detail-subtitle">Jay Balunas and Wesley Hales</div>
                       <div class="detail-description">Mobile devices are rapidly becoming the primary web client for many users. Taking your existing skills from traditional web application development and applying them to a mobile interface can be daunting. In this session Jay and Wesley will walk through best-practices to build a mobile solution using JSF and the Richfaces component suite.
