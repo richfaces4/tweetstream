@@ -599,7 +599,7 @@
                        <li id="list-row-#{status.index}" class="list-row">
                           <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}" oncomplete="showDetail()">
                              <div class="tweet-box">
-                                <span class="tweet-username">#{status.index}#{tweet.screenName}</span><br clear="all"/>
+                                <span class="tweet-username">#{tweet.screenName}</span><br clear="all"/>
                                 <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt="" align="left" width="48" height="48"/>#{tweet.text}</div>
                                 <br clear="all"/>
                              </div>
