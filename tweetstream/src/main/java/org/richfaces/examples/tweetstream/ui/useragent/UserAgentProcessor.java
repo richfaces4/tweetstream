@@ -53,13 +53,14 @@ public class UserAgentProcessor
 
    public boolean isPhone()
    {
-     //uAgentTest.
-      return uAgentTest.detectIphone();
+      //Detects a whole tier of phones that support similar functionality as the iphone
+      return uAgentTest.detectTierIphone();
    }
 
    public boolean isTablet()
    {
-      return uAgentTest.detectIpad();
+      //will detect ipads, xooms, blackberry tablets, but not galaxy - they use a strange user-agent
+      return uAgentTest.detectTierTablet();
    }
 
 
