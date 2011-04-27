@@ -24,11 +24,25 @@
       <!--<h:outputStylesheet name="css/iphone.css"/>-->
 
       <script type="text/javascript">
+         // <![CDATA[
          //TODO - create global .js to be used only for mobile devices
          function hideURLbar()
          {
             setTimeout(scrollTo, 0, 0, 1);
          }
+
+         function supports_web_workers() {
+           return !!window.Worker;
+         }
+
+         function supports_local_storage() {
+           try {
+             return 'localStorage' in window && window['localStorage'] !== null;
+           } catch(e){
+             return false;
+           }
+         }
+         // ]]>
       </script>
 
       <ui:insert name="head"/>

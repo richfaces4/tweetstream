@@ -17,441 +17,446 @@
 <ui:define name="head">
 <ui:param name="demoMode" value="jbw"/>
 <style type="text/css">
-/*Global*/
-html {
-   height:100%;
-}
-body {
-   margin: 0;
-   padding: 0;
-   height: 100%;
-   /*min-height: 416px;*/
-   font: 80% / 1.5em "Helvetica", "Lucida Sans", Verdana, Arial, sans-serif;
-}
-
-a {
-   text-decoration: none;
-}
-
-#browser {
-   /*height: auto;*/
-   background: #000 -moz-linear-gradient(top, #0e0e0e, #313131);
-   background: #000 -webkit-gradient(linear, left top, left bottom, from(#0e0e0e), to(#313131));
-   position: relative;
-   min-height: 416px;
-   width: auto;
-   height: 100%;
-   overflow-x: hidden;
-   overflow-y: auto;
-}
-
-#jbw-header {
-   position: relative;
-   height: 44px;
-   width: auto;
-   font-weight: bold;
-   color: #fff;
-   text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-   font-size: 16pt;
-   border: 0;
-   text-align: center;
-   line-height: 47px;
-   -webkit-user-select: none;
-}
-
-#judcon-header {
-   position: relative;
-   height: 44px;
-   width: auto;
-   font-weight: bold;
-   color: #fff;
-   text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-   font-size: 16pt;
-   border: 0;
-   text-align: center;
-   line-height: 47px;
-   -webkit-user-select: none;
-}
-
-#page-container {
-   position: relative;
-}
-
-
-
-#page-container ul{
-   /*overflow: hidden;*/
-   padding: 0px;
-   margin: 0px;
-   height: auto;
-   width: auto;
-   cursor: default;
-   -webkit-user-select: none;
-   list-style:none;
-}
-
-.detail-box {
-   padding: 8px;
-   border: 1px solid rgb(172, 172, 172);
-   background-color: white;
-   -webkit-border-radius: 8px 8px;
-   position: relative;
-   margin: 10px 9px 12px 9px;
-   -webkit-margin-top-collapse: separate;
-   -webkit-margin-bottom-collapse: separate;
-   width: auto;
-   min-height: 64px;
-   height: auto;
-}
-
-.detail-title {
-   color: black;
-   text-overflow: ellipsis;
-   overflow: hidden;
-   font-size: 16pt;
-   font-weight: bold;
-   text-align: left;
-}
-
-.detail-subtitle {
-   color: rgb(128, 128, 128);
-   font-size: 12px;
-   margin-top: 2px;
-   min-height: 17px;
-   white-space: nowrap;
-}
-
-.detail-description {
-   color: black;
-   font-size: 13px;
-   text-overflow: ellipsis;
-   overflow: hidden;
-}
-
-
-.tweet-box {
-   padding: 1px 3px 5px 7px;
-   border: 1px solid rgb(172, 172, 172);
-   background-color: white;
-   -webkit-border-radius: 8px 8px;
-   position: relative;
-   margin: 7px 9px 1px 9px;
-   -webkit-margin-top-collapse: separate;
-   -webkit-margin-bottom-collapse: separate;
-   width: auto;
-   min-height: 64px;
-   height: auto;
-}
-
-.tweet-image {
-   color: black;
-   overflow: hidden;
-   font-size: 16pt;
-   font-weight: bold;
-   text-align: left;
-   width:48px;
-   float: left;
-}
-
-.tweet-username {
-   color: rgb(128, 128, 128);
-   font-size: 12px;
-   margin-top: 2px;
-   min-height: 17px;
-   white-space: nowrap;
-   float: left;
-   width: auto;
-}
-
-.tweet-description {
-   color: black;
-   font-size: 13px;
-   text-overflow: ellipsis;
-   overflow: hidden;
-   float: left;
-   width: auto;
-}
-
-.tweet-description img {
-   padding: 1px 7px 0 0;
-   width: 48px;
-}
-
-
-
-/*Buttons and bars*/
-.left-header-button {
-   font-weight: bold;
-   font-size: 12px;
-   color: #fff;
-   text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-   text-align: center;
-   text-overflow: ellipsis;
-   height: 30px;
-   width: 60px;
-   position: absolute;
-   top: 7px;
-   left: 5px;
-   line-height: 30px;
-}
-
-.right-header-button {
-   font-weight: bold;
-   font-size: 12px;
-   color: #fff;
-   text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-   text-align: center;
-   text-overflow: ellipsis;
-   height: 30px;
-   width: 60px;
-   position: absolute;
-   top: 7px;
-   right: 5px;
-   line-height: 30px;
-}
-
-.judcon-button {
-   background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-   background: #af7124 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
-   border-radius: 7px;
-   mozborder-radius: 7px;
-   webkitborder-radius: 7px;
-   border: none;
-}
-
-.judcon-header-gradient {
-   /*background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);*/
-   /*background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));*/
-   border: none;
-}
-
-.jbw-button {
-   background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-   background: #000 -webkit-gradient(linear, left top, left bottom, from(#717172), to(#0f0f10), color-stop(0.5, #3a3a3a), color-stop(0.5, #0d0d0f));
-   border-radius: 7px;
-   mozborder-radius: 7px;
-   webkitborder-radius: 7px;
-   border: none;
-}
-
-.jbw-header-gradient {
-   background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-   background: #000 -webkit-gradient(linear, left top, left bottom, from(#ca1400),  to(#800700));
-   border: none;
-}
-
-.nav-button {
-   font-family: "Helvetica Neue", Helvetica, sans-serif;
-   font-size: 0.8em;
-   font-weight: bold;
-   padding: 0 5px 0 5px;
-   height: 24px;
-   border: 1px solid #4c525a;
-   background: -webkit-gradient( linear, left top, left bottom, from(#9fafc1), to(#6c83a1), color-stop(0.5, #798eaa), color-stop(0.5, #6c83a1) );
-   margin: 0;
-   text-shadow: 0px 1px 0 #000;
-   -webkit-background-origin: padding-box;
-   -webkit-background-clip: border-box;
-   -webkit-border-radius: 8px;
-   line-height: 23px;
-   color: #fff;
-}
-
-.nav-button-left {
-   -webkit-border-bottom-left-radius:8px;
-   -webkit-border-top-left-radius: 8px;
-   -webkit-border-bottom-right-radius: 0;
-   -webkit-border-top-right-radius: 0;
-   width:45%;
-   float:left;
-   margin: 0;
-   border-width: 1px 1px 1px 1px;
-
-}
-
-.nav-button-right {
-   -webkit-border-bottom-left-radius: 0;
-   -webkit-border-top-left-radius: 0;
-   -webkit-border-bottom-right-radius: 8px;
-   -webkit-border-top-right-radius: 8px;
-   width: 45%;
-   float:left;
-   margin: 0;
-   border-width: 1px 1px 1px 0;
-}
-
-.button-container {
-   width: 80%;
-   margin: 10px auto 0 auto;
-   text-align: center;
-}
-
-.nav-button:hover, nav-button:active {
-   color: #fff;
-   text-shadow: none;
-}
-
-
-/*utils - functions */
-.hide {
-   opacity: 0;
-}
-
-.hide-delay {
-   opacity: 0;
-   -webkit-transition-delay: 0.3s;
-}
-
-.show {
-   opacity: 1;
-}
-
-.show-delay {
-   opacity: 1;
-   -webkit-transition-delay: 0.3s;
-}
-
-.none {
-   display: none;
-}
-
-.block {
-   display: block;
-}
-
-.stage-center {
-   top: 0;
-   left: 0;
-   /*width: 100%;*/
-}
-
-.transition {
-   -moz-transition-duration: 1.5s;
-   -webkit-transition-duration: 1.5s;
-   -o-transition-duration: 1.5s;
-}
-
-.iphone-page {
-   position: absolute;
-   width: 100%;
-   height: 100%;
-}
-
-/*client specific styles*/
-
-
-/*iphone landscape screen width*/
-@media screen and (max-device-width: 480px) and (orientation:landscape) {
-   .stage-left {
-      opacity: 0;
-      left: -480px;
+   /*Global*/
+   html {
+      height:100%;
+   }
+   body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      /*min-height: 416px;*/
+      font: 80% / 1.5em "Helvetica", "Lucida Sans", Verdana, Arial, sans-serif;
    }
 
-   .stage-right {
-      opacity: 0;
-      left: 480px;
+   a {
+      text-decoration: none;
    }
 
-   .iphone-page,
+   #browser {
+      /*height: auto;*/
+      background: #000 -moz-linear-gradient(top, #0e0e0e, #313131);
+      background: #000 -webkit-gradient(linear, left top, left bottom, from(#0e0e0e), to(#313131));
+      position: relative;
+      min-height: 416px;
+      width: auto;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+   }
+
+   #jbw-header {
+      position: relative;
+      height: 44px;
+      width: auto;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+      font-size: 16pt;
+      border: 0;
+      text-align: center;
+      line-height: 47px;
+      -webkit-user-select: none;
+   }
+
+   #judcon-header {
+      position: relative;
+      height: 44px;
+      width: auto;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+      font-size: 16pt;
+      border: 0;
+      text-align: center;
+      line-height: 47px;
+      -webkit-user-select: none;
+   }
+
+   #page-container {
+      position: relative;
+   }
+
+
+
+   #page-container ul{
+      /*overflow: hidden;*/
+      padding: 0px;
+      margin: 0px;
+      height: auto;
+      width: auto;
+      cursor: default;
+      -webkit-user-select: none;
+      list-style:none;
+   }
+
+   .detail-box {
+      padding: 8px;
+      border: 1px solid rgb(172, 172, 172);
+      background-color: white;
+      -webkit-border-radius: 8px 8px;
+      position: relative;
+      margin: 10px 9px 12px 9px;
+      -webkit-margin-top-collapse: separate;
+      -webkit-margin-bottom-collapse: separate;
+      width: auto;
+      min-height: 64px;
+      height: auto;
+   }
+
+   .detail-title {
+      color: black;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      font-size: 16pt;
+      font-weight: bold;
+      text-align: left;
+   }
+
+   .detail-subtitle {
+      color: rgb(128, 128, 128);
+      font-size: 12px;
+      margin-top: 2px;
+      min-height: 17px;
+      white-space: nowrap;
+   }
+
+   .detail-description {
+      color: black;
+      font-size: 13px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+   }
+
+
    .tweet-box {
-      width: 450px;
+      padding: 1px 3px 5px 7px;
+      border: 1px solid rgb(172, 172, 172);
+      background-color: white;
+      -webkit-border-radius: 8px 8px;
+      position: relative;
+      margin: 7px 9px 1px 9px;
+      -webkit-margin-top-collapse: separate;
+      -webkit-margin-bottom-collapse: separate;
+      width: auto;
+      min-height: 64px;
+      height: auto;
+   }
+
+   .tweet-image {
+      color: black;
+      overflow: hidden;
+      font-size: 16pt;
+      font-weight: bold;
+      text-align: left;
+      width:48px;
+      float: left;
+   }
+
+   .tweet-username {
+      color: rgb(128, 128, 128);
+      font-size: 12px;
+      margin-top: 2px;
+      min-height: 17px;
+      white-space: nowrap;
+      float: left;
+      width: auto;
+   }
+
+   .tweet-description {
+      color: black;
+      font-size: 13px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      float: left;
+      width: auto;
+   }
+
+   .tweet-description img {
+      padding: 1px 7px 0 0;
+      width: 48px;
    }
 
 
-}
 
-/*iphone portrait screen width*/
-@media screen and (max-device-width: 320px) and (orientation:portrait) {
-   .stage-left {
-      left: -320px;
+   /*Buttons and bars*/
+   .left-header-button {
+      font-weight: bold;
+      font-size: 12px;
+      color: #fff;
+      text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+      text-align: center;
+      text-overflow: ellipsis;
+      height: 30px;
+      width: 60px;
+      position: absolute;
+      top: 7px;
+      left: 5px;
+      line-height: 30px;
+   }
+
+   .right-header-button {
+      font-weight: bold;
+      font-size: 12px;
+      color: #fff;
+      text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+      text-align: center;
+      text-overflow: ellipsis;
+      height: 30px;
+      width: 60px;
+      position: absolute;
+      top: 7px;
+      right: 5px;
+      line-height: 30px;
+   }
+
+   .judcon-button {
+      background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+      background: #af7124 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
+      border-radius: 7px;
+      mozborder-radius: 7px;
+      webkitborder-radius: 7px;
+      border: none;
+   }
+
+   .judcon-header-gradient {
+      /*background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);*/
+      /*background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));*/
+      border: none;
+   }
+
+   .jbw-button {
+      background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+      background: #000 -webkit-gradient(linear, left top, left bottom, from(#717172), to(#0f0f10), color-stop(0.5, #3a3a3a), color-stop(0.5, #0d0d0f));
+      border-radius: 7px;
+      mozborder-radius: 7px;
+      webkitborder-radius: 7px;
+      border: none;
+   }
+
+   .jbw-header-gradient {
+      background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+      background: #000 -webkit-gradient(linear, left top, left bottom, from(#ca1400),  to(#800700));
+      border: none;
+   }
+
+   .nav-button {
+      font-family: "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 0.8em;
+      font-weight: bold;
+      padding: 0 5px 0 5px;
+      height: 24px;
+      border: 1px solid #4c525a;
+      background: -webkit-gradient( linear, left top, left bottom, from(#9fafc1), to(#6c83a1), color-stop(0.5, #798eaa), color-stop(0.5, #6c83a1) );
+      margin: 0;
+      text-shadow: 0px 1px 0 #000;
+      -webkit-background-origin: padding-box;
+      -webkit-background-clip: border-box;
+      -webkit-border-radius: 8px;
+      line-height: 23px;
+      color: #fff;
+   }
+
+   .nav-button-left {
+      -webkit-border-bottom-left-radius:8px;
+      -webkit-border-top-left-radius: 8px;
+      -webkit-border-bottom-right-radius: 0;
+      -webkit-border-top-right-radius: 0;
+      width:45%;
+      float:left;
+      margin: 0;
+      border-width: 1px 1px 1px 1px;
+
+   }
+
+   .nav-button-right {
+      -webkit-border-bottom-left-radius: 0;
+      -webkit-border-top-left-radius: 0;
+      -webkit-border-bottom-right-radius: 8px;
+      -webkit-border-top-right-radius: 8px;
+      width: 45%;
+      float:left;
+      margin: 0;
+      border-width: 1px 1px 1px 0;
+   }
+
+   .button-container {
+      width: 80%;
+      margin: 10px auto 0 auto;
+      text-align: center;
+   }
+
+   .nav-button:hover, nav-button:active {
+      color: #fff;
+      text-shadow: none;
+   }
+
+
+   /*utils - functions */
+   .hide {
       opacity: 0;
    }
 
-   .stage-right {
+   .hide-delay {
+      -webkit-transform:translate3d(0,0,0);
       opacity: 0;
-      left: 320px;
+      -webkit-transition-delay: 0.3s;
    }
 
-   .iphone-page,
-   .tweet-box{
-      width: 290px;
-   }
-}
-
-/*catch all for larger than iphone landscape device widths*/
-@media screen and (min-device-width: 481px) {
-   .stage-left {
-      left: -1024px;
-      opacity: 0;
+   .show {
+      opacity: 1;
    }
 
-   .stage-right {
-      opacity: 0;
-      left: 1024px;
+   .show-delay {
+      -webkit-transform:translate3d(0,0,0);
+      opacity: 1;
+      -webkit-transition-delay: 0.3s;
    }
 
-   /*.iphone-page {*/
-      /*width: 480px;*/
-   /*}*/
-}
+   .none {
+      display: none;
+   }
 
-/*------------------------android devices*/
-@media only screen and (-webkit-device-pixel-ratio:.75){
-    /* Put CSS for low density (ldpi) Android layouts in here */
-}
-@media only screen and (-webkit-device-pixel-ratio:1){
-    /* Put CSS for medium density (mdpi) Android layouts in here */
-}
-@media only screen and (-webkit-device-pixel-ratio:1.5){
-    /* Put CSS for high density (hdpi) Android layouts in here */
-}
+   .block {
+      display: block;
+   }
 
+   .stage-center {
+      top: 0;
+      left: 0;
+      /*width: 100%;*/
+   }
 
+   .transition {
+      -webkit-transform:translate3d(0,0,0);
+      -moz-transition-duration: 1s;
+      -webkit-transition-duration: 1s;
+      -o-transition-duration: 1s;
 
-/*flip transition related*/
-.flip-face {
-   position: relative;
-   width: 100%;
-   -webkit-transition-property: -webkit-transform, background;
-   -webkit-transition-duration: 1s, 0;
-   -webkit-transform-style: preserve-3d;
-   -webkit-transition-delay: 0, 0.3s;
-   -webkit-transform: rotateY(0deg);
+   }
 
-}
+   .iphone-page {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-transform:translate3d(0,0,0);
+   }
 
-.flip-back {
-   -webkit-transform: rotateY(180deg);
-   width: 100%;
-}
+   /*client specific styles*/
 
 
-.flipped {
-   -webkit-user-select: element;
-   -webkit-transform: rotateY(180deg);
-}
+   /*iphone landscape screen width*/
+   @media screen and (max-device-width: 480px) and (orientation:landscape) {
+      .stage-left {
+         opacity: 0;
+         left: -480px;
+      }
 
-.agenda-flip-show {
-   position: absolute;
-   top: 0;
-   left: 0;
-}
+      .stage-right {
+         opacity: 0;
+         left: 480px;
+      }
 
-#tweet-detail a {
-   text-decoration: none;
+      .iphone-page,
+      .tweet-box {
+         width: 450px;
+      }
 
-}
 
-#rh-logo {
-   position: absolute;
-   top: 7px;
-   left: 25px;
-}
+   }
+
+   /*iphone portrait screen width*/
+   @media screen and (max-device-width: 320px) and (orientation:portrait) {
+      .stage-left {
+         left: -320px;
+         opacity: 0;
+      }
+
+      .stage-right {
+         opacity: 0;
+         left: 320px;
+      }
+
+      .iphone-page,
+      .tweet-box{
+         width: 290px;
+      }
+   }
+
+   /*catch all for larger than iphone landscape device widths*/
+   @media screen and (min-device-width: 481px) {
+      .stage-left {
+         left: -1024px;
+         opacity: 0;
+      }
+
+      .stage-right {
+         opacity: 0;
+         left: 1024px;
+      }
+
+      /*.iphone-page {*/
+         /*width: 480px;*/
+      /*}*/
+   }
+
+   /*------------------------android devices*/
+   @media only screen and (-webkit-device-pixel-ratio:.75){
+       /* Put CSS for low density (ldpi) Android layouts in here */
+   }
+   @media only screen and (-webkit-device-pixel-ratio:1){
+       /* Put CSS for medium density (mdpi) Android layouts in here */
+   }
+   @media only screen and (-webkit-device-pixel-ratio:1.5){
+       /* Put CSS for high density (hdpi) Android layouts in here */
+   }
+
+
+
+   /*flip transition related*/
+   .flip-face {
+      position: relative;
+      width: 100%;
+      -webkit-transition-property: -webkit-transform, background;
+      -webkit-transition-duration: 1s, 0;
+      -webkit-transform-style: preserve-3d;
+      -webkit-transition-delay: 0, 0.3s;
+      -webkit-transform: rotateY(0deg);
+
+   }
+
+   .flip-back {
+      -webkit-transform: rotateY(180deg);
+      width: 100%;
+   }
+
+
+   .flipped {
+      -webkit-user-select: element;
+      -webkit-transform: rotateY(180deg);
+   }
+
+   .agenda-flip-show {
+      position: absolute;
+      top: 0;
+      left: 0;
+   }
+
+   #tweet-detail a {
+      text-decoration: none;
+
+   }
+
+   #rh-logo {
+      position: absolute;
+      top: 7px;
+      left: 25px;
+   }
 
 </style>
 <script type="text/javascript">
 
-
+   // <![CDATA[
    var currentPage;
 
    function showDetail(e)
@@ -474,7 +479,7 @@ a {
       hideAll();
       swap('flippable','flip-face flip-back');
       swap('about-page','iphone-page agenda-flip-show show-delay');
-      swap('home-page','hide-delay');
+      swap('home-page','hide-delay none');
       showHeaderButton('agenda-back-button','right');
 
       //hide tweet detail if coming from that screen
@@ -538,11 +543,11 @@ a {
    }
 
    function hideAll(){
+
       hideDetail();
       hideHashtags();
       hideTweeters();
    }
-
 
 
    function swap(id,classString) {
@@ -554,6 +559,7 @@ a {
    function jumpToTop(){
       window.location = window.location + "#browser";
    }
+   // ]]>
 </script>
 <ui:insert name="head"/>
 </ui:define>
@@ -589,11 +595,11 @@ a {
             <div class="iphone-page" id="home-page">
                <h:form id="list-form">
                  <ul id="tweet-list" class="list">
-                    <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
-                       <li id="list-row-#{tweet.id}" class="" tabindex="-1">
+                    <ui:repeat value="#{twitterAgent.tweets}" var="tweet" varStatus="status">
+                       <li id="list-row-#{status.index}" class="list-row">
                           <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}" oncomplete="showDetail()">
                              <div class="tweet-box">
-                                <span class="tweet-username">#{tweet.screenName}</span><br clear="all"/>
+                                <span class="tweet-username">#{status.index}#{tweet.screenName}</span><br clear="all"/>
                                 <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt="" align="left" width="48" height="48"/>#{tweet.text}</div>
                                 <br clear="all"/>
                              </div>
