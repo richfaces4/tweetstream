@@ -17,19 +17,13 @@
   <ui:define name="head">
     <title>TweetStream</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <!-- enable full-screen mode -->
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <!-- controls the appearance of the status bar in full-screen mode -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 
-    <script type="text/javascript">
-      function hideURLbar() {
-        //TODO figure out why this is not working on the ipad
-        setTimeout(scrollTo, 0, 0, 1);
-      }
-    </script>
     <h:outputStylesheet name="css/ipad.css"/>
 
   </ui:define>
@@ -48,6 +42,7 @@
       <div id="browser">
         <div id="header" class="header-gradient">
           <img src="#{request.contextPath}/resources/images/SMrgbeps.png" width="30" height="29" alt="" id="rh-logo"/>
+
           <h1>TweetStream</h1>
         </div>
 
@@ -93,20 +88,20 @@
         </div>
 
         <div id="tweets">
-            <ul id="tweets_list">
-              <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
-                <li>
-                  <div class="tweet_div">
-                    <img src="#{tweet.profileImageUrl}" alt="tw_img" class="tweet_profile_img"/>
+          <ul id="tweets_list">
+            <ui:repeat value="#{twitterAgent.tweets}" var="tweet">
+              <li>
+                <div class="tweet_div">
+                  <img src="#{tweet.profileImageUrl}" alt="tw_img" class="tweet_profile_img"/>
 
-                    <div class="tweet_txt_div">
-                      <h:outputText value="#{tweet.screenName}:" class="tweeter"/>
-                      <h:outputText value="#{tweet.text}" class="tweet_text"/>
-                    </div>
+                  <div class="tweet_txt_div">
+                    <h:outputText value="#{tweet.screenName}:" class="tweeter"/>
+                    <h:outputText value="#{tweet.text}" class="tweet_text"/>
                   </div>
-                </li>
-              </ui:repeat>
-            </ul>
+                </div>
+              </li>
+            </ui:repeat>
+          </ul>
         </div>
 
 
