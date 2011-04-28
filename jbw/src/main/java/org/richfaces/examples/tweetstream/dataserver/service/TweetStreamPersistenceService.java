@@ -39,9 +39,9 @@ public interface TweetStreamPersistenceService
 
    public List<Tweet> allTweetsSortedByTime(final int maxResult);
 
-   public Set<ScoredTerm> getTopHashTags();
+   public Set<ScoredTerm> getTopHashTags(final int maxResult);
 
-   public Set<ScoredTerm> getTopScreenNames();
+   public Set<ScoredTerm> getTopScreenNames(final int maxResult);
 
    public TweetAggregate getAggregate();
 
