@@ -200,6 +200,13 @@ public class TwitterSourceLocal implements TwitterSource
 
    }
 
+   @Override
+   public void refreshList()
+   {
+      TwitterAggregate tweetAggregate = (TwitterAggregate)cacheBuilder.getCache().get("tweetaggregate");
+      twitterAggregate.setTweets(tweetAggregate.getTweets());
+   }
+
    private boolean performSearch()
    {
       if (lastSearch > 0)

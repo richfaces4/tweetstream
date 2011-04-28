@@ -41,6 +41,8 @@ public interface TwitterSource extends Serializable
 
    public void fetchContent();
 
+   public void refreshList();
+
    public String getSearchTerm();
 
    public List<Tweet> getTweets();

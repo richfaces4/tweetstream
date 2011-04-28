@@ -56,6 +56,10 @@ public class TwitterAgentImpl implements TwitterAgent, Serializable
       source.getTwitterSource().fetchContent();
    }
 
+   public void refreshList(){
+      source.getTwitterSource().refreshList();
+   }
+
    @Override
    public String getSearchTerm()
    {
@@ -89,4 +93,6 @@ public class TwitterAgentImpl implements TwitterAgent, Serializable
    {
       this.selectedTweet = selectedTweet;
    }
+
+
 }
