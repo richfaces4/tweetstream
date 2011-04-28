@@ -157,28 +157,32 @@ public class TwitterSourceLocal implements TwitterSource
                tweet.setScreenName(t4jTweet.getFromUser());
                //TODO fill in any other required data
 
+               boolean createNew = false;
                //quick krap code to calculate top tweeters
                for (Tweet atweet : tweets){
                   //if we already have the user in our tweets list...
                   if(atweet.getScreenName().equals(tweet.getScreenName())){
                      //loop through the tweeters to get compare ids so we can increment by 1
                      for(Tweeter atweeter : tweeters){
-                        if(atweeter.getUserId() == atweet.getId()){
+                        if(atweeter.getUser().equals(atweet.getScreenName())){
                            //increment tweet count
                            atweeter.setTweetCount(atweeter.getTweetCount() + 1);
                         }
                      }
                   }else{
-                     tweeter = new Tweeter();
-                     tweeter.setProfileImgUrl(t4jTweet.getProfileImageUrl().toString());
-                     tweeter.setTweetCount(1);
-                     tweeter.setUser(t4jTweet.getFromUser());
-                     tweeter.setUserId(t4jTweet.getFromUserId());
+                     //set a flag to create new tweeter since he wasn't in list
+                     createNew = true;
                   }
-
                }
 
-               tweeters.add(tweeter);
+               if(createNew){
+                  tweeter = new Tweeter();
+                  tweeter.setProfileImgUrl(t4jTweet.getProfileImageUrl().toString());
+                  tweeter.setTweetCount(1);
+                  tweeter.setUser(t4jTweet.getFromUser());
+                  tweeter.setUserId(t4jTweet.getFromUserId());
+                  tweeters.add(tweeter);
+               }
 
                tweets.add(tweet);
             }

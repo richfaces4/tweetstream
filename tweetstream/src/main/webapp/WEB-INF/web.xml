@@ -14,7 +14,7 @@
    </context-param>
     <context-param>
       <param-name>org.richfaces.examples.tweetstream.searchTermBase</param-name>
-      <param-value>#jboss</param-value>
+      <param-value>#java</param-value>
    </context-param>
     <filter>
         <filter-name>PushFilter</filter-name>
