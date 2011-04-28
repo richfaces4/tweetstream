@@ -641,8 +641,8 @@
                       <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
                         <li>
                           <div class="tweet-box">
-                             <span class="tweet-username">#{tweeter.user}</span>
-                             <div class="tweet-description"><img src="#{tweeter.profileImgUrl}" alt="" width="48" height="48" align="left"/>#{tweeter.tweetCount}</div>
+                             <span class="tweet-username">#{tweeter.user}</span><br clear="all"/>
+                             <div class="tweet-description"><img src="#{tweeter.profileImgUrl}" alt="" width="48" height="48" align="left"/>Tweet Count: #{tweeter.tweetCount}</div>
                              <br clear="all"/>
                           </div>
                         </li>

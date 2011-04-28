@@ -178,7 +178,6 @@ public class TwitterSourceLocal implements TwitterSource
 
                }
 
-               if(t4jTweet.getProfileImageUrl().toString() != null)
                tweeters.add(tweeter);
 
                tweets.add(tweet);
