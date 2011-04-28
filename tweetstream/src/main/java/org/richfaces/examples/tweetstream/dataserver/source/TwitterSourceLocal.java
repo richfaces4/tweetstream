@@ -137,6 +137,8 @@ public class TwitterSourceLocal implements TwitterSource
 
          //Load the twitter search
          List<Tweet> tweets = new ArrayList<Tweet>();
+         List<Tweeter> tweeters = new ArrayList<Tweeter>();
+         Tweeter tweeter = null;
 
          Twitter twitter = new TwitterFactory().getInstance();
          List<twitter4j.Tweet> t4jTweets = null;
@@ -154,6 +156,31 @@ public class TwitterSourceLocal implements TwitterSource
                tweet.setProfileImageUrl(t4jTweet.getProfileImageUrl().toString());
                tweet.setScreenName(t4jTweet.getFromUser());
                //TODO fill in any other required data
+
+               //quick krap code to calculate top tweeters
+               for (Tweet atweet : tweets){
+                  //if we already have the user in our tweets list...
+                  if(atweet.getScreenName().equals(tweet.getScreenName())){
+                     //loop through the tweeters to get compare ids so we can increment by 1
+                     for(Tweeter atweeter : tweeters){
+                        if(atweeter.getUserId() == atweet.getId()){
+                           //increment tweet count
+                           atweeter.setTweetCount(atweeter.getTweetCount() + 1);
+                        }
+                     }
+                  }else{
+                     tweeter = new Tweeter();
+                     tweeter.setProfileImgUrl(t4jTweet.getProfileImageUrl().toString());
+                     tweeter.setTweetCount(1);
+                     tweeter.setUser(t4jTweet.getFromUser());
+                     tweeter.setUserId(t4jTweet.getFromUserId());
+                  }
+
+               }
+
+               if(t4jTweet.getProfileImageUrl().toString() != null)
+               tweeters.add(tweeter);
+
                tweets.add(tweet);
             }
          }
@@ -165,21 +192,6 @@ public class TwitterSourceLocal implements TwitterSource
 
          twitterAggregate.setTweets(tweets);
 
-         //TODO need to calc the top N
-
-         //Load TopTweeters
-         List<Tweeter> tweeters = new ArrayList<Tweeter>();
-
-         Tweeter tweeter = null;
-         for (int i = 0; i < 10; i++)
-         {
-            tweeter = new Tweeter();
-            tweeter.setProfileImgUrl("http://twitter.com/account/profile_image/tech4j?hreflang=en");
-            tweeter.setTweetCount(100 - (2 * i));
-            tweeter.setUser("tech4j_" + i);
-            tweeter.setUserId(32423444);
-            tweeters.add(tweeter);
-         }
 
          twitterAggregate.setTopTweeters(tweeters);
 
