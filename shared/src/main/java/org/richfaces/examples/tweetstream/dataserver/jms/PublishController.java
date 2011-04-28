@@ -82,7 +82,7 @@ public class PublishController implements Serializable
       try
       {
          log.debug("Pushing Message : " + tweetString);
-         getTopicsContext().publish(new TopicKey("twitter", "incoming_tweets"), MessageFormat.format("{0}", tweetString));
+         getTopicsContext().publish(new TopicKey("twitter", "content"), MessageFormat.format("{0}", ""));
       }
       catch (Exception e)
       {

@@ -564,7 +564,14 @@
 <ui:insert name="head"/>
 </ui:define>
 <ui:define name="body">
-
+   <ui:remove>
+   <a4j:jsFunction name="updateContent" action="#{twitterAgent.refreshList}"
+                   render="tweet-list-panel"/>
+   <a4j:push address="content@twitter"
+             onerror="alert('Error retrieving pushed data')"
+             ondataavailable="updateContent()">
+   </a4j:push>
+   </ui:remove>
    <div id="browser">
       <div id="#{demoMode}-header" class="#{demoMode}-header-gradient">
          TweetStream
@@ -594,6 +601,7 @@
 
             <div class="iphone-page" id="home-page">
                <h:form id="list-form">
+                  <a4j:outputPanel id="tweet-list-panel">
                  <ul id="tweet-list" class="list">
                     <ui:repeat value="#{twitterAgent.tweets}" var="tweet" varStatus="status">
                        <li id="list-row-#{status.index}" class="list-row">
@@ -607,6 +615,7 @@
                        </li>
                     </ui:repeat>
                  </ul>
+                  </a4j:outputPanel>
                   <br clear="all"/>
               </h:form>
              </div>

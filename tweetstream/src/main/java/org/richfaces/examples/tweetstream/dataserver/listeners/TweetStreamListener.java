@@ -34,6 +34,8 @@ import twitter4j.TwitterStreamFactory;
 
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -50,7 +52,7 @@ public class TweetStreamListener implements StatusListener, Serializable
    CacheBuilder cacheBuilder;
 
    //TODO Update track support to work with context param
-   private static final String[] TRACK = {"java", "jboss", "richfaces"};
+   private static final String[] TRACK = {"java","jboss", "richfaces"};
    private static TwitterStream twitterStream;
 
 
@@ -83,6 +85,8 @@ public class TweetStreamListener implements StatusListener, Serializable
 
       List<Tweet> tweets = tweetAggregate.getTweets();
       tweets.add(tweet);
+
+      //Collections.sort(tweets,Collections.reverseOrder());
       log.info("-------tweets.size(): " + tweets.size());
 
       //clip to top 50
