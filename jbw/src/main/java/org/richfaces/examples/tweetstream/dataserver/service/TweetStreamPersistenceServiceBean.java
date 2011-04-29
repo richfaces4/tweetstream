@@ -87,11 +87,11 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
    }
 
    @Override
-   public Set<ScoredTerm> getTopHashTags()
+   public Set<ScoredTerm> getTopHashTags(final int maxResult)
    {
       try
       {
-         return mostFrequentlyUsedTerms("hashtags", 1);
+         return mostFrequentlyUsedTerms("hashtags", 1, maxResult);
       }
       catch (IOException e)
       {
@@ -101,11 +101,11 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
    }
 
    @Override
-   public Set<ScoredTerm> getTopScreenNames()
+   public Set<ScoredTerm> getTopScreenNames(final int maxResult)
    {
       try
       {
-         return mostFrequentlyUsedTerms("screenName", 1);
+         return mostFrequentlyUsedTerms("screenName", 1, maxResult);
       }
       catch (IOException e)
       {
@@ -123,9 +123,9 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
     *                         stopwords for better results).
     * @throws IOException
     */
-   public Set<ScoredTerm> mostFrequentlyUsedTerms(String inField, int minimumFrequency) throws IOException
+   public Set<ScoredTerm> mostFrequentlyUsedTerms(String inField, int minimumFrequency, final int maxResult) throws IOException
    {
-      return impl.mostFrequentlyUsedTerms(entityManagerFactory, inField, minimumFrequency);
+      return impl.mostFrequentlyUsedTerms(entityManagerFactory, inField, minimumFrequency, maxResult);
    }
 
    @Override
@@ -142,7 +142,7 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
    {
       ArrayList<Tweeter> topTweeters = new ArrayList<Tweeter>(10);
       int usersAddedCounter = 0;
-      for (ScoredTerm scoredTweeter : getTopScreenNames())
+      for (ScoredTerm scoredTweeter : getTopScreenNames(10))
       {
          List<Tweet> messagesByScreenName = messagesByScreenName(scoredTweeter.term, 1);
          if (messagesByScreenName.size() > 0)
@@ -167,7 +167,7 @@ public class TweetStreamPersistenceServiceBean implements TweetStreamPersistence
    private ArrayList<Hashtag> getAggregateTopHashTags()
    {
       ArrayList<Hashtag> hashTags = new ArrayList<Hashtag>(10);
-      Set<ScoredTerm> topHashTags = getTopHashTags();
+      Set<ScoredTerm> topHashTags = getTopHashTags(10);
       int tagsAddedCounter = 0;
       for (ScoredTerm hashtag : topHashTags)
       {
