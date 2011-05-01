@@ -26,12 +26,6 @@
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
 
-   <!--mobile performance enhancements-->
-   <context-param>
-        <param-name>org.ajax4jsf.COMPRESS_SCRIPT</param-name>
-        <param-value>true</param-value>
-   </context-param>
-
    <!--<context-param>-->
     <!--<param-name>org.richfaces.LoadStyleStrategy</param-name>-->
     <!--<param-value>NONE</param-value>-->
