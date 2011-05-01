@@ -80,7 +80,7 @@ public class TwitterSourceLocal implements TwitterSource
       cacheBuilder.getCache().put("tweetaggregate", twitterAggregate);
 
       //Start the twitter streaming
-      tweetListener.startTwitterStream();
+     // tweetListener.startTwitterStream();
 
 
       log.info("Initialization of twitter source local complete");
