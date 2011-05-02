@@ -70,18 +70,24 @@ public class TwitterSourceLocal implements TwitterSource
 
    public void init()
    {
-      //TODO Wrap in what ever try/catch is needed
-      fetchContent();
+      //Fetch the initial content
+      //TODO - turned off initial content
+      //fetchContent();
 
       // add the listener that checks hi new data has been added.
       cacheBuilder.getCache().addListener(new CacheUpdateListener());
+
+      //TODO TEMP - just have them empty to start
+      twitterAggregate = new TwitterAggregate();
+      twitterAggregate.setTweets(new ArrayList<Tweet>());
+      twitterAggregate.setTopHashTags(new ArrayList<HashTag>());
+      twitterAggregate.setTopTweeters(new ArrayList<Tweeter>());
 
       //Populate cache with seed data from this class
       cacheBuilder.getCache().put("tweetaggregate", twitterAggregate);
 
       //Start the twitter streaming
-     // tweetListener.startTwitterStream();
-
+      tweetListener.startTwitterStream();
 
       log.info("Initialization of twitter source local complete");
    }
@@ -116,9 +122,11 @@ public class TwitterSourceLocal implements TwitterSource
    @Override
    public void fetchContent()
    {
-      //TODO Check if updating content is needed
+      //Check if updating content is needed
       //If not skip - can be called on every page load
-      if (performSearch())
+//      if (performSearch())
+      //TODO for test not fetching content.
+      if (false)
       {
 
 
