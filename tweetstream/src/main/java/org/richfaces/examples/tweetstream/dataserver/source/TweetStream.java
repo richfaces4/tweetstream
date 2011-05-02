@@ -24,6 +24,7 @@ package org.richfaces.examples.tweetstream.dataserver.source;
 import org.jboss.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
@@ -42,6 +43,7 @@ import java.lang.reflect.Method;
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 
 @ManagedBean
+@ApplicationScoped
 public class TweetStream implements Serializable
 {
    @Inject

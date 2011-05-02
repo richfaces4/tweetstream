@@ -36,8 +36,7 @@ import javax.faces.bean.ManagedBean;
  */
 @Listener
 @ManagedBean
-public class CacheUpdateListener
-{
+public class CacheUpdateListener {
 
    //@Inject
    //private Logger log;
@@ -47,18 +46,18 @@ public class CacheUpdateListener
 
    @CacheEntryModified
    @CacheEntryCreated
-   public void handle(Event e)
-   {
-      System.out.println("-----e.getType()----" + e.getType());
+   public void handle(Event e) {
+//      System.out.println("-----e.getType()----" + e.getType());
+//      System.out.println("-----e.isPre()----" + e.isPre());
 
-      //TODO - need to do some checking here or we will get duplicates
-      //actually, we need a better cache update strategy globally
+      if (!e.isPre()) {
+         System.out.println("------ Fetching and pushing updated tweetAggregate");
+         //Pull out updated aggregate
+         TwitterAggregate tweetAggregate = (TwitterAggregate) e.getCache().get("tweetaggregate");
 
-      //Pull out updated aggregate
-      TwitterAggregate tweetAggregate = (TwitterAggregate)e.getCache().get("tweetaggregate");
-
-      //Send push controller updated content to publish
-      pubControl.publishView(tweetAggregate);
+         //Send push controller updated content to publish
+         pubControl.publishView(tweetAggregate);
+      }
 
    }
 }

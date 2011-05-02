@@ -24,7 +24,7 @@ package org.richfaces.examples.tweetstream.domain;
 import java.io.Serializable;
 
 /** @author jbalunas@redhat.com */
-public class HashTag implements Serializable
+public class HashTag implements Serializable, Comparable<HashTag>
 {
 
    private String hashtag;
@@ -49,5 +49,34 @@ public class HashTag implements Serializable
    public void setCount(int count)
    {
       this.count = count;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof HashTag)) return false;
+
+      HashTag hashTag = (HashTag) o;
+
+      if (hashtag != null ? !hashtag.equalsIgnoreCase(hashTag.hashtag) : hashTag.hashtag != null) return false;
+
+      return true;
+   }
+
+   @Override
+   public int hashCode() {
+      return hashtag != null ? hashtag.hashCode() : 0;
+   }
+
+   @Override
+   public int compareTo(HashTag o) {
+      if (this.count < o.getCount()){
+         return +1;
+      }else if (this.count > o.getCount()){
+         return -1;
+      }else {
+         //must be equal
+         return 0;
+      }
    }
 }

@@ -22,8 +22,10 @@
 package org.richfaces.examples.tweetstream.domain;
 
 
+import java.io.Serializable;
+
 /** @author jbalunas@redhat.com */
-public class Tweeter
+public class Tweeter implements Serializable, Comparable<Tweeter>
 {
    private long userId;
    private String user;
@@ -68,5 +70,34 @@ public class Tweeter
    public void setTweetCount(int tweetCount)
    {
       this.tweetCount = tweetCount;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof Tweeter)) return false;
+
+      Tweeter tweeter = (Tweeter) o;
+
+      if (userId != tweeter.userId) return false;
+
+      return true;
+   }
+
+   @Override
+   public int hashCode() {
+      return (int) (userId ^ (userId >>> 32));
+   }
+
+   @Override
+   public int compareTo(Tweeter o) {
+      if (this.tweetCount < o.getTweetCount()){
+         return +1;
+      }else if (this.tweetCount > o.getTweetCount()){
+         return -1;
+      }else {
+         //must be equal
+         return 0;
+      }
    }
 }

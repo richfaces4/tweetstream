@@ -53,7 +53,7 @@
             </div>
 
             <ul id="top_tags_list">
-              <ui:repeat value="#{twitterAgent.hashtags}" var="tag">
+              <a4j:repeat value="#{twitterAgent.hashtags}" var="tag" rows="10">
                 <li>
                   <div class="top_tag_div">
 
@@ -61,7 +61,7 @@
                     <h:outputText value="#{tag.count}" class="tag_count"/>
                   </div>
                 </li>
-              </ui:repeat>
+              </a4j:repeat>
             </ul>
 
           </div>
@@ -71,7 +71,7 @@
               <h2>Top Tweeters</h2>
             </div>
             <ul id="top_tweeters_list">
-              <ui:repeat value="#{twitterAgent.tweeters}" var="tweeter">
+              <a4j:repeat value="#{twitterAgent.tweeters}" var="tweeter" rows="10">
                 <li>
                   <div class="top_tweeter_div">
                     <img src="#{tweeter.profileImgUrl}" alt="ttw_img" class="top_tweeter_profile_img"/>
@@ -82,7 +82,7 @@
                     </div>
                   </div>
                 </li>
-              </ui:repeat>
+              </a4j:repeat>
             </ul>
           </div>
         </div>
