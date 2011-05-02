@@ -29,6 +29,7 @@ import org.richfaces.examples.tweetstream.domain.HashTag;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.Tweeter;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
+import org.richfaces.examples.tweetstream.util.TwitterAggregateUtil;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Twitter;
@@ -52,6 +53,9 @@ import java.util.List;
 @ApplicationScoped
 public class TwitterSourceLocal implements TwitterSource
 {
+   //If this changes must also update TweetStreamListener
+//   private static final String[] TRACK = {"java", "jboss", "richfaces", "jbw", "judcon"};
+   private static final String TRACK = "java jboss richfaces jbw judcon";
 
    @Inject
    Logger log;
@@ -70,18 +74,20 @@ public class TwitterSourceLocal implements TwitterSource
 
    public void init()
    {
+      System.out.println("&&&&&&&&&&& Init");
       //Fetch the initial content
-      //TODO - turned off initial content
-      //fetchContent();
+      //rich:push not working on android 2.2 phones
+      //  so we need to fetch initial content
+      fetchContent();
 
-      // add the listener that checks hi new data has been added.
-      cacheBuilder.getCache().addListener(new CacheUpdateListener());
-
-      //TODO TEMP - just have them empty to start
+//TODO TEMP - just have them empty to start
       twitterAggregate = new TwitterAggregate();
       twitterAggregate.setTweets(new ArrayList<Tweet>());
       twitterAggregate.setTopHashTags(new ArrayList<HashTag>());
       twitterAggregate.setTopTweeters(new ArrayList<Tweeter>());
+
+      // add the listener that checks hi new data has been added.
+      cacheBuilder.getCache().addListener(new CacheUpdateListener());
 
       //Populate cache with seed data from this class
       cacheBuilder.getCache().put("tweetaggregate", twitterAggregate);
@@ -123,102 +129,56 @@ public class TwitterSourceLocal implements TwitterSource
    public void fetchContent()
    {
       //Check if updating content is needed
-      //If not skip - can be called on every page load
+      //If not skip because this can be called on every page load
+      if(false){
 //      if (performSearch())
-      //TODO for test not fetching content.
-      if (false)
-      {
-
-
-         twitterAggregate = new TwitterAggregate();
-
-         //Load the base search term from context param
-         String searchTerm = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("org.richfaces.examples.tweetstream.searchTermBase");
-
-         if (searchTerm == null)
          {
-            searchTerm = "";
-            log.warn("Default initial twitter filter term not found in context params");
-         }
+            twitterAggregate = new TwitterAggregate();
 
-         twitterAggregate.setFilter(searchTerm);
+            //Load the base search term from context param
+//         String searchTerm = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("org.richfaces.examples.tweetstream.searchTermBase");
 
-         //Load the twitter search
-         List<Tweet> tweets = new ArrayList<Tweet>();
-         List<Tweeter> tweeters = new ArrayList<Tweeter>();
-         Tweeter tweeter = null;
+//         if (searchTerm == null)
+//         {
+//            searchTerm = "";
+//            log.warn("Default initial twitter filter term not found in context params");
+//         }
 
-         Twitter twitter = new TwitterFactory().getInstance();
-         List<twitter4j.Tweet> t4jTweets = null;
-         try
-         {
-            QueryResult result = twitter.search(new Query(searchTerm));
-            t4jTweets = result.getTweets();
-            for (twitter4j.Tweet t4jTweet : t4jTweets)
+//         twitterAggregate.setFilter(searchTerm);
+
+            //Load the twitter search
+//         List<Tweet> tweets = new ArrayList<Tweet>();
+//         List<Tweeter> tweeters = new ArrayList<Tweeter>();
+//         Tweeter tweeter = null;
+
+            Twitter twitter = new TwitterFactory().getInstance();
+            List<twitter4j.Tweet> t4jTweets = null;
+            try
             {
-               log.info("@" + t4jTweet.getFromUser() + " - " + t4jTweet.getText());
-               //Create a local tweet object from the t4j
-               Tweet tweet = new Tweet();
-               tweet.setText(t4jTweet.getText());
-               tweet.setId(t4jTweet.getFromUserId());
-               tweet.setProfileImageUrl(t4jTweet.getProfileImageUrl().toString());
-               tweet.setScreenName(t4jTweet.getFromUser());
-               //TODO fill in any other required data
+               Query query = new Query(TRACK);
+               QueryResult result = twitter.search(query);
+               t4jTweets = result.getTweets();
+               for (twitter4j.Tweet t4jTweet : t4jTweets)
+               {
+                  log.info("@" + t4jTweet.getFromUser() + " - " + t4jTweet.getText());
 
-               boolean createNew = false;
-               //quick krap code to calculate top tweeters
-               for (Tweet atweet : tweets){
-                  //if we already have the user in our tweets list...
-                  if(atweet.getScreenName().equals(tweet.getScreenName())){
-                     //loop through the tweeters to get compare ids so we can increment by 1
-                     for(Tweeter atweeter : tweeters){
-                        if(atweeter.getUser().equals(atweet.getScreenName())){
-                           //increment tweet count
-                           atweeter.setTweetCount(atweeter.getTweetCount() + 1);
-                        }
-                     }
-                  }else{
-                     //set a flag to create new tweeter since he wasn't in list
-                     createNew = true;
-                  }
+                  //Create a local tweet object from the t4j
+                  Tweet tweet = new Tweet();
+                  tweet.setText(t4jTweet.getText());
+                  tweet.setId(t4jTweet.getFromUserId());
+                  tweet.setProfileImageUrl(t4jTweet.getProfileImageUrl());
+                  tweet.setScreenName(t4jTweet.getFromUser());
+                  tweet.setHashTags(TwitterAggregateUtil.pullHashtags(t4jTweet.getText()));
+
+                  twitterAggregate = TwitterAggregateUtil.updateTwitterAggregate(tweet, twitterAggregate);
                }
-
-               if(createNew){
-                  tweeter = new Tweeter();
-                  tweeter.setProfileImgUrl(t4jTweet.getProfileImageUrl().toString());
-                  tweeter.setTweetCount(1);
-                  tweeter.setUser(t4jTweet.getFromUser());
-                  tweeter.setUserId(t4jTweet.getFromUserId());
-                  tweeters.add(tweeter);
-               }
-
-               tweets.add(tweet);
+            }
+            catch (TwitterException te)
+            {
+               te.printStackTrace();
+               log.info("Failed to search tweets: " + te.getMessage());
             }
          }
-         catch (TwitterException te)
-         {
-            te.printStackTrace();
-            log.info("Failed to search tweets: " + te.getMessage());
-         }
-
-         twitterAggregate.setTweets(tweets);
-
-
-         twitterAggregate.setTopTweeters(tweeters);
-
-         //Load TopTags
-         List<HashTag> hashTags = new ArrayList<HashTag>();
-
-         HashTag hashTag = null;
-         for (int i = 0; i < 10; i++)
-         {
-            hashTag = new HashTag();
-            hashTag.setHashtag("#richfaces_" + i);
-            hashTag.setCount(1000 - (5 * i));
-            hashTags.add(hashTag);
-         }
-
-         twitterAggregate.setTopHashTags(hashTags);
       }
 
    }
@@ -226,8 +186,8 @@ public class TwitterSourceLocal implements TwitterSource
    @Override
    public void refreshList()
    {
-      TwitterAggregate tweetAggregate = (TwitterAggregate)cacheBuilder.getCache().get("tweetaggregate");
-      twitterAggregate.setTweets(tweetAggregate.getTweets());
+      twitterAggregate = (TwitterAggregate)cacheBuilder.getCache().get("tweetaggregate");
+//      twitterAggregate.setTweets(tweetAggregate.getTweets());
    }
 
    private boolean performSearch()
@@ -237,20 +197,20 @@ public class TwitterSourceLocal implements TwitterSource
          long current = new Date().getTime();
          if (current - lastSearch > 5000)
          {
-            log.debug("****** Enough time past - fetching new data--" + current + "-" + lastSearch + "=" + (current - lastSearch));
+            log.debug("Enough time past - fetching new data--" + current + "-" + lastSearch + "=" + (current - lastSearch));
             lastSearch = current;
             return true;
          }
          else
          {
-            log.debug("****** NOT enough time past - NOT fetching new data--" + current + "-" + lastSearch + "=" + (current - lastSearch));
+            log.debug("NOT enough time past - NOT fetching new data--" + current + "-" + lastSearch + "=" + (current - lastSearch));
             return false;
          }
       }
       else
       {
          lastSearch = new Date().getTime();
-         log.debug("****** First time through - fetching new data");
+         log.debug("First time through - fetching new data");
          return true;
       }
    }
