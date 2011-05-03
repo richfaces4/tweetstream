@@ -47,11 +47,8 @@ public class CacheUpdateListener {
    @CacheEntryModified
    @CacheEntryCreated
    public void handle(Event e) {
-//      System.out.println("-----e.getType()----" + e.getType());
-//      System.out.println("-----e.isPre()----" + e.isPre());
 
       if (!e.isPre()) {
-         System.out.println("------ Fetching and pushing updated tweetAggregate");
          //Pull out updated aggregate
          TwitterAggregate tweetAggregate = (TwitterAggregate) e.getCache().get("tweetaggregate");
 
