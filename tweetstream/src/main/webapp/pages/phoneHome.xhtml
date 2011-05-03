@@ -1,5 +1,5 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -17,441 +17,431 @@
 <ui:define name="head">
 <ui:param name="demoMode" value="jbw"/>
 <style type="text/css">
-   /*Global*/
-   html {
-      height:100%;
+/*Global*/
+html {
+   height: 100%;
+}
+
+body {
+   margin: 0;
+   padding: 0;
+   height: 100%; /*min-height: 416px;*/
+   font: 80% / 1.5em "Helvetica", "Lucida Sans", Verdana, Arial, sans-serif;
+}
+
+a {
+   text-decoration: none;
+}
+
+#browser {
+/*height: auto;*/
+   background: #000 -moz-linear-gradient(top, #0e0e0e, #313131);
+   background: #000 -webkit-gradient(linear, left top, left bottom, from(#0e0e0e), to(#313131));
+   position: relative;
+   min-height: 416px;
+   width: auto;
+   height: 100%;
+   overflow-x: hidden;
+   overflow-y: auto;
+}
+
+#jbw-header {
+   position: relative;
+   height: 44px;
+   width: auto;
+   font-weight: bold;
+   color: #fff;
+   text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+   font-size: 16pt;
+   border: 0;
+   text-align: center;
+   line-height: 47px;
+   -webkit-user-select: none;
+}
+
+#judcon-header {
+   position: relative;
+   height: 44px;
+   width: auto;
+   font-weight: bold;
+   color: #fff;
+   text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+   font-size: 16pt;
+   border: 0;
+   text-align: center;
+   line-height: 47px;
+   -webkit-user-select: none;
+}
+
+#page-container {
+   position: relative;
+}
+
+#page-container ul {
+/*overflow: hidden;*/
+   padding: 0px;
+   margin: 0px;
+   height: auto;
+   width: auto;
+   cursor: default;
+   -webkit-user-select: none;
+   list-style: none;
+}
+
+.detail-box {
+   padding: 8px;
+   border: 1px solid rgb(172, 172, 172);
+   background-color: white;
+   -webkit-border-radius: 8px 8px;
+   position: relative;
+   margin: 10px 9px 12px 9px;
+   -webkit-margin-top-collapse: separate;
+   -webkit-margin-bottom-collapse: separate;
+   width: auto;
+   min-height: 64px;
+   height: auto;
+}
+
+.detail-title {
+   color: black;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   font-size: 16pt;
+   font-weight: bold;
+   text-align: left;
+}
+
+.detail-subtitle {
+   color: rgb(128, 128, 128);
+   font-size: 12px;
+   margin-top: 2px;
+   min-height: 17px;
+   white-space: nowrap;
+}
+
+.detail-description {
+   color: black;
+   font-size: 13px;
+   text-overflow: ellipsis;
+   overflow: hidden;
+}
+
+.tweet-box {
+   padding: 1px 3px 5px 7px;
+   border: 1px solid rgb(172, 172, 172);
+   background-color: white;
+   -webkit-border-radius: 8px 8px;
+   position: relative;
+   margin: 7px 9px 1px 9px;
+   -webkit-margin-top-collapse: separate;
+   -webkit-margin-bottom-collapse: separate;
+   width: auto;
+   min-height: 64px;
+   height: auto;
+}
+
+.tweet-image {
+   color: black;
+   overflow: hidden;
+   font-size: 16pt;
+   font-weight: bold;
+   text-align: left;
+   width: 48px;
+   float: left;
+}
+
+.tweet-username {
+   color: rgb(128, 128, 128);
+   font-size: 12px;
+   margin-top: 2px;
+   min-height: 17px;
+   white-space: nowrap;
+   float: left;
+   width: auto;
+}
+
+.tweet-description {
+   color: black;
+   font-size: 13px;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   float: left;
+   width: auto;
+}
+
+.tweet-description img {
+   padding: 1px 7px 0 0;
+   width: 48px;
+}
+
+/*Buttons and bars*/
+.left-header-button {
+   font-weight: bold;
+   font-size: 12px;
+   color: #fff;
+   text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+   text-align: center;
+   text-overflow: ellipsis;
+   height: 30px;
+   width: 60px;
+   position: absolute;
+   top: 7px;
+   left: 5px;
+   line-height: 30px;
+}
+
+.right-header-button {
+   font-weight: bold;
+   font-size: 12px;
+   color: #fff;
+   text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
+   text-align: center;
+   text-overflow: ellipsis;
+   height: 30px;
+   width: 60px;
+   position: absolute;
+   top: 7px;
+   right: 5px;
+   line-height: 30px;
+}
+
+.judcon-button {
+   background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+   background: #af7124 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
+   border-radius: 7px;
+   mozborder-radius: 7px;
+   webkitborder-radius: 7px;
+   border: none;
+}
+
+.judcon-header-gradient {
+/*background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);*/
+/*background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));*/
+   border: none;
+}
+
+.jbw-button {
+   background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+   background: #000 -webkit-gradient(linear, left top, left bottom, from(#717172), to(#0f0f10), color-stop(0.5, #3a3a3a), color-stop(0.5, #0d0d0f));
+   border-radius: 7px;
+   mozborder-radius: 7px;
+   webkitborder-radius: 7px;
+   border: none;
+}
+
+.jbw-header-gradient {
+   background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
+   background: #000 -webkit-gradient(linear, left top, left bottom, from(#ca1400), to(#800700));
+   border: none;
+}
+
+.nav-button {
+   font-family: "Helvetica Neue", Helvetica, sans-serif;
+   font-size: 0.8em;
+   font-weight: bold;
+   padding: 0 5px 0 5px;
+   height: 24px;
+   border: 1px solid #4c525a;
+   background: -webkit-gradient(linear, left top, left bottom, from(#9fafc1), to(#6c83a1), color-stop(0.5, #798eaa), color-stop(0.5, #6c83a1));
+   margin: 0;
+   text-shadow: 0px 1px 0 #000;
+   -webkit-background-origin: padding-box;
+   -webkit-background-clip: border-box;
+   -webkit-border-radius: 8px;
+   line-height: 23px;
+   color: #fff;
+}
+
+.nav-button-left {
+   -webkit-border-bottom-left-radius: 8px;
+   -webkit-border-top-left-radius: 8px;
+   -webkit-border-bottom-right-radius: 0;
+   -webkit-border-top-right-radius: 0;
+   width: 45%;
+   float: left;
+   margin: 0;
+   border-width: 1px 1px 1px 1px;
+
+}
+
+.nav-button-right {
+   -webkit-border-bottom-left-radius: 0;
+   -webkit-border-top-left-radius: 0;
+   -webkit-border-bottom-right-radius: 8px;
+   -webkit-border-top-right-radius: 8px;
+   width: 45%;
+   float: left;
+   margin: 0;
+   border-width: 1px 1px 1px 0;
+}
+
+.button-container {
+   width: 80%;
+   margin: 10px auto 0 auto;
+   text-align: center;
+}
+
+.nav-button:hover, nav-button:active {
+   color: #fff;
+   text-shadow: none;
+}
+
+/*utils - functions */
+.hide {
+   opacity: 0;
+}
+
+.hide-delay {
+   -webkit-transform: translate3d(0, 0, 0);
+   opacity: 0;
+   -webkit-transition-delay: 0.3s;
+}
+
+.show {
+   opacity: 1;
+}
+
+.show-delay {
+   -webkit-transform: translate3d(0, 0, 0);
+   opacity: 1;
+   -webkit-transition-delay: 0.3s;
+}
+
+.none {
+   display: none;
+}
+
+.block {
+   display: block;
+}
+
+.stage-center {
+   top: 0;
+   left: 0; /*width: 100%;*/
+}
+
+.transition {
+   -webkit-transform: translate3d(0, 0, 0);
+   -moz-transition-duration: 1s;
+   -webkit-transition-duration: 1s;
+   -o-transition-duration: 1s;
+
+}
+
+.iphone-page {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   -webkit-transform: translate3d(0, 0, 0);
+}
+
+/*client specific styles*/
+
+/*iphone landscape screen width*/
+@media screen and (max-device-width: 480px) and (orientation:landscape) {
+   .stage-left {
+      opacity: 0;
+      left: -480px;
    }
-   body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      /*min-height: 416px;*/
-      font: 80% / 1.5em "Helvetica", "Lucida Sans", Verdana, Arial, sans-serif;
+
+   .stage-right {
+      opacity: 0;
+      left: 480px;
    }
 
-   a {
-      text-decoration: none;
-   }
-
-   #browser {
-      /*height: auto;*/
-      background: #000 -moz-linear-gradient(top, #0e0e0e, #313131);
-      background: #000 -webkit-gradient(linear, left top, left bottom, from(#0e0e0e), to(#313131));
-      position: relative;
-      min-height: 416px;
-      width: auto;
-      height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-   }
-
-   #jbw-header {
-      position: relative;
-      height: 44px;
-      width: auto;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-      font-size: 16pt;
-      border: 0;
-      text-align: center;
-      line-height: 47px;
-      -webkit-user-select: none;
-   }
-
-   #judcon-header {
-      position: relative;
-      height: 44px;
-      width: auto;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-      font-size: 16pt;
-      border: 0;
-      text-align: center;
-      line-height: 47px;
-      -webkit-user-select: none;
-   }
-
-   #page-container {
-      position: relative;
-   }
-
-
-
-   #page-container ul{
-      /*overflow: hidden;*/
-      padding: 0px;
-      margin: 0px;
-      height: auto;
-      width: auto;
-      cursor: default;
-      -webkit-user-select: none;
-      list-style:none;
-   }
-
-   .detail-box {
-      padding: 8px;
-      border: 1px solid rgb(172, 172, 172);
-      background-color: white;
-      -webkit-border-radius: 8px 8px;
-      position: relative;
-      margin: 10px 9px 12px 9px;
-      -webkit-margin-top-collapse: separate;
-      -webkit-margin-bottom-collapse: separate;
-      width: auto;
-      min-height: 64px;
-      height: auto;
-   }
-
-   .detail-title {
-      color: black;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      font-size: 16pt;
-      font-weight: bold;
-      text-align: left;
-   }
-
-   .detail-subtitle {
-      color: rgb(128, 128, 128);
-      font-size: 12px;
-      margin-top: 2px;
-      min-height: 17px;
-      white-space: nowrap;
-   }
-
-   .detail-description {
-      color: black;
-      font-size: 13px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-   }
-
-
+   .iphone-page,
    .tweet-box {
-      padding: 1px 3px 5px 7px;
-      border: 1px solid rgb(172, 172, 172);
-      background-color: white;
-      -webkit-border-radius: 8px 8px;
-      position: relative;
-      margin: 7px 9px 1px 9px;
-      -webkit-margin-top-collapse: separate;
-      -webkit-margin-bottom-collapse: separate;
-      width: auto;
-      min-height: 64px;
-      height: auto;
+      width: 450px;
    }
 
-   .tweet-image {
-      color: black;
-      overflow: hidden;
-      font-size: 16pt;
-      font-weight: bold;
-      text-align: left;
-      width:48px;
-      float: left;
-   }
+}
 
-   .tweet-username {
-      color: rgb(128, 128, 128);
-      font-size: 12px;
-      margin-top: 2px;
-      min-height: 17px;
-      white-space: nowrap;
-      float: left;
-      width: auto;
-   }
-
-   .tweet-description {
-      color: black;
-      font-size: 13px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      float: left;
-      width: auto;
-   }
-
-   .tweet-description img {
-      padding: 1px 7px 0 0;
-      width: 48px;
-   }
-
-
-
-   /*Buttons and bars*/
-   .left-header-button {
-      font-weight: bold;
-      font-size: 12px;
-      color: #fff;
-      text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-      text-align: center;
-      text-overflow: ellipsis;
-      height: 30px;
-      width: 60px;
-      position: absolute;
-      top: 7px;
-      left: 5px;
-      line-height: 30px;
-   }
-
-   .right-header-button {
-      font-weight: bold;
-      font-size: 12px;
-      color: #fff;
-      text-shadow: rgba(0, 0, 0, 0.6) 0px -1px 0px;
-      text-align: center;
-      text-overflow: ellipsis;
-      height: 30px;
-      width: 60px;
-      position: absolute;
-      top: 7px;
-      right: 5px;
-      line-height: 30px;
-   }
-
-   .judcon-button {
-      background: #af7124 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-      background: #af7124 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));
-      border-radius: 7px;
-      mozborder-radius: 7px;
-      webkitborder-radius: 7px;
-      border: none;
-   }
-
-   .judcon-header-gradient {
-      /*background: #5889a0 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);*/
-      /*background: #5889a0 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(0, 0, 0, .3)));*/
-      border: none;
-   }
-
-   .jbw-button {
-      background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-      background: #000 -webkit-gradient(linear, left top, left bottom, from(#717172), to(#0f0f10), color-stop(0.5, #3a3a3a), color-stop(0.5, #0d0d0f));
-      border-radius: 7px;
-      mozborder-radius: 7px;
-      webkitborder-radius: 7px;
-      border: none;
-   }
-
-   .jbw-header-gradient {
-      background: #000 -moz-linear-gradient(90deg, rgba(0, 0, 0, .3) 33%, rgba(255, 255, 255, .1) 123%);
-      background: #000 -webkit-gradient(linear, left top, left bottom, from(#ca1400),  to(#800700));
-      border: none;
-   }
-
-   .nav-button {
-      font-family: "Helvetica Neue", Helvetica, sans-serif;
-      font-size: 0.8em;
-      font-weight: bold;
-      padding: 0 5px 0 5px;
-      height: 24px;
-      border: 1px solid #4c525a;
-      background: -webkit-gradient( linear, left top, left bottom, from(#9fafc1), to(#6c83a1), color-stop(0.5, #798eaa), color-stop(0.5, #6c83a1) );
-      margin: 0;
-      text-shadow: 0px 1px 0 #000;
-      -webkit-background-origin: padding-box;
-      -webkit-background-clip: border-box;
-      -webkit-border-radius: 8px;
-      line-height: 23px;
-      color: #fff;
-   }
-
-   .nav-button-left {
-      -webkit-border-bottom-left-radius:8px;
-      -webkit-border-top-left-radius: 8px;
-      -webkit-border-bottom-right-radius: 0;
-      -webkit-border-top-right-radius: 0;
-      width:45%;
-      float:left;
-      margin: 0;
-      border-width: 1px 1px 1px 1px;
-
-   }
-
-   .nav-button-right {
-      -webkit-border-bottom-left-radius: 0;
-      -webkit-border-top-left-radius: 0;
-      -webkit-border-bottom-right-radius: 8px;
-      -webkit-border-top-right-radius: 8px;
-      width: 45%;
-      float:left;
-      margin: 0;
-      border-width: 1px 1px 1px 0;
-   }
-
-   .button-container {
-      width: 80%;
-      margin: 10px auto 0 auto;
-      text-align: center;
-   }
-
-   .nav-button:hover, nav-button:active {
-      color: #fff;
-      text-shadow: none;
-   }
-
-
-   /*utils - functions */
-   .hide {
+/*iphone portrait screen width*/
+@media screen and (max-device-width: 320px) and (orientation:portrait) {
+   .stage-left {
+      left: -320px;
       opacity: 0;
    }
 
-   .hide-delay {
-      -webkit-transform:translate3d(0,0,0);
+   .stage-right {
       opacity: 0;
-      -webkit-transition-delay: 0.3s;
+      left: 320px;
    }
 
-   .show {
-      opacity: 1;
+   .iphone-page,
+   .tweet-box {
+      width: 290px;
+   }
+}
+
+/*catch all for larger than iphone landscape device widths*/
+@media screen and (min-device-width: 481px) {
+   .stage-left {
+      left: -1024px;
+      opacity: 0;
    }
 
-   .show-delay {
-      -webkit-transform:translate3d(0,0,0);
-      opacity: 1;
-      -webkit-transition-delay: 0.3s;
+   .stage-right {
+      opacity: 0;
+      left: 1024px;
    }
 
-   .none {
-      display: none;
-   }
+/*.iphone-page {*/
+/*width: 480px;*/
+/*}*/
+}
 
-   .block {
-      display: block;
-   }
+/*------------------------android devices*/
+@media only screen and (-webkit-device-pixel-ratio:.75) {
+/* Put CSS for low density (ldpi) Android layouts in here */
+}
 
-   .stage-center {
-      top: 0;
-      left: 0;
-      /*width: 100%;*/
-   }
+@media only screen and (-webkit-device-pixel-ratio:1) {
+/* Put CSS for medium density (mdpi) Android layouts in here */
+}
 
-   .transition {
-      -webkit-transform:translate3d(0,0,0);
-      -moz-transition-duration: 1s;
-      -webkit-transition-duration: 1s;
-      -o-transition-duration: 1s;
+@media only screen and (-webkit-device-pixel-ratio:1.5) {
+/* Put CSS for high density (hdpi) Android layouts in here */
+}
 
-   }
+/*flip transition related*/
+.flip-face {
+   position: relative;
+   width: 100%;
+   -webkit-transition-property: -webkit-transform, background;
+   -webkit-transition-duration: 1s, 0;
+   -webkit-transform-style: preserve-3d;
+   -webkit-transition-delay: 0, 0.3s;
+   -webkit-transform: rotateY(0deg);
 
-   .iphone-page {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      -webkit-transform:translate3d(0,0,0);
-   }
+}
 
-   /*client specific styles*/
+.flip-back {
+   -webkit-transform: rotateY(180deg);
+   width: 100%;
+}
 
+.flipped {
+   -webkit-user-select: element;
+   -webkit-transform: rotateY(180deg);
+}
 
-   /*iphone landscape screen width*/
-   @media screen and (max-device-width: 480px) and (orientation:landscape) {
-      .stage-left {
-         opacity: 0;
-         left: -480px;
-      }
+.agenda-flip-show {
+   position: absolute;
+   top: 0;
+   left: 0;
+}
 
-      .stage-right {
-         opacity: 0;
-         left: 480px;
-      }
+#tweet-detail a {
+   text-decoration: none;
 
-      .iphone-page,
-      .tweet-box {
-         width: 450px;
-      }
+}
 
-
-   }
-
-   /*iphone portrait screen width*/
-   @media screen and (max-device-width: 320px) and (orientation:portrait) {
-      .stage-left {
-         left: -320px;
-         opacity: 0;
-      }
-
-      .stage-right {
-         opacity: 0;
-         left: 320px;
-      }
-
-      .iphone-page,
-      .tweet-box{
-         width: 290px;
-      }
-   }
-
-   /*catch all for larger than iphone landscape device widths*/
-   @media screen and (min-device-width: 481px) {
-      .stage-left {
-         left: -1024px;
-         opacity: 0;
-      }
-
-      .stage-right {
-         opacity: 0;
-         left: 1024px;
-      }
-
-      /*.iphone-page {*/
-         /*width: 480px;*/
-      /*}*/
-   }
-
-   /*------------------------android devices*/
-   @media only screen and (-webkit-device-pixel-ratio:.75){
-       /* Put CSS for low density (ldpi) Android layouts in here */
-   }
-   @media only screen and (-webkit-device-pixel-ratio:1){
-       /* Put CSS for medium density (mdpi) Android layouts in here */
-   }
-   @media only screen and (-webkit-device-pixel-ratio:1.5){
-       /* Put CSS for high density (hdpi) Android layouts in here */
-   }
-
-
-
-   /*flip transition related*/
-   .flip-face {
-      position: relative;
-      width: 100%;
-      -webkit-transition-property: -webkit-transform, background;
-      -webkit-transition-duration: 1s, 0;
-      -webkit-transform-style: preserve-3d;
-      -webkit-transition-delay: 0, 0.3s;
-      -webkit-transform: rotateY(0deg);
-
-   }
-
-   .flip-back {
-      -webkit-transform: rotateY(180deg);
-      width: 100%;
-   }
-
-
-   .flipped {
-      -webkit-user-select: element;
-      -webkit-transform: rotateY(180deg);
-   }
-
-   .agenda-flip-show {
-      position: absolute;
-      top: 0;
-      left: 0;
-   }
-
-   #tweet-detail a {
-      text-decoration: none;
-
-   }
-
-   #rh-logo {
-      position: absolute;
-      top: 7px;
-      left: 25px;
-   }
+#rh-logo {
+   position: absolute;
+   top: 7px;
+   left: 25px;
+}
 
 </style>
 <script type="text/javascript">
@@ -459,90 +449,86 @@
    // <![CDATA[
    var currentPage;
 
-   function showDetail(e)
-   {
-      showHeaderButton('back-button','left');
-      exit('home-page','left');
+   function showDetail(e) {
+      showHeaderButton('back-button', 'left');
+      exit('home-page', 'left');
       showPage('tweet-detail-page');
       hideURLbar();
    }
 
-   function hideDetail(e)
-   {
-      exit('tweet-detail-page','right');
-      swap('back-button','none');
+   function hideDetail(e) {
+      exit('tweet-detail-page', 'right');
+      swap('back-button', 'none');
       resetHome();
    }
 
-   function flip(e)
-   {
+   function flip(e) {
       hideAll();
-      swap('flippable','flip-face flip-back');
-      swap('about-page','iphone-page agenda-flip-show show-delay');
-      swap('home-page','hide-delay');
-      showHeaderButton('agenda-back-button','right');
+      swap('flippable', 'flip-face flip-back');
+      swap('about-page', 'iphone-page agenda-flip-show show-delay');
+      swap('home-page', 'hide-delay');
+      showHeaderButton('agenda-back-button', 'right');
 
       //hide tweet detail if coming from that screen
-      swap('tweet-detail-page','none');
-      swap('agenda-button','none');
-      swap('back-button','none');
-      swap('nav-button-container','none');
+      swap('tweet-detail-page', 'none');
+      swap('agenda-button', 'none');
+      swap('back-button', 'none');
+      swap('nav-button-container', 'none');
    }
 
-    function flipBack()
-   {
-      swap('flippable','flip-face');
-      swap('about-page','iphone-page hide-delay');
-      swap('agenda-back-button','none');
-      swap('nav-button-container','show-delay button-container');
-      showHeaderButton('agenda-button','right');
+   function flipBack() {
+      swap('flippable', 'flip-face');
+      swap('about-page', 'iphone-page hide-delay');
+      swap('agenda-back-button', 'none');
+      swap('nav-button-container', 'show-delay button-container');
+      showHeaderButton('agenda-button', 'right');
       resetHome();
    }
 
    function showTweeters() {
       hideAll();
-      showHeaderButton('tweeters-back-button','left');
-      exit('home-page','left');
+      showHeaderButton('tweeters-back-button', 'left');
+      exit('home-page', 'left');
       showPage('top-tweeters-page');
    }
 
    function hideTweeters() {
-      swap('tweeters-back-button','none');
-      exit('top-tweeters-page','right');
+      swap('tweeters-back-button', 'none');
+      exit('top-tweeters-page', 'right');
       resetHome();
    }
 
    function showHashtags() {
       hideAll();
-      showHeaderButton('tags-back-button','left');
-      exit('home-page','left');
+      showHeaderButton('tags-back-button', 'left');
+      exit('home-page', 'left');
       showPage('top-hashtags-page');
    }
 
    function hideHashtags() {
-      swap('tags-back-button','none');
-      exit('top-hashtags-page','right');
+      swap('tags-back-button', 'none');
+      exit('top-hashtags-page', 'right');
       resetHome();
    }
 
    function resetHome() {
       //reset back to home page
-      swap('home-page','iphone-page stage-center transition');
+      swap('home-page', 'iphone-page stage-center transition');
    }
 
-   function exit(pageId,direction) {
-      swap(pageId,'iphone-page stage-' + direction + ' hide transition');
+   function exit(pageId, direction) {
+      swap(pageId, 'iphone-page stage-' + direction + ' hide transition');
    }
 
    function showPage(pageId) {
-      swap(pageId,'iphone-page stage-center transition');
+      swap(pageId, 'iphone-page stage-center transition');
    }
 
-   function showHeaderButton(buttonId,position){
-      swap(buttonId,'#{demoMode}-button '+ position + '-header-button show transition');
+   function showHeaderButton(buttonId, position) {
+      swap(buttonId, '#{demoMode}-button ' + position + '-header-button show transition');
    }
 
-   function hideAll(){
+   function hideAll() {
 
       hideDetail();
       hideHashtags();
@@ -550,13 +536,13 @@
    }
 
 
-   function swap(id,classString) {
+   function swap(id, classString) {
       //var element = document.getElementById(id);
       //classString = element.className + ' ' + classString;
       document.getElementById(id).className = classString;
    }
 
-   function jumpToTop(){
+   function jumpToTop() {
       window.location = window.location + "#browser";
    }
    // ]]>
@@ -566,7 +552,7 @@
 <ui:define name="body">
    <!--<ui:remove>-->
    <a4j:jsFunction name="updateContent" action="#{twitterAgent.refreshList}"
-                   render="browser"/>
+                   render="list-form"/>
    <a4j:push address="content@twitter"
              onerror="alert('Error retrieving pushed data')"
              ondataavailable="updateContent()">
@@ -576,116 +562,135 @@
       <div id="#{demoMode}-header" class="#{demoMode}-header-gradient">
          TweetStream
          <img src="#{request.contextPath}/resources/images/SMrgbeps.png" width="30" height="29" alt="" id="rh-logo"/>
+
          <div id="back-button" class="#{demoMode}-button left-header-button none" onclick="hideDetail()">Back</div>
-         <div id="tweeters-back-button" class="#{demoMode}-button left-header-button none" onclick="hideTweeters()">Back</div>
-         <div id="tags-back-button" class="#{demoMode}-button left-header-button none" onclick="hideHashtags()">Back</div>
+         <div id="tweeters-back-button" class="#{demoMode}-button left-header-button none" onclick="hideTweeters()">Back
+         </div>
+         <div id="tags-back-button" class="#{demoMode}-button left-header-button none" onclick="hideHashtags()">Back
+         </div>
          <div id="agenda-button" class="#{demoMode}-button right-header-button" onclick="flip()">About</div>
-         <div id="agenda-back-button" class="#{demoMode}-button right-header-button none" onclick="flipBack()">Back</div>
+         <div id="agenda-back-button" class="#{demoMode}-button right-header-button none" onclick="flipBack()">Back
+         </div>
       </div>
 
 
       <div id="flippable" class="flip-face">
 
-          <div id="nav-button-container" class="button-container">
-              <div class="nav-button nav-button-left" onclick="showTweeters()">Top Tweeters</div>
-              <div class="nav-button nav-button-right" onclick="showHashtags()">Top Hashtags</div>
-              <br clear="all"/>
-          </div>
-
+         <div id="nav-button-container" class="button-container">
+            <div class="nav-button nav-button-left" onclick="showTweeters()">Top Tweeters</div>
+            <div class="nav-button nav-button-right" onclick="showHashtags()">Top Hashtags</div>
+            <br clear="all"/>
+         </div>
 
 
          <div id="page-container">
+            <h:form id="list-form">
+               <a4j:outputPanel id="tweet-list-panel">
+                  <div class="iphone-page" id="home-page">
 
-            <div class="iphone-page" id="home-page">
-               <h:form id="list-form">
-                  <a4j:outputPanel id="tweet-list-panel">
-                 <ul id="tweet-list" class="list">
-                    <ui:repeat value="#{twitterAgent.tweets}" var="tweet" varStatus="status" >
-                       <li id="list-row-#{status.index}" class="list-row">
-                          <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}" oncomplete="showDetail()">
-                             <div class="tweet-box">
-                                <span class="tweet-username">#{tweet.screenName}</span><br clear="all"/>
-                                <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt="" align="left" width="48" height="48"/>#{tweet.text}</div>
-                                <br clear="all"/>
-                             </div>
-                          </a4j:commandLink>
-                       </li>
-                    </ui:repeat>
-                 </ul>
-                  </a4j:outputPanel>
-                  <br clear="all"/>
-              </h:form>
-             </div>
+                     <ul id="tweet-list" class="list">
+                        <ui:repeat value="#{twitterAgent.tweets}" var="tweet" varStatus="status">
+                           <li id="list-row-#{status.index}" class="list-row">
+                              <a4j:commandLink action="#{twitterAgent.setSelectedTweet(tweet)}"
+                                               oncomplete="showDetail()">
+                                 <div class="tweet-box">
+                                    <span class="tweet-username">#{tweet.screenName}</span><br clear="all"/>
 
-              <div class="iphone-page stage-right hide" id="tweet-detail-page">
-                 <div id="tweet-detail">
-                  <a4j:outputPanel id="list-panel" ajaxRendered="true">
-                     <div class="tweet-box">
-                        <span class="tweet-username">#{twitterAgent.selectedTweet.screenName}</span>
-                        <div class="tweet-description"><img src="#{twitterAgent.selectedTweet.profileImageUrl}" alt="" width="48" height="48" align="left"/>#{twitterAgent.selectedTweet.text}</div>
-                        <br clear="all"/>
-                     </div>
-                  </a4j:outputPanel>
-                 </div>
-              </div>
+                                    <div class="tweet-description"><img src="#{tweet.profileImageUrl}" alt=""
+                                                                        align="left" width="48"
+                                                                        height="48"/>#{tweet.text}</div>
+                                    <br clear="all"/>
+                                 </div>
+                              </a4j:commandLink>
+                           </li>
+                        </ui:repeat>
+                     </ul>
 
-              <div class="iphone-page stage-right hide" id="top-tweeters-page">
-                 <div id="top-tweeters">
-                    <div id="tweeters-container" class="">
-                     Top tweeters
+                     <br clear="all"/>
 
-                    <ul>
-                      <a4j:repeat value="#{twitterAgent.tweeters}" var="tweeter" rows="10">
-                        <li>
-                          <div class="tweet-box">
-                             <span class="tweet-username">#{tweeter.user}</span><br clear="all"/>
-                             <div class="tweet-description"><img src="#{tweeter.profileImgUrl}" alt="" width="48" height="48" align="left"/>Tweet Count: #{tweeter.tweetCount}</div>
-                             <br clear="all"/>
-                          </div>
-                        </li>
-                      </a4j:repeat>
-                    </ul>
+                  </div>
 
-                    </div>
-                 </div>
-              </div>
-
-               <div class="iphone-page stage-right hide" id="top-hashtags-page">
-                 <div id="top-hashtags">
-                    <div id="hashtags-container" class="">
-                    Top hashtags
-                    <ul>
-                      <a4j:repeat value="#{twitterAgent.hashtags}" var="tag" rows="10">
-                        <li>
+                  <div class="iphone-page stage-right hide" id="tweet-detail-page">
+                     <div id="tweet-detail">
+                        <a4j:outputPanel id="list-panel" ajaxRendered="true">
                            <div class="tweet-box">
-                             <div class="tweet-description">
-                                 Tag: #{tag.hashtag}  Count: #{tag.count}
-                             </div>
-                             <br clear="all"/>
-                          </div>
-                        </li>
-                      </a4j:repeat>
-                    </ul>
-                    </div>
-                 </div>
-              </div>
+                              <span class="tweet-username">#{twitterAgent.selectedTweet.screenName}</span>
+
+                              <div class="tweet-description"><img src="#{twitterAgent.selectedTweet.profileImageUrl}"
+                                                                  alt="" width="48" height="48"
+                                                                  align="left"/>#{twitterAgent.selectedTweet.text}</div>
+                              <br clear="all"/>
+                           </div>
+                        </a4j:outputPanel>
+                     </div>
+                  </div>
+
+                  <div class="iphone-page stage-right hide" id="top-tweeters-page">
+                     <div id="top-tweeters">
+                        <div id="tweeters-container" class="">
+                           Top tweeters
+
+                           <ul>
+                              <a4j:repeat value="#{twitterAgent.tweeters}" var="tweeter" rows="10">
+                                 <li>
+                                    <div class="tweet-box">
+                                       <span class="tweet-username">#{tweeter.user}</span><br clear="all"/>
+
+                                       <div class="tweet-description"><img src="#{tweeter.profileImgUrl}" alt=""
+                                                                           width="48" height="48"
+                                                                           align="left"/>Tweet Count: #{tweeter.tweetCount}
+                                       </div>
+                                       <br clear="all"/>
+                                    </div>
+                                 </li>
+                              </a4j:repeat>
+                           </ul>
+
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="iphone-page stage-right hide" id="top-hashtags-page">
+                     <div id="top-hashtags">
+                        <div id="hashtags-container" class="">
+                           Top hashtags
+                           <ul>
+                              <a4j:repeat value="#{twitterAgent.hashtags}" var="tag" rows="10">
+                                 <li>
+                                    <div class="tweet-box">
+                                       <div class="tweet-description">
+                                          Tag: #{tag.hashtag}  Count: #{tag.count}
+                                       </div>
+                                       <br clear="all"/>
+                                    </div>
+                                 </li>
+                              </a4j:repeat>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
 
 
-              <div class="iphone-page hide" id="about-page">
-                 <div class="flipped">
-                  <div id="judcon-talk">
-                    <div class="detail-box">
-                      <div class="detail-title"><img src="#{request.contextPath}/resources/images/judcon-logo.gif" width="249" height="29" alt=""/>
-                          <br/><br/>Filling The Gap : Going Mobile With JBoss Technologies Today</div>
-                      <div class="detail-subtitle">Jay Balunas and Wesley Hales</div>
-                      <div class="detail-description">Mobile devices are rapidly becoming the primary web client for many users. Taking your existing skills from traditional web application development and applying them to a mobile interface can be daunting. In this session Jay and Wesley will walk through best-practices to build a mobile solution using JSF and the Richfaces component suite.
-                                                      Attendees will learn which front-end mobile frameworks work best with JBoss technologies and how they can be used to kick start your own applications. The presentation will kick off with an overview of technologies used to create a RichFaces mobile demo and will then jump into the code to give a step-by-step tutorial.
-                                                      This will include a walk through of how we built the RichFaces mobile demo, issues we had and how we got around them. Some of the questions that will be answered are: How to determine the client device? Do's, and don't's of Mobile skinning? Options for client-side caching? How might WebWorkers be used with Richfaces? Where do CDI and RestEasy fit into this picture? and more!!</div>
-                    </div>
-                    </div>
-                 </div>
-              </div>
-
+                  <div class="iphone-page hide" id="about-page">
+                     <div class="flipped">
+                        <div id="judcon-talk">
+                           <div class="detail-box">
+                              <div class="detail-title"><img
+                                      src="#{request.contextPath}/resources/images/judcon-logo.gif" width="249"
+                                      height="29" alt=""/>
+                                 <br/><br/>Filling The Gap : Going Mobile With JBoss Technologies Today
+                              </div>
+                              <div class="detail-subtitle">Jay Balunas and Wesley Hales</div>
+                              <div class="detail-description">Mobile devices are rapidly becoming the primary web client for many users. Taking your existing skills from traditional web application development and applying them to a mobile interface can be daunting. In this session Jay and Wesley will walk through best-practices to build a mobile solution using JSF and the Richfaces component suite.
+                                 Attendees will learn which front-end mobile frameworks work best with JBoss technologies and how they can be used to kick start your own applications. The presentation will kick off with an overview of technologies used to create a RichFaces mobile demo and will then jump into the code to give a step-by-step tutorial.
+                                 This will include a walk through of how we built the RichFaces mobile demo, issues we had and how we got around them. Some of the questions that will be answered are: How to determine the client device? Do's, and don't's of Mobile skinning? Options for client-side caching? How might WebWorkers be used with Richfaces? Where do CDI and RestEasy fit into this picture? and more!!
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </a4j:outputPanel>
+            </h:form>
 
          </div>
 

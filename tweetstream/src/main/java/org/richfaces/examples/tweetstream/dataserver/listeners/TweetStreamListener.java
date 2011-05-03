@@ -49,7 +49,8 @@ public class TweetStreamListener implements StatusListener, Serializable {
 
    //TODO Update track support to work with context param
    //If this changes must also update TwitterSourceLocal
-   private static final String[] TRACK = {"java", "jboss", "richfaces", "jbw", "judcon"};
+//   private static final String[] TRACK = {"java", "jboss", "richfaces", "jbw", "judcon"};
+   private static final String[] TRACK = {"jboss", "judcon", "jbw", "judcon", "judcon2011"};
    private static TwitterStream twitterStream;
 
    public void startTwitterStream() {
@@ -103,65 +104,6 @@ public class TweetStreamListener implements StatusListener, Serializable {
       }
       return tweet;
    }
-
-//   private TwitterAggregate updateTwitterAggregate(Tweet tweet, TwitterAggregate tweetAggregate){
-//      //add the latest tweet to the aggregate tweet list
-//      List<Tweet> tweets = tweetAggregate.getTweets();
-//      tweets.add(0,tweet);
-//
-//      //clip to top 25
-//      if (tweets.size() > 25) {
-//         tweets = tweets.subList(0, 24);
-//         tweetAggregate.setTweets(tweets);
-//      }
-//
-//      //Add or increment the tweeter in the top tweeter list
-//      List<Tweeter> tweeters = tweetAggregate.getTopTweeters();
-//
-//      Tweeter tweeter = new Tweeter();
-//      tweeter.setUserId(tweet.getId());
-//
-//      int tweeteridx = tweeters.indexOf(tweeter);
-//
-//      if (tweeteridx == -1 ){
-//         //tweeter is not in the list yet - so set count to 1 and add
-//         tweeter.setUser(tweet.getScreenName());
-//         tweeter.setProfileImgUrl(tweet.getProfileImageUrl());
-//         tweeter.setTweetCount(1);
-//         tweeters.add(tweeter);
-//      }else{
-//         //tweeter is in list - so get the tweet and increment the count
-//         tweeters.get(tweeteridx).setTweetCount(tweeters.get(tweeteridx).getTweetCount() + 1);
-//      }
-//
-//      //sort the list
-//      Collections.sort(tweeters);
-//
-//      //Add or increment any hash tags
-//      String[] tags = tweet.getHashTags();
-//      List<HashTag> topTags =  tweetAggregate.getTopHashTags();
-//
-//      for (String tagStr : tags){
-//         HashTag tag = new HashTag();
-//         tag.setHashtag(tagStr);
-//         int tagIdx = topTags.indexOf(tag);
-//
-//         if (tagIdx == -1 ){
-//            //tag not tracked add it
-//            tag.setCount(1);
-//            topTags.add(tag);
-//         }else{
-//            //tag existing, increment count
-//            topTags.get(tagIdx).setCount(topTags.get(tagIdx).getCount() + 1);
-//         }
-//      }
-//
-//      //sort the list
-//      Collections.sort(topTags);
-//
-//      return tweetAggregate;
-//
-//   }
 
    public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
       System.out.println("Got a status deletion notice id:" + statusDeletionNotice.getStatusId());

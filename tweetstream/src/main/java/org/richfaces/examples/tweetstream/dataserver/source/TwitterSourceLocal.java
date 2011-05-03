@@ -80,7 +80,7 @@ public class TwitterSourceLocal implements TwitterSource
       //  so we need to fetch initial content
       fetchContent();
 
-//TODO TEMP - just have them empty to start
+      //TODO TEMP - just have them empty to start
       twitterAggregate = new TwitterAggregate();
       twitterAggregate.setTweets(new ArrayList<Tweet>());
       twitterAggregate.setTopHashTags(new ArrayList<HashTag>());
@@ -134,22 +134,6 @@ public class TwitterSourceLocal implements TwitterSource
 //      if (performSearch())
          {
             twitterAggregate = new TwitterAggregate();
-
-            //Load the base search term from context param
-//         String searchTerm = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("org.richfaces.examples.tweetstream.searchTermBase");
-
-//         if (searchTerm == null)
-//         {
-//            searchTerm = "";
-//            log.warn("Default initial twitter filter term not found in context params");
-//         }
-
-//         twitterAggregate.setFilter(searchTerm);
-
-            //Load the twitter search
-//         List<Tweet> tweets = new ArrayList<Tweet>();
-//         List<Tweeter> tweeters = new ArrayList<Tweeter>();
-//         Tweeter tweeter = null;
 
             Twitter twitter = new TwitterFactory().getInstance();
             List<twitter4j.Tweet> t4jTweets = null;
