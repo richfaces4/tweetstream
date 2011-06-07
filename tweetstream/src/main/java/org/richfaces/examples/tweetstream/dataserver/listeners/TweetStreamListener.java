@@ -49,8 +49,7 @@ public class TweetStreamListener implements StatusListener, Serializable {
 
    //TODO Update track support to work with context param
    //If this changes must also update TwitterSourceLocal
-//   private static final String[] TRACK = {"java", "jboss", "richfaces", "jbw", "judcon"};
-   private static final String[] TRACK = {"jboss", "judcon", "jbw", "judcon", "judcon2011"};
+   private static final String[] TRACK = {"jboss", "redhat", "jbw2011keynote", "richfaces"};
    private static TwitterStream twitterStream;
 
    public void startTwitterStream() {
