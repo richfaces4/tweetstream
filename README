@@ -1,24 +1,47 @@
-tweetstream
+A mobile web enabled RichFaces 4.0 application supporting features 
+like device detection, CSS3 transitions, orientation support, and more. 
+
+----------------------
+TweetStream Setup
 -----------------------
 
-You must setup a JMS topic within the admin console to run this app:
+- This application was made for JBoss AS 6 final.
 
-Name: twitter
+- Configure twitter4j for API access
+  - See instructions below
 
-JNDI name: /topic/twitter All the others: by default.
+- Build using standard maven commands: mvn package
 
-In the same form we need to add roles for that topic. For that demo application we will create single role with next parameters:
+- Deploy to JBoss AS 6 and start the server
+  - Copy /tweetstream/target/tweetstream.war to 
+     $JBOSS_HOME/server/default/deploy
+  - Remember to start with the "./run.sh -b 0.0.0.0" 
+     for access from other devices
 
-Name: guest
+- Access the application at http://localhost:8080/tweetstream
+  - Or from other devices at http://your.ip:8080/tweetstream
+    - May require firewall updated, etc..
+     
+----------------
+Twitter4j Config
+----------------
+Everything is setup and configured for twitter4j except the API 
+credentials.  We can not provide public credentials for accessing 
+twitter API's via twitter4j.  This mean you will need to get and 
+create your own credentials following the twitter4j and twitter 
+instructions.
 
-Send: yes
+This is really not too hard, but does require some effort.  Because 
+these steps change from time to time you should see 
+http://twitter4j.org/en/configuration.html and 
+https://dev.twitter.com/pages/auth for the details.
 
-Consume: yes
+Once you have access to the values here: 
 
-create subscriber: yes
+oauth.consumerKey=**************************
+oauth.consumerSecret=**************************
+oauth.accessToken=**************************
+oauth.accessTokenSecret=**************************
 
-delete subscriber: yes
-
-create durable subscriber: yes
-
-delete durable subscriber: yes
+Update tweetstream/src/main/resources/twitter4j.properties with these 
+values.  From there you should be able to build and run the application.
