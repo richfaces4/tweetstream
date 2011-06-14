@@ -30,9 +30,14 @@ import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 import org.richfaces.examples.tweetstream.util.TwitterAggregateUtil;
 import twitter4j.*;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -47,14 +52,22 @@ public class TweetStreamListener implements StatusListener, Serializable {
    @Inject
    CacheBuilder cacheBuilder;
 
+   private  String[] tracks;
+
+   @PostConstruct
+    public void init()
+    {
+        tracks = readKeys("twittertracks.properties");
+    }
+
    //TODO Update track support to work with context param
    //If this changes must also update TwitterSourceLocal
-   private static final String[] TRACK = {"jboss", "redhat", "jbw2011keynote", "richfaces"};
+
    private static TwitterStream twitterStream;
 
    public void startTwitterStream() {
       FilterQuery filterQuery = new FilterQuery();
-      filterQuery.track(TRACK);
+      filterQuery.track(tracks);
 
       twitterStream = new TwitterStreamFactory().getInstance();
       twitterStream.addListener(this);
@@ -103,6 +116,25 @@ public class TweetStreamListener implements StatusListener, Serializable {
       }
       return tweet;
    }
+
+   private String[] readKeys(final String name)
+    {
+        final InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(name) ;
+        if (is != null)
+        {
+            final Properties properties = new Properties() ;
+            try
+            {
+                properties.load(is) ;
+                return properties.keySet().toArray(new String[0]) ;
+            }
+            catch (final IOException ioe)
+            {
+                log.warn("Unexpected exception loading tracks, ignoring", ioe) ;
+            }
+        }
+        return null ;
+    }
 
    public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
       System.out.println("Got a status deletion notice id:" + statusDeletionNotice.getStatusId());
