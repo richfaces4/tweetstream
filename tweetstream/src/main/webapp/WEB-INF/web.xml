@@ -16,15 +16,25 @@
       <param-name>org.richfaces.examples.tweetstream.searchTermBase</param-name>
       <param-value>#java</param-value>
    </context-param>
-    <filter>
-        <filter-name>PushFilter</filter-name>
-        <filter-class>org.richfaces.webapp.PushFilter</filter-class>
-        <async-supported>true</async-supported>
-    </filter>
-    <filter-mapping>
-        <filter-name>PushFilter</filter-name>
-        <servlet-name>Faces Servlet</servlet-name>
-    </filter-mapping>
+    <!--<filter>-->
+        <!--<filter-name>PushFilter</filter-name>-->
+        <!--<filter-class>org.richfaces.webapp.PushFilter</filter-class>-->
+        <!--<async-supported>true</async-supported>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>PushFilter</filter-name>-->
+        <!--<servlet-name>Faces Servlet</servlet-name>-->
+    <!--</filter-mapping>-->
+
+    <context-param>
+        <param-name>org.richfaces.push.jms.disable</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>org.atmosphere.useBlocking</param-name>
+        <param-value>true</param-value>
+    </context-param>
 
    <!--<context-param>-->
     <!--<param-name>org.richfaces.LoadStyleStrategy</param-name>-->
