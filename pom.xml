@@ -37,6 +37,20 @@
         <updatePolicy>never</updatePolicy>
       </snapshots>
     </repository>
+      <repository>
+      <id>sonatype-public-repository-group</id>
+      <name>Public Maven Repository Group</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </snapshots>
+    </repository>
   </repositories>
 
   <dependencyManagement>
@@ -141,7 +155,7 @@
       <dependency>
         <groupId>org.atmosphere</groupId>
         <artifactId>atmosphere-runtime</artifactId>
-        <version>0.7.1</version>
+        <version>0.8-SNAPSHOT</version>
       </dependency>
 
       <dependency>

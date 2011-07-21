@@ -4,7 +4,9 @@
        xsi:schemaLocation="
       http://java.sun.com/xml/ns/javaee 
       http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-  <alternatives/>
+   <alternatives>
+         <class>org.richfaces.examples.tweetstream.dataserver.cache.SimpleCacheBuilder</class>
+   </alternatives>
   <decorators/>
   <interceptors/>
 </beans>

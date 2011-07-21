@@ -24,15 +24,17 @@ package org.richfaces.examples.tweetstream.dataserver.cache;
 import org.infinispan.Cache;
 import org.infinispan.manager.EmbeddedCacheManager;
 
+import java.util.Map;
+
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 public interface CacheBuilder
 {
 
    public static final String TWEETSTREAM_CACHE = "tweetstream";
 
-   public <K, V> Cache<K, V> getCache();
+   public <K, V> Map<K, V> getCache();
 
-   public <K, V> Cache<K, V> getCache(String cacheName);
+   public <K, V> Map<K, V> getCache(String cacheName);
 
    public EmbeddedCacheManager getCacheContainer();
 }

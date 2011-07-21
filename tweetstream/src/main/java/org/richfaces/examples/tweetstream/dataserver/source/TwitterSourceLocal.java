@@ -22,7 +22,10 @@
 package org.richfaces.examples.tweetstream.dataserver.source;
 
 import org.jboss.logging.Logger;
+import org.richfaces.examples.tweetstream.dataserver.cache.CacheBuilder;
 import org.richfaces.examples.tweetstream.dataserver.cache.InfinispanCacheBuilder;
+import org.richfaces.examples.tweetstream.dataserver.cache.SimpleCacheBuilder;
+import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
 import org.richfaces.examples.tweetstream.dataserver.listeners.CacheUpdateListener;
 import org.richfaces.examples.tweetstream.dataserver.listeners.TweetStreamListener;
 import org.richfaces.examples.tweetstream.domain.HashTag;
@@ -61,7 +64,7 @@ public class TwitterSourceLocal implements TwitterSource
    Logger log;
 
    @Inject
-   InfinispanCacheBuilder cacheBuilder;
+   CacheBuilder cacheBuilder;
 
    @Inject
    TweetStreamListener tweetListener;
@@ -71,7 +74,7 @@ public class TwitterSourceLocal implements TwitterSource
 
    private TwitterAggregate twitterAggregate;
 
-
+   PublishController pubControl = new PublishController();
    public void init()
    {
       System.out.println("&&&&&&&&&&& Init");
@@ -87,14 +90,14 @@ public class TwitterSourceLocal implements TwitterSource
       twitterAggregate.setTopTweeters(new ArrayList<Tweeter>());
 
       // add the listener that checks hi new data has been added.
-      cacheBuilder.getCache().addListener(new CacheUpdateListener());
+      //cacheBuilder.getCache().addListener(new CacheUpdateListener());
 
       //Populate cache with seed data from this class
       cacheBuilder.getCache().put("tweetaggregate", twitterAggregate);
 
       //Start the twitter streaming
       tweetListener.startTwitterStream();
-
+      pubControl.publishView(twitterAggregate);
       log.info("Initialization of twitter source local complete");
    }
 

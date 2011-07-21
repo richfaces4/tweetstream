@@ -28,6 +28,7 @@ import org.infinispan.manager.EmbeddedCacheManager;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Alternative;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -36,6 +37,7 @@ import java.io.Serializable;
 /** @author <a href="mailto:whales@redhat.com">Wesley Hales</a> */
 
 @Singleton
+@Alternative
 public class InfinispanCacheBuilder implements CacheBuilder, Serializable
 {
 

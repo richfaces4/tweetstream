@@ -23,6 +23,8 @@ package org.richfaces.examples.tweetstream.dataserver.listeners;
 
 import org.jboss.logging.Logger;
 import org.richfaces.examples.tweetstream.dataserver.cache.CacheBuilder;
+import org.richfaces.examples.tweetstream.dataserver.cache.SimpleCacheBuilder;
+import org.richfaces.examples.tweetstream.dataserver.jms.PublishController;
 import org.richfaces.examples.tweetstream.domain.HashTag;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.Tweeter;
@@ -53,6 +55,8 @@ public class TweetStreamListener implements StatusListener, Serializable {
    CacheBuilder cacheBuilder;
 
    private  String[] tracks;
+
+   PublishController pubControl = new PublishController();
 
    @PostConstruct
     public void init()
@@ -88,6 +92,8 @@ public class TweetStreamListener implements StatusListener, Serializable {
 
       //put back in the cache
       cacheBuilder.getCache().put("tweetaggregate", tweetAggregate);
+
+      pubControl.publishView(tweetAggregate);
    }
 
    private Tweet createTweet(Status status) {
