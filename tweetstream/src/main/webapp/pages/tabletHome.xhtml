@@ -26,15 +26,27 @@
 
     <h:outputStylesheet name="css/ipad.css"/>
 
+     <script type="text/javascript">
+
+        function updateContent(data){
+         //DEBUG To check if there is data in the msg uncomment this
+         //alert("Data is : " + data);
+
+         //trigger an update to the different parts of the page
+         updatePage();
+        }
+
+     </script>
+
   </ui:define>
 
   <ui:define name="body">
     <h:form>
-      <a4j:jsFunction name="updateContent" action="#{twitterAgent.updateTweets}"
+      <a4j:jsFunction name="updatePage" action="#{twitterAgent.updateTweets}"
                       render="browser_form"/>
       <a4j:push address="content@twitter"
                 onerror="alert('Error retrieving pushed data')"
-                ondataavailable="updateContent()">
+                ondataavailable="updateContent(event.rf.data)">
       </a4j:push>
     </h:form>
     <h:form id="browser_form">

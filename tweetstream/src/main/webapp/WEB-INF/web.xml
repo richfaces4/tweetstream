@@ -5,6 +5,10 @@
          id="WebApp_ID" version="3.0">
 
    <context-param>
+      <param-name>tweetstream.postContent</param-name>
+      <param-value>false</param-value>
+   </context-param>
+   <context-param>
       <param-name>org.richfaces.push.jms.connectionUsername</param-name>
       <param-value>guest</param-value>
    </context-param>

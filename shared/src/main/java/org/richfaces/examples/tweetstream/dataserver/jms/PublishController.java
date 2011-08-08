@@ -28,6 +28,7 @@ import org.richfaces.application.push.TopicsContext;
 import org.richfaces.examples.tweetstream.domain.Tweet;
 import org.richfaces.examples.tweetstream.domain.TwitterAggregate;
 
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.text.MessageFormat;
 
@@ -42,6 +43,7 @@ public class PublishController implements Serializable
 
 
    private transient TopicsContext topicsContext;
+   private Boolean postContent = null;
 
    private TopicsContext getTopicsContext()
    {
@@ -54,39 +56,30 @@ public class PublishController implements Serializable
 
    public void publishView(TwitterAggregate twitterAggregate)
    {
-      //TODO Update to contain more than just tweet updates
-      String tweetString = "{\"tweets\":[";
-      if (twitterAggregate != null && twitterAggregate.getTweets() != null)
-      {
-
-         for (int i = 0; i < twitterAggregate.getTweets().size(); i++)
-         {
-            Tweet tweet = twitterAggregate.getTweets().get(i);
-
-            tweetString += "{\"id\":" + tweet.getId()
-               + ",\"text\":\"" + StringEscapeUtils.escapeHtml(tweet.getText())
-               + "\",\"profileImageURL\":\"" + StringEscapeUtils.escapeHtml(tweet.getProfileImageUrl())
-               + "\",\"screenName\":\"" + tweet.getScreenName()
-               + "\",\"retweet\":" + tweet.isRetweet() + "}";
-
-            if (i + 1 != twitterAggregate.getTweets().size())
-            {
-               tweetString += ",";
-            }
-
-         }
-         tweetString += "]}";
-
-      }
-
       try
       {
+         String tweetString = "";
+
+         //Initialize postContent
+         initPostContent();
+
+         if ((twitterAggregate != null) && (postContent))
+            tweetString = twitterAggregate.toJSON();
+
          log.debug("Pushing Message : " + tweetString);
-         getTopicsContext().publish(new TopicKey("twitter", "content"), MessageFormat.format("{0}", ""));
+         getTopicsContext().publish(new TopicKey("twitter", "content"), tweetString);
       }
       catch (Exception e)
       {
          log.error(e.getMessage(), e);
+      }
+   }
+
+   private void initPostContent(){
+
+      if (postContent == null){
+         String postContentStr = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("tweetstream.postContent");
+         postContent = new Boolean(postContentStr);
       }
    }
 
